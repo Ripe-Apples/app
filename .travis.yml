@@ -16,12 +16,12 @@ install:
 before_script:
   - psql -c 'create database "boilermaker-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 
-# before_deploy:
-#   - npm run build-client # make the bundle
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy:
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: cache-cache # see README
+  api_key:
+    secure: tNLEby5P2hw7+1N3mwzBWTFchi82aV7ndc1qYGfh3mERwtft8zD192aRY+j5TFoLQJyb6aQMGiPbldB49QwtGSrEz1nFC9Aob+HV5tAArzB+2C8X+bpCSnEkXF/4hS0dxewBgQ+uGYbRpi2g8d3N/aYfsXKL7E4YACQ3GI7M1G0POjMXmX8sgMY2mqnoYMnw/BKnDslbeRpnnp3rmNFwYo6WV484m3nfVc2egXkWygaenajeLXPLv0O8GSf0WTuUB9tNMxs+x3UcBh1ml4YuPPc3oNZ6+CscVOTkJUviGWSb6QYEASjG4hhBApltXOMOeQ4PQvFmfdgojYtYa6MHYNBYieO8T7/JzfjnbTQGSq5+u59wqP+uKl2JulvGB/BJoniTXf8DPhqgB0rI4PqDDXCD7jGAUiaZeguUw0z79ZJWbjZPCZ+xViUBaxYyE6FFxye+XUD2MqmfxddswOih3nobghav4y28FqNDJMOnQZcDPRC7l4tRSUh1EwvcMbt0ixNE46q/NyFQpj0QJO9JiuzfQyLwXwcHd93yTTPaxerpOcMHBciWNTDGcsVFe491RYJe33YMKVyaWncfQnrfYr4dKeLm2NIXs1wAU/xsKSZAMX3cQUbb44UaFk1H8Y8qEJjbRHr7Gh9nNi0oHFnc2GibFa+w5YTd1mvsEt8iMjk= # see README
