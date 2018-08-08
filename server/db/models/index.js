@@ -1,6 +1,6 @@
 const User = require('./user');
-const Restaurant = require('./restaurant');
-const Review = require('./review');
+const Restaurant = require('./restaurant.model');
+const Review = require('./review.model');
 
 /**
  * If we had any associations to make, this would be a great place to put them!
