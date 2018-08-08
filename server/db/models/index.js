@@ -10,7 +10,7 @@ const Review = require('./review.model');
  */
 
 Restaurant.hasMany(Review);
-Review.hasOne(Restaurant);
+Review.belongsTo(Restaurant);
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
