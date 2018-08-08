@@ -1,6 +1,6 @@
 const User = require('./user');
-const Restaurant = require('./restaurant.model');
-const Review = require('./review.model');
+const Restaurant = require('./restaurant');
+const Review = require('./review');
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -10,7 +10,7 @@ const Review = require('./review.model');
  */
 
 Restaurant.hasMany(Review);
-Review.hasOne(Restaurant);
+Review.belongsTo(Restaurant);
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
