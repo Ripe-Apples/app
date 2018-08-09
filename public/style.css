@@ -29,3 +29,8 @@ form div {
   height: 200px !important;
   object-fit: cover !important;
 }
+
+.sourceLogo {
+  height: 15px;
+  width: 15px;
+}
