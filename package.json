@@ -43,7 +43,6 @@
     "express": "^4.16.3",
     "express-session": "^1.15.1",
     "history": "^4.6.3",
-    "image-webpack-loader": "^4.3.1",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
@@ -87,7 +86,6 @@
     "eslint-config-fullstack": "^5.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-react": "^7.10.0",
-    "file-loader": "^1.1.11",
     "husky": "^0.14.3",
     "lint-staged": "^7.2.0",
     "mocha": "^5.2.0",
@@ -98,7 +96,6 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-mock-store": "^1.5.3",
     "supertest": "^3.1.0",
-    "url-loader": "^1.0.1",
     "webpack": "^4.16.4",
     "webpack-cli": "^3.1.0"
   }
