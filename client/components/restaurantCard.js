@@ -1,12 +1,15 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import { Popup } from 'semantic-ui-react';
 
 const RestaurantCard = props => {
-  const restaurant = props.restaurant
+  const restaurant = props.restaurant;
+  const reviews = restaurant.reviews;
   const dollarSignHelper = expenseRating => {
     return '$'.repeat(expenseRating)
   }
+
   return (
     <div className="card">
       <div className="image card-image">
@@ -18,7 +21,13 @@ const RestaurantCard = props => {
         <div className="description">
           {dollarSignHelper(restaurant.expenseRating)}, {restaurant.cuisineType}
           <span className="right floated">
-            <Link to="/sourceComp">View Sources</Link>
+            <Popup trigger={<a>View Sources</a>} wide='very'>
+            {reviews.map(review => (
+              <div key={review.id}>
+                <p> <img className="sourceLogo" src={review.sourceLogo} />  {review.source}:   {review.rating} </p>
+              </div>
+            ))}
+            </Popup>
           </span>
         </div>
       </div>
