@@ -92,137 +92,137 @@ async function seed() {
   const reviews = await Promise.all([
     Review.create({
       source: 'Yelp',
-      rating: 7,
+      rating: 3.5,
       restaurantId: 9
     }),
     Review.create({
       source: 'Trip Advisor',
-      rating: 8,
+      rating: 4,
       restaurantId: 9
     }),
     Review.create({
       source: 'Google',
-      rating: 8.4,
+      rating: 4.2,
       restaurantId: 9
     }),
     Review.create({
       source: 'Google',
-      rating: 9,
+      rating: 4.5,
       restaurantId: 8
     }),
     Review.create({
       source: 'Yelp',
-      rating: 8,
+      rating: 4,
       restaurantId: 8
     }),
     Review.create({
       source: 'Trip Advisor',
-      rating: 8,
+      rating: 4,
       restaurantId: 8
     }),
     Review.create({
       source: 'Google',
-      rating: 8.8,
+      rating: 4.4,
       restaurantId: 7
     }),
     Review.create({
       source: 'Yelp',
-      rating: 8,
+      rating: 4,
       restaurantId: 7
     }),
     Review.create({
       source: 'Trip Advisor',
-      rating: 8,
+      rating: 4,
       restaurantId: 7
     }),
     Review.create({
       source: 'Yelp',
-      rating: 8,
+      rating: 4,
       restaurantId: 6
     }),
     Review.create({
       source: 'Google',
-      rating: 8.6,
+      rating: 4.3,
       restaurantId: 6
     }),
     Review.create({
       source: 'Trip Advisor',
-      rating: 8,
+      rating: 4,
       restaurantId: 6
     }),
     Review.create({
       source: 'Trip Advisor',
-      rating: 9,
+      rating: 4.5,
       restaurantId: 5
     }),
     Review.create({
       source: 'Yelp',
-      rating: 7,
+      rating: 3.5,
       restaurantId: 5
     }),
     Review.create({
       source: 'Google',
-      rating: 7,
+      rating: 3.5,
       restaurantId: 5
     }),
     Review.create({
       source: 'Google',
-      rating: 8.6,
+      rating: 4.3,
       restaurantId: 4
     }),
     Review.create({
       source: 'Trip Advisor',
-      rating: 9,
+      rating: 4.5,
       restaurantId: 4
     }),
     Review.create({
       source: 'Yelp',
-      rating: 7,
+      rating: 3.5,
       restaurantId: 4
     }),
     Review.create({
       source: 'Yelp',
-      rating: 8,
+      rating: 4,
       restaurantId: 3
     }),
     Review.create({
       source: 'Trip Advisor',
-      rating: 9,
-      restaurantId: 3
-    }),
-    Review.create({
-      source: 'Google',
-      rating: 8.6,
+      rating: 4.5,
       restaurantId: 3
     }),
     Review.create({
       source: 'Google',
-      rating: 9,
+      rating: 4.3,
+      restaurantId: 3
+    }),
+    Review.create({
+      source: 'Google',
+      rating: 4.5,
       restaurantId: 2
     }),
     Review.create({
       source: 'Yelp',
-      rating: 8,
+      rating: 4,
       restaurantId: 2
     }),
     Review.create({
       source: 'Trip Advisor',
-      rating: 9,
+      rating: 4.5,
       restaurantId: 2
     }),
     Review.create({
       source: 'Trip Advisor',
-      rating: 9,
+      rating: 4.5,
       restaurantId: 1
     }),
     Review.create({
       source: 'Google',
-      rating: 9,
+      rating: 4.5,
       restaurantId: 1
     }),
     Review.create({
       source: 'Yelp',
-      rating: 8,
+      rating: 4,
       restaurantId: 1
     })
   ])
