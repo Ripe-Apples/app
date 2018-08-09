@@ -34,7 +34,7 @@ form div {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 1em 0;
+  margin: 0.125em 0;
 }
 
 .weigh-sources-flex > .item-flex {

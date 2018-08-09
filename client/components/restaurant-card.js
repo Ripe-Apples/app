@@ -2,6 +2,10 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
+const dollarSignHelper = number => {
+  return '$'.repeat(number)
+}
+
 const RestaurantCard = props => {
   const restaurant = props.restaurant
 
@@ -14,7 +18,7 @@ const RestaurantCard = props => {
         <div className="header">{restaurant.name}</div>
         <div className="meta">{restaurant.location}</div>
         <div className="description">
-          {restaurant.expenseRating}, {restaurant.cuisineType}
+          {dollarSignHelper(restaurant.expenseRating)}, {restaurant.cuisineType}
           <span className="right floated">
             <Link to="/sourceComp">View Sources</Link>
           </span>
