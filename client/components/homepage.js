@@ -4,15 +4,13 @@ import Restaurant from './restaurant'
 import Options from './options'
 
 const Homepage = () => (
-  <div className="container-fluid">
-    <h1>Top Restaurants</h1>
-    <div className="row no-gutters">
-      <div className="col-2">
-        <Restaurant />
-      </div>
-      <div className="col-3">
-        <Options />
-      </div>
+  <div class="ui grid">
+    <div class="twelve wide column">
+      <h1>Top Restaurants</h1>
+      <Restaurant />
+    </div>
+    <div class="four wide column">
+      <Options />
     </div>
   </div>
 )
