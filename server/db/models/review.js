@@ -7,13 +7,13 @@ const Review = db.define('reviews', {
     allowNull: false
   },
   rating: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.FLOAT,
     allowNull: false,
     validate: {
-      min: 1,
+      min: 0,
       max: 10
     }
   }
-});
+})
 
-module.exports = Review;
+module.exports = Review
