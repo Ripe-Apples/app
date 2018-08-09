@@ -17,7 +17,7 @@ async function seed() {
   const restaurants = await Promise.all([
     Restaurant.create({
       name: 'Marea',
-      cuiseineType: 'Seafood',
+      cuisineType: 'Seafood',
       expenseRating: '4',
       location: 'New York',
       imageUrl:
@@ -25,7 +25,7 @@ async function seed() {
     }),
     Restaurant.create({
       name: 'Ai Fiori',
-      cuiseineType: 'Italian',
+      cuisineType: 'Italian',
       expenseRating: '4',
       location: 'New York',
       imageUrl:
@@ -33,7 +33,7 @@ async function seed() {
     }),
     Restaurant.create({
       name: 'Crif Dogs',
-      cuiseineType: 'Hot Dogs',
+      cuisineType: 'Hot Dogs',
       expenseRating: '1',
       location: 'New York',
       imageUrl:
@@ -41,7 +41,7 @@ async function seed() {
     }),
     Restaurant.create({
       name: 'Ivan Ramen',
-      cuiseineType: 'Ramen',
+      cuisineType: 'Ramen',
       expenseRating: '2',
       location: 'New York',
       imageUrl:
@@ -49,7 +49,7 @@ async function seed() {
     }),
     Restaurant.create({
       name: 'Momofuku Noodle Bar',
-      cuiseineType: 'Ramen',
+      cuisineType: 'Ramen',
       expenseRating: '2',
       location: 'New York',
       imageUrl:
@@ -57,7 +57,7 @@ async function seed() {
     }),
     Restaurant.create({
       name: 'Carbone',
-      cuiseineType: 'Italian',
+      cuisineType: 'Italian',
       expenseRating: '4',
       location: 'New York',
       imageUrl:
@@ -65,21 +65,21 @@ async function seed() {
     }),
     Restaurant.create({
       name: 'Peter Luger',
-      cuiseineType: 'Steakhouse',
+      cuisineType: 'Steakhouse',
       expenseRating: '4',
       location: 'New York',
       imageUrl: 'https://i.redd.it/z3u65bv8o6101.jpg'
     }),
     Restaurant.create({
       name: "Katz's",
-      cuiseineType: 'Deli',
+      cuisineType: 'Deli',
       expenseRating: '2',
       location: 'New York',
       imageUrl: "http://katzsdeli.net/images/Katz's-Deli-about.jpg"
     }),
     Restaurant.create({
       name: 'Szechuan Gourment',
-      cuiseineType: 'Chinese',
+      cuisineType: 'Chinese',
       expenseRating: '2',
       location: 'New York',
       imageUrl:
