@@ -3,9 +3,7 @@ import {connect} from 'react-redux'
 import {fetchRestaurants} from '../store/restaurant'
 import RestaurantCard from './restaurantCard'
 
-
 class RestaurantList extends Component {
-
   componentDidMount() {
     this.props.fetchRestaurants()
   }
@@ -14,15 +12,13 @@ class RestaurantList extends Component {
     return (
       <div>
         <h1>Restaurants</h1>
-        <ul>
+        <div className="ui cards">
           {this.props.restaurants.map(restaurant => {
             return (
-              <li key={restaurant.id}>
-                <RestaurantCard restaurant={restaurant} />
-              </li>
+              <RestaurantCard restaurant={restaurant} key={restaurant.id} />
             )
           })}
-        </ul>
+        </div>
       </div>
     )
   }

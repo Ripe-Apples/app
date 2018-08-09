@@ -23,3 +23,9 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.card-image,
+.card-image > img {
+  height: 200px !important;
+  object-fit: cover !important;
+}

@@ -11,11 +11,12 @@ class weighSources extends Component {
               <label>Yelp</label>
             </div>
             <div className="eight wide field">
-              <div className="ui icon buttons">
+              <div className="ui buttons">
                 <button type="button" className="ui button">
                   <i className="minus icon" />
                 </button>
-                <button type="button" className="ui button">
+                <div className="or" data-text="5" />
+                <button type="button" className="ui positive button">
                   <i className="plus icon" />
                 </button>
               </div>
@@ -28,11 +29,12 @@ class weighSources extends Component {
               <label>Trip Advisor</label>
             </div>
             <div className="eight wide field">
-              <div className="ui icon buttons">
+              <div className="ui buttons">
                 <button type="button" className="ui button">
                   <i className="minus icon" />
                 </button>
-                <button type="button" className="ui button">
+                <div className="or" data-text="5" />
+                <button type="button" className="ui positive button">
                   <i className="plus icon" />
                 </button>
               </div>
@@ -45,11 +47,12 @@ class weighSources extends Component {
               <label>Google</label>
             </div>
             <div className="eight wide field">
-              <div className="ui icon buttons">
+              <div className="ui buttons">
                 <button type="button" className="ui button">
                   <i className="minus icon" />
                 </button>
-                <button type="button" className="ui button">
+                <div className="or" data-text="5" />
+                <button type="button" className="ui positive button">
                   <i className="plus icon" />
                 </button>
               </div>
