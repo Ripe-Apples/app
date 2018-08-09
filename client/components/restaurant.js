@@ -1,10 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import RestaurantList from './restaurant-list'
 
 const Restaurant = () => (
-  <React.Fragment>
-    <h1>Top Restaurants</h1>
+  // <React.Fragment>
+  <div>
+    <RestaurantList />
+    {/* <h1>Top Restaurants</h1>
     <div>
       <input type="text" />
     </div>
@@ -18,8 +21,9 @@ const Restaurant = () => (
     <p>Price</p>
     <p>Cuisine</p>
     <p>Rating</p>
-    <Link to="/">View Sources</Link>
-  </React.Fragment>
+    <Link to="/">View Sources</Link> */}
+  {/* </React.Fragment> */}
+  </div>
 )
 
 /**
