@@ -2,6 +2,10 @@ body {
   font-family: sans-serif;
 }
 
+.view-padding {
+  padding: 1em;
+}
+
 a {
   text-decoration: none;
 }

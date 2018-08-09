@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 
 const Restaurant = () => (
   <React.Fragment>
+    <h1>Top Restaurants</h1>
     <img
       height="200px"
       width="200px"
