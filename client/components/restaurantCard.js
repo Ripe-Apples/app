@@ -24,7 +24,7 @@ const RestaurantCard = props => {
             <Popup trigger={<a>View Sources</a>} wide='very'>
             {reviews.map(review => (
               <div key={review.id}>
-                <p> <img src="https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjjytfK4-DcAhWyY98KHQgCBfUQjRx6BAgBEAU&url=https%3A%2F%2Fwww.yelp.com%2Fbrand&psig=AOvVaw1pQVxBz1WNhYdStdcnL6Sa&ust=1533931841022248" />  {review.source}:   {review.rating} </p>
+                <p> <img className="sourceLogo" src="https://image.flaticon.com/icons/svg/174/174882.svg" />  {review.source}:   {review.rating} </p>
               </div>
             ))}
             </Popup>

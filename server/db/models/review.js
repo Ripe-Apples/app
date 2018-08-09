@@ -6,6 +6,10 @@ const Review = db.define('reviews', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  sourceLogo: {
+    type: Sequelize.TEXT,
+    allowNull: false
+  },
   rating: {
     type: Sequelize.FLOAT,
     allowNull: false,
