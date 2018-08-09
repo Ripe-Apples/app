@@ -4,9 +4,7 @@ import {Link} from 'react-router-dom'
 
 const RestaurantCard = props => {
   const restaurant = props.restaurant
-  const dollarSignHelper = expenseRating => {
-    return '$'.repeat(expenseRating)
-  }
+
   return (
     <div className="card">
       <div className="image card-image">
@@ -16,7 +14,7 @@ const RestaurantCard = props => {
         <div className="header">{restaurant.name}</div>
         <div className="meta">{restaurant.location}</div>
         <div className="description">
-          {dollarSignHelper(restaurant.expenseRating)}, {restaurant.cuisineType}
+          {restaurant.expenseRating}, {restaurant.cuisineType}
           <span className="right floated">
             <Link to="/sourceComp">View Sources</Link>
           </span>

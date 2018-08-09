@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchRestaurants} from '../store/restaurant'
-import RestaurantCard from './restaurantCard'
+import RestaurantCard from './restaurant-card'
 
 class RestaurantList extends Component {
   componentDidMount() {
