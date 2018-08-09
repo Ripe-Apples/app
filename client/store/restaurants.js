@@ -11,12 +11,17 @@ export const fetchRestaurants= () => {
   }
 }
 
-const initalState = [];
+const initalState = {
+  restaurants: []
+};
 
 const restaurantReducer = (state = initalState, action) => {
   switch (action.type) {
     case GET_RESTAURANTS: 
-      return action.payload;
+      return {
+        ...state,
+        restaurants: action.payload
+      };
     default: 
       return state;
   }
