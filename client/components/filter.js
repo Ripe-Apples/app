@@ -1,7 +1,29 @@
 import React, {Component} from 'react'
 import {List, Dropdown, ListItem} from 'semantic-ui-react'
+import {connect} from 'react-redux'
+import {changePrice, changeCuisine, changeLocation} from '../store/filters.js'
 
 class filter extends Component {
+  constructor() {
+    super()
+    this.handlePriceChange = this.handlePriceChange.bind(this)
+    this.handleCuisineChange = this.handleCuisineChange.bind(this)
+    this.handleLocationChange = this.handleLocationChange.bind(this)
+  }
+
+  handlePriceChange(event, {value}) {
+    const price = value
+    this.props.changePrice(price)
+  }
+  handleCuisineChange(event, {value}) {
+    const cuisine = value
+    this.props.changeCuisine(cuisine)
+  }
+  handleLocationChange(event, {value}) {
+    const location = value
+    this.props.changeLocation(location)
+  }
+
   render() {
     //Cuisines
 
@@ -17,12 +39,14 @@ class filter extends Component {
     const newYork = 'New York'
 
     const prices = [
+      {text: 'All', value: ''},
       {text: '$', value: 1},
       {text: '$$', value: 2},
       {text: '$$$', value: 3},
       {text: '$$$$', value: 4}
     ]
     const cuisine = [
+      {text: 'All', value: ''},
       {text: chinese, value: chinese},
       {text: deli, value: deli},
       {text: italian, value: italian},
@@ -30,21 +54,28 @@ class filter extends Component {
       {text: seafood, value: seafood},
       {text: steakhouse, value: steakhouse}
     ]
-    const location = [
-      {
-        text: newYork,
-        value: newYork
-      }
-    ]
+    const location = [{text: 'All', value: ''}, {text: newYork, value: newYork}]
     return (
       <React.Fragment>
         <List>
           <List.Header>Filter</List.Header>
           <List.Item>
-            <Dropdown placeholder="Price" fluid selection options={prices} />
+            <Dropdown
+              placeholder="Price"
+              fluid
+              selection
+              options={prices}
+              onChange={this.handlePriceChange}
+            />
           </List.Item>
           <ListItem>
-            <Dropdown placeholder="Cuisine" fluid selection options={cuisine} />
+            <Dropdown
+              placeholder="Cuisine"
+              fluid
+              selection
+              options={cuisine}
+              onChange={this.handleCuisineChange}
+            />
           </ListItem>
           <ListItem>
             <Dropdown
@@ -52,6 +83,7 @@ class filter extends Component {
               fluid
               selection
               options={location}
+              onChange={this.handleLocationChange}
             />
           </ListItem>
         </List>
@@ -60,4 +92,10 @@ class filter extends Component {
   }
 }
 
-export default filter
+const mapDispatch = dispatch => ({
+  changePrice: price => dispatch(changePrice(price)),
+  changeCuisine: cuisine => dispatch(changeCuisine(cuisine)),
+  changeLocation: location => dispatch(changeLocation(location))
+})
+
+export default connect(null, mapDispatch)(filter)
