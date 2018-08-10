@@ -40,10 +40,30 @@ class RestaurantList extends Component {
   }
 
   render() {
-    const restaurants = this.props.restaurants
+    let {restaurants} = this.props
+    const {price, cuisine, location} = this.props
+
+    restaurants =
+      price === ''
+        ? restaurants
+        : restaurants.filter(restaurant => {
+            return restaurant.expenseRating === price
+          })
+    restaurants =
+      cuisine === ''
+        ? restaurants
+        : restaurants.filter(restaurant => {
+            return restaurant.cuisineType === cuisine
+          })
+    restaurants =
+      location === ''
+        ? restaurants
+        : restaurants.filter(restaurant => {
+            return restaurant.location === location
+          })
+
     restaurants.forEach(restaurant => {
       restaurant.score = this.restaurantScore(restaurant.reviews)
-      console.log(restaurant.score)
     })
     let restaurantsArray
     const lowercaseSearchValue = this.state.searchValue.toLowerCase()
@@ -88,7 +108,10 @@ class RestaurantList extends Component {
 }
 
 const mapState = state => ({
-  restaurants: state.restaurantReducer.restaurants
+  restaurants: state.restaurantReducer.restaurants,
+  price: state.filtersReducer.price,
+  cuisine: state.filtersReducer.cuisine,
+  location: state.filtersReducer.location
 })
 
 const mapDispatch = dispatch => ({
