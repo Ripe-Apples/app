@@ -78,7 +78,7 @@ async function seed() {
       imageUrl: "http://katzsdeli.net/images/Katz's-Deli-about.jpg"
     }),
     Restaurant.create({
-      name: 'Szechuan Gourment',
+      name: 'Szechuan Gourmet',
       cuisineType: 'Chinese',
       expenseRating: '2',
       location: 'New York',

@@ -6,7 +6,7 @@ import {Header, List} from 'semantic-ui-react'
 
 const Options = () => (
   <React.Fragment>
-    <Header as="h1">Options</Header>
+    <Header as="h1">Advanced Options</Header>
     <List>
       <List.Item>
         <WeighSources />
@@ -17,10 +17,6 @@ const Options = () => (
     </List>
   </React.Fragment>
 )
-
-/**
- * CONTAINER
- */
 
 const mapState = state => {}
 
