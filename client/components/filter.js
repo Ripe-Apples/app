@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {List, Header, Dropdown, ListItem} from 'semantic-ui-react'
+import {List, Dropdown, ListItem} from 'semantic-ui-react'
 
 class filter extends Component {
   render() {

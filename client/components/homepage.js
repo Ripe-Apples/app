@@ -2,17 +2,18 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Restaurant from './restaurant-list'
 import Options from './options'
+import {Grid} from 'semantic-ui-react'
 
 const Homepage = () => (
   <div className="view-padding">
-    <div className="ui grid">
-      <div className="twelve wide column">
+    <Grid columns="equal" divided>
+      <Grid.Column width={12}>
         <Restaurant />
-      </div>
-      <div className="four wide column">
+      </Grid.Column>
+      <Grid.Column width={4}>
         <Options />
-      </div>
-    </div>
+      </Grid.Column>
+    </Grid>
   </div>
 )
 

@@ -50,3 +50,7 @@ form div {
   height: 15px;
   width: 15px;
 }
+
+.top-menu > .menu {
+  border-radius: 0px;
+}

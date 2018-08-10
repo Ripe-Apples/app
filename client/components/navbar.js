@@ -6,42 +6,44 @@ import {logout} from '../store'
 import {Menu, Grid} from 'semantic-ui-react'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <Menu stackable inverted color="orange">
-    <Menu.Item>
-      <Link to="/">
-        <Grid centered verticalAlign="middle" columns={2}>
-          <Grid.Column width={4}>
-            <img
-              height="25px"
-              width="25px"
-              src="https://freeiconshop.com/wp-content/uploads/edd/apple-outline-filled.png"
-            />
-          </Grid.Column>
-          <Grid.Column width={12}>
-            <h3>Ripe Apples</h3>
-          </Grid.Column>
-        </Grid>
-      </Link>
-    </Menu.Item>
-    {isLoggedIn ? (
-      // The navbar will show these links after you log in
+  <div className="top-menu">
+    <Menu stackable inverted color="orange">
       <Menu.Item>
-        <Link href="#" onClick={handleClick}>
-          Logout
+        <Link to="/">
+          <Grid centered verticalAlign="middle" columns={2}>
+            <Grid.Column width={4}>
+              <img
+                height="25px"
+                width="25px"
+                src="https://freeiconshop.com/wp-content/uploads/edd/apple-outline-filled.png"
+              />
+            </Grid.Column>
+            <Grid.Column width={12}>
+              <h3>Ripe Apples</h3>
+            </Grid.Column>
+          </Grid>
         </Link>
       </Menu.Item>
-    ) : (
-      // The navbar will show these links before you log in
-      <React.Fragment>
+      {isLoggedIn ? (
+        // The navbar will show these links after you log in
         <Menu.Item>
-          <Link to="/login">Login</Link>
+          <Link href="#" onClick={handleClick}>
+            Logout
+          </Link>
         </Menu.Item>
-        <Menu.Item>
-          <Link to="/signup">Sign Up</Link>
-        </Menu.Item>
-      </React.Fragment>
-    )}
-  </Menu>
+      ) : (
+        // The navbar will show these links before you log in
+        <React.Fragment>
+          <Menu.Item>
+            <Link to="/login">Login</Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to="/signup">Sign Up</Link>
+          </Menu.Item>
+        </React.Fragment>
+      )}
+    </Menu>
+  </div>
 )
 
 /**
