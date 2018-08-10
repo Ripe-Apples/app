@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import WeighSources from './weighSources'
+import WeighSources from './weigh-sources'
 import Filter from './filter'
 import {Header, List} from 'semantic-ui-react'
 
