@@ -17,15 +17,12 @@ class weighSources extends Component {
 
     if (event.target.id === 'Yelp') {
       weight = 'yelpWeight'
-      console.log(weight)
     }
     if (event.target.id === 'Trip Advisor') {
       weight = 'tripAdvisorWeight'
-      console.log(weight)
     }
     if (event.target.id === 'Google') {
       weight = 'googleWeight'
-      console.log(weight)
     }
 
     const oldWeight = this.state[weight]
@@ -39,15 +36,12 @@ class weighSources extends Component {
 
     if (event.target.id === 'Yelp') {
       weight = 'yelpWeight'
-      console.log(weight)
     }
     if (event.target.id === 'Trip Advisor') {
       weight = 'tripAdvisorWeight'
-      console.log(weight)
     }
     if (event.target.id === 'Google') {
       weight = 'googleWeight'
-      console.log(weight)
     }
 
     const oldWeight = this.state[weight]
