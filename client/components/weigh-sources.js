@@ -1,57 +1,33 @@
 import React, {Component} from 'react'
 import {List, Button, Icon} from 'semantic-ui-react'
+import {connect} from 'react-redux'
+import {
+  yelpChange,
+  tripAdvisorChange,
+  googleChange
+} from '../store/weighSources'
 
 class weighSources extends Component {
-  constructor() {
-    super()
-    this.state = {
-      yelpWeight: 5,
-      tripAdvisorWeight: 5,
-      googleWeight: 5
-    }
-    this.handleIncrement = this.handleIncrement.bind(this)
-    this.handleDecrement = this.handleDecrement.bind(this)
-  }
-
-  handleIncrement(event) {
-    let weight
-
-    if (event.target.id === 'Yelp') {
-      weight = 'yelpWeight'
-    }
-    if (event.target.id === 'Trip Advisor') {
-      weight = 'tripAdvisorWeight'
-    }
-    if (event.target.id === 'Google') {
-      weight = 'googleWeight'
-    }
-
-    const oldWeight = this.state[weight]
-    if (oldWeight + 1 <= 10) {
-      this.setState({[weight]: oldWeight + 1})
+  decrementBlock(val, callback, yelpWeight, tripAdvisorWeight, googleWeight) {
+    if (yelpWeight + tripAdvisorWeight + googleWeight > 1) {
+      if (val) {
+        val--
+        callback(val)
+      }
     }
   }
-
-  handleDecrement(event) {
-    let weight
-
-    if (event.target.id === 'Yelp') {
-      weight = 'yelpWeight'
-    }
-    if (event.target.id === 'Trip Advisor') {
-      weight = 'tripAdvisorWeight'
-    }
-    if (event.target.id === 'Google') {
-      weight = 'googleWeight'
-    }
-
-    const oldWeight = this.state[weight]
-    if (oldWeight - 1 >= 0) {
-      this.setState({[weight]: oldWeight - 1})
+  incrementBlock(val, callback) {
+    if (val < 10) {
+      val++
+      callback(val)
     }
   }
 
   render() {
+    let {yelpWeight, tripAdvisorWeight, googleWeight} = this.props
+
+    const {yelpChange, tripAdvisorChange, googleChange} = this.props
+
     return (
       <div>
         <h3>Weigh Sources</h3>
@@ -66,19 +42,26 @@ class weighSources extends Component {
                   id="Yelp"
                   type="button"
                   className="ui button"
-                  onClick={this.handleDecrement}
+                  onClick={() => {
+                    this.decrementBlock(
+                      yelpWeight,
+                      yelpChange,
+                      yelpWeight,
+                      tripAdvisorWeight,
+                      googleWeight
+                    )
+                  }}
                 >
                   <i id="Yelp" className="minus icon" />
                 </button>
-                <div
-                  className="or"
-                  data-text={this.state.yelpWeight.toString()}
-                />
+                <div className="or" data-text={yelpWeight.toString()} />
                 <button
                   id="Yelp"
                   type="button"
                   className="ui positive button"
-                  onClick={this.handleIncrement}
+                  onClick={() => {
+                    this.incrementBlock(yelpWeight, yelpChange)
+                  }}
                 >
                   <i id="Yelp" className="plus icon" />
                 </button>
@@ -97,19 +80,26 @@ class weighSources extends Component {
                   id="Trip Advisor"
                   type="button"
                   className="ui button"
-                  onClick={this.handleDecrement}
+                  onClick={() => {
+                    this.decrementBlock(
+                      tripAdvisorWeight,
+                      tripAdvisorChange,
+                      yelpWeight,
+                      tripAdvisorWeight,
+                      googleWeight
+                    )
+                  }}
                 >
                   <i id="Trip Advisor" className="minus icon" />
                 </button>
-                <div
-                  className="or"
-                  data-text={this.state.tripAdvisorWeight.toString()}
-                />
+                <div className="or" data-text={tripAdvisorWeight.toString()} />
                 <button
                   id="Trip Advisor"
                   type="button"
                   className="ui positive button"
-                  onClick={this.handleIncrement}
+                  onClick={() => {
+                    this.incrementBlock(tripAdvisorWeight, tripAdvisorChange)
+                  }}
                 >
                   <i id="Trip Advisor" className="plus icon" />
                 </button>
@@ -128,19 +118,26 @@ class weighSources extends Component {
                   id="Google"
                   type="button"
                   className="ui button"
-                  onClick={this.handleDecrement}
+                  onClick={() => {
+                    this.decrementBlock(
+                      googleWeight,
+                      googleChange,
+                      yelpWeight,
+                      tripAdvisorWeight,
+                      googleWeight
+                    )
+                  }}
                 >
                   <i id="Google" className="minus icon" />
                 </button>
-                <div
-                  className="or"
-                  data-text={this.state.googleWeight.toString()}
-                />
+                <div className="or" data-text={googleWeight.toString()} />
                 <button
                   id="Google"
                   type="button"
                   className="ui positive button"
-                  onClick={this.handleIncrement}
+                  onClick={() => {
+                    this.incrementBlock(googleWeight, googleChange)
+                  }}
                 >
                   <i id="Google" className="plus icon" />
                 </button>
@@ -153,4 +150,16 @@ class weighSources extends Component {
   }
 }
 
-export default weighSources
+const mapState = state => ({
+  yelpWeight: state.weighSourcesReducer.yelpWeight,
+  tripAdvisorWeight: state.weighSourcesReducer.tripAdvisorWeight,
+  googleWeight: state.weighSourcesReducer.googleWeight
+})
+
+const mapDispatch = dispatch => ({
+  yelpChange: value => dispatch(yelpChange(value)),
+  tripAdvisorChange: value => dispatch(tripAdvisorChange(value)),
+  googleChange: value => dispatch(googleChange(value))
+})
+
+export default connect(mapState, mapDispatch)(weighSources)
