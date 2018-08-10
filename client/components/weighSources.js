@@ -67,7 +67,7 @@ class weighSources extends Component {
                   className="ui button"
                   onClick={this.handleDecrement}
                 >
-                  <i className="minus icon" />
+                  <i id="Yelp" className="minus icon" />
                 </button>
                 <div
                   className="or"
@@ -79,7 +79,7 @@ class weighSources extends Component {
                   className="ui positive button"
                   onClick={this.handleIncrement}
                 >
-                  <i className="plus icon" />
+                  <i id="Yelp" className="plus icon" />
                 </button>
               </div>
             </div>
@@ -98,7 +98,7 @@ class weighSources extends Component {
                   className="ui button"
                   onClick={this.handleDecrement}
                 >
-                  <i className="minus icon" />
+                  <i id="Trip Advisor" className="minus icon" />
                 </button>
                 <div
                   className="or"
@@ -110,7 +110,7 @@ class weighSources extends Component {
                   className="ui positive button"
                   onClick={this.handleIncrement}
                 >
-                  <i className="plus icon" />
+                  <i id="Trip Advisor" className="plus icon" />
                 </button>
               </div>
             </div>
@@ -129,7 +129,7 @@ class weighSources extends Component {
                   className="ui button"
                   onClick={this.handleDecrement}
                 >
-                  <i className="minus icon" />
+                  <i id="Google" className="minus icon" />
                 </button>
                 <div
                   className="or"
@@ -141,7 +141,7 @@ class weighSources extends Component {
                   className="ui positive button"
                   onClick={this.handleIncrement}
                 >
-                  <i className="plus icon" />
+                  <i id="Google" className="plus icon" />
                 </button>
               </div>
             </div>
