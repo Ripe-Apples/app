@@ -93,137 +93,164 @@ async function seed() {
     Review.create({
       source: 'Yelp',
       rating: 3.5,
-      restaurantId: 9
+      restaurantId: 9,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/174/174882.svg'
     }),
     Review.create({
       source: 'Trip Advisor',
       rating: 4,
-      restaurantId: 9
+      restaurantId: 9,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/732/732253.svg'
     }),
     Review.create({
       source: 'Google',
       rating: 4.2,
-      restaurantId: 9
+      restaurantId: 9,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/281/281781.svg'
     }),
     Review.create({
       source: 'Google',
       rating: 4.5,
-      restaurantId: 8
+      restaurantId: 8,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/281/281781.svg'
     }),
     Review.create({
       source: 'Yelp',
       rating: 4,
-      restaurantId: 8
+      restaurantId: 8,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/174/174882.svg'
     }),
     Review.create({
       source: 'Trip Advisor',
       rating: 4,
-      restaurantId: 8
+      restaurantId: 8,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/732/732253.svg'
     }),
     Review.create({
       source: 'Google',
       rating: 4.4,
-      restaurantId: 7
+      restaurantId: 7,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/281/281781.svg'
     }),
     Review.create({
       source: 'Yelp',
       rating: 4,
-      restaurantId: 7
+      restaurantId: 7,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/174/174882.svg'
     }),
     Review.create({
       source: 'Trip Advisor',
       rating: 4,
-      restaurantId: 7
+      restaurantId: 7,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/732/732253.svg'
     }),
     Review.create({
       source: 'Yelp',
       rating: 4,
-      restaurantId: 6
+      restaurantId: 6,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/174/174882.svg'
     }),
     Review.create({
       source: 'Google',
       rating: 4.3,
-      restaurantId: 6
+      restaurantId: 6,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/281/281781.svg'
     }),
     Review.create({
       source: 'Trip Advisor',
       rating: 4,
-      restaurantId: 6
+      restaurantId: 6,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/732/732253.svg'
     }),
     Review.create({
       source: 'Trip Advisor',
       rating: 4.5,
-      restaurantId: 5
+      restaurantId: 5,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/732/732253.svg'
     }),
     Review.create({
       source: 'Yelp',
       rating: 3.5,
-      restaurantId: 5
+      restaurantId: 5,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/174/174882.svg'
     }),
     Review.create({
       source: 'Google',
       rating: 3.5,
-      restaurantId: 5
+      restaurantId: 5,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/281/281781.svg'
     }),
     Review.create({
       source: 'Google',
       rating: 4.3,
-      restaurantId: 4
+      restaurantId: 4,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/281/281781.svg'
     }),
     Review.create({
       source: 'Trip Advisor',
       rating: 4.5,
-      restaurantId: 4
+      restaurantId: 4,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/732/732253.svg'
     }),
     Review.create({
       source: 'Yelp',
       rating: 3.5,
-      restaurantId: 4
+      restaurantId: 4,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/174/174882.svg'
     }),
     Review.create({
       source: 'Yelp',
       rating: 4,
-      restaurantId: 3
+      restaurantId: 3,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/174/174882.svg'
     }),
     Review.create({
       source: 'Trip Advisor',
       rating: 4.5,
-      restaurantId: 3
+      restaurantId: 3,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/732/732253.svg'
     }),
     Review.create({
       source: 'Google',
       rating: 4.3,
-      restaurantId: 3
+      restaurantId: 3,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/281/281781.svg'
     }),
     Review.create({
       source: 'Google',
       rating: 4.5,
-      restaurantId: 2
+      restaurantId: 2,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/281/281781.svg'
     }),
     Review.create({
       source: 'Yelp',
       rating: 4,
-      restaurantId: 2
+      restaurantId: 2,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/174/174882.svg'
     }),
     Review.create({
       source: 'Trip Advisor',
       rating: 4.5,
-      restaurantId: 2
+      restaurantId: 2,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/732/732253.svg'
     }),
     Review.create({
       source: 'Trip Advisor',
       rating: 4.5,
-      restaurantId: 1
+      restaurantId: 1,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/732/732253.svg'
     }),
     Review.create({
       source: 'Google',
       rating: 4.5,
-      restaurantId: 1
+      restaurantId: 1,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/281/281781.svg'
     }),
     Review.create({
       source: 'Yelp',
       rating: 4,
-      restaurantId: 1
+      restaurantId: 1,
+      sourceLogo: 'https://image.flaticon.com/icons/svg/174/174882.svg'
     })
   ])
 

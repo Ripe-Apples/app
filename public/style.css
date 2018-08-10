@@ -26,8 +26,10 @@ form div {
 
 .card-image,
 .card-image > img {
+  width: 100% !important;
   height: 200px !important;
   object-fit: cover !important;
+  border-radius: 0.28571429rem;
 }
 
 .weigh-sources-flex {
@@ -43,4 +45,8 @@ form div {
 
 .right {
   text-align: right;
+}
+.sourceLogo {
+  height: 15px;
+  width: 15px;
 }
