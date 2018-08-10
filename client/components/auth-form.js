@@ -2,35 +2,37 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {Form, Button, Icon, Container} from 'semantic-ui-react'
 
 /**
  * COMPONENT
  */
 const AuthForm = props => {
-  const {name, displayName, handleSubmit, error} = props
+  const {displayName, handleSubmit, error} = props
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
+    <React.Fragment>
+      <Form onSubmit={handleSubmit}>
+        <div className="form-max-width">
+          <Form.Field>
+            <label htmlFor="email">Email</label>
+            <input name="email" type="text" />
+          </Form.Field>
+          <Form.Field>
+            <label htmlFor="password">Password</label>
+            <input name="password" type="password" />
+          </Form.Field>
         </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
+        <Button type="submit">{displayName}</Button>
         {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
-    </div>
+      </Form>
+      <div className="top-margin">
+        <Button href="/auth/google" color="google plus">
+          <Icon name="google" />
+          {displayName} with Google
+        </Button>
+      </div>
+    </React.Fragment>
   )
 }
 
