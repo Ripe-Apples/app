@@ -9,11 +9,9 @@ import {
 
 class weighSources extends Component {
   decrementBlock(val, callback, yelpWeight, tripAdvisorWeight, googleWeight) {
-    if (yelpWeight + tripAdvisorWeight + googleWeight > 1) {
-      if (val) {
-        val--
-        callback(val)
-      }
+    if (val && yelpWeight + tripAdvisorWeight + googleWeight > 1) {
+      val--
+      callback(val)
     }
   }
   incrementBlock(val, callback) {
@@ -29,19 +27,14 @@ class weighSources extends Component {
     const {yelpChange, tripAdvisorChange, googleChange} = this.props
 
     return (
-      <div>
-        <h3>Weigh Sources</h3>
-        <div className="ui form">
-          <div className="inline fields">
-            <div className="eight wide field" style={{textAlign: 'right'}}>
-              <label>Yelp</label>
-            </div>
-            <div className="eight wide field">
-              <div className="ui buttons">
-                <button
-                  id="Yelp"
-                  type="button"
-                  className="ui button"
+      <List>
+        <List.Header>Weigh Sources</List.Header>
+        <List.Item>
+          <div className="weigh-sources-flex">
+            <div className="item-flex">Yelp</div>
+            <div className="item-flex right">
+              <Button.Group>
+                <Button
                   onClick={() => {
                     this.decrementBlock(
                       yelpWeight,
@@ -52,34 +45,27 @@ class weighSources extends Component {
                     )
                   }}
                 >
-                  <i id="Yelp" className="minus icon" />
-                </button>
-                <div className="or" data-text={yelpWeight.toString()} />
-                <button
-                  id="Yelp"
-                  type="button"
-                  className="ui positive button"
+                  <Icon name="minus" />
+                </Button>
+                <Button.Or text={yelpWeight.toString()} />
+                <Button
+                  positive
                   onClick={() => {
                     this.incrementBlock(yelpWeight, yelpChange)
                   }}
                 >
-                  <i id="Yelp" className="plus icon" />
-                </button>
-              </div>
+                  <Icon name="plus" />
+                </Button>
+              </Button.Group>
             </div>
           </div>
-        </div>
-        <div className="ui form">
-          <div className="inline fields">
-            <div className="eight wide field">
-              <label>Trip Advisor</label>
-            </div>
-            <div className="eight wide field">
-              <div className="ui buttons">
-                <button
-                  id="Trip Advisor"
-                  type="button"
-                  className="ui button"
+        </List.Item>
+        <List.Item>
+          <div className="weigh-sources-flex">
+            <div className="item-flex">Trip Advisor</div>
+            <div className="item-flex right">
+              <Button.Group>
+                <Button
                   onClick={() => {
                     this.decrementBlock(
                       tripAdvisorWeight,
@@ -90,34 +76,27 @@ class weighSources extends Component {
                     )
                   }}
                 >
-                  <i id="Trip Advisor" className="minus icon" />
-                </button>
-                <div className="or" data-text={tripAdvisorWeight.toString()} />
-                <button
-                  id="Trip Advisor"
-                  type="button"
-                  className="ui positive button"
+                  <Icon name="minus" />
+                </Button>
+                <Button.Or text={tripAdvisorWeight.toString()} />
+                <Button
+                  positive
                   onClick={() => {
                     this.incrementBlock(tripAdvisorWeight, tripAdvisorChange)
                   }}
                 >
-                  <i id="Trip Advisor" className="plus icon" />
-                </button>
-              </div>
+                  <Icon name="plus" />
+                </Button>
+              </Button.Group>
             </div>
           </div>
-        </div>
-        <div className="ui form">
-          <div className="inline fields">
-            <div className="eight wide field">
-              <label>Google</label>
-            </div>
-            <div className="eight wide field">
-              <div className="ui buttons">
-                <button
-                  id="Google"
-                  type="button"
-                  className="ui button"
+        </List.Item>
+        <List.Item>
+          <div className="weigh-sources-flex">
+            <div className="item-flex">Google</div>
+            <div className="item-flex right">
+              <Button.Group>
+                <Button
                   onClick={() => {
                     this.decrementBlock(
                       googleWeight,
@@ -128,24 +107,22 @@ class weighSources extends Component {
                     )
                   }}
                 >
-                  <i id="Google" className="minus icon" />
-                </button>
-                <div className="or" data-text={googleWeight.toString()} />
-                <button
-                  id="Google"
-                  type="button"
-                  className="ui positive button"
+                  <Icon name="minus" />
+                </Button>
+                <Button.Or text={googleWeight.toString()} />
+                <Button
+                  positive
                   onClick={() => {
                     this.incrementBlock(googleWeight, googleChange)
                   }}
                 >
-                  <i id="Google" className="plus icon" />
-                </button>
-              </div>
+                  <Icon name="plus" />
+                </Button>
+              </Button.Group>
             </div>
           </div>
-        </div>
-      </div>
+        </List.Item>
+      </List>
     )
   }
 }

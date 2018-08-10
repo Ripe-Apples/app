@@ -50,7 +50,14 @@ class RestaurantList extends Component {
 
   render() {
     let {restaurants} = this.props
-    const {price, cuisine, location} = this.props
+    const {
+      price,
+      cuisine,
+      location,
+      yelpWeight,
+      tripAdvisorWeight,
+      googleWeight
+    } = this.props
 
     restaurants =
       price === ''
