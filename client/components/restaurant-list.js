@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchRestaurants} from '../store/restaurant'
 import RestaurantCard from './restaurant-card'
-import {Input} from 'semantic-ui-react'
+import {Input, Grid} from 'semantic-ui-react'
 
 class RestaurantList extends Component {
   constructor() {
@@ -58,14 +58,18 @@ class RestaurantList extends Component {
 
     return (
       <div>
-        <div>
-          <Input
-            onChange={this.handleChange}
-            icon="search"
-            placeholder="Search..."
-          />
-          <h1>Restaurants</h1>
-        </div>
+        <Grid>
+          <Grid.Column width={8} floated="left">
+            <h1>Restaurants</h1>
+          </Grid.Column>
+          <Grid.Column width={8} floated="right" textAlign="right">
+            <Input
+              onChange={this.handleChange}
+              icon="search"
+              placeholder="Search..."
+            />
+          </Grid.Column>
+        </Grid>
         <div className="ui cards">
           {restaurantsArray
             .sort(
