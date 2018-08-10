@@ -49,12 +49,27 @@ class RestaurantList extends Component {
   }
 
   render() {
-    const {
-      restaurants,
-      yelpWeight,
-      tripAdvisorWeight,
-      googleWeight
-    } = this.props
+    let {restaurants} = this.props
+    const {price, cuisine, location} = this.props
+
+    restaurants =
+      price === ''
+        ? restaurants
+        : restaurants.filter(restaurant => {
+            return restaurant.expenseRating === price
+          })
+    restaurants =
+      cuisine === ''
+        ? restaurants
+        : restaurants.filter(restaurant => {
+            return restaurant.cuisineType === cuisine
+          })
+    restaurants =
+      location === ''
+        ? restaurants
+        : restaurants.filter(restaurant => {
+            return restaurant.location === location
+          })
 
     restaurants.forEach(restaurant => {
       restaurant.score = this.restaurantScore(
@@ -108,6 +123,9 @@ class RestaurantList extends Component {
 
 const mapState = state => ({
   restaurants: state.restaurantReducer.restaurants,
+  price: state.filtersReducer.price,
+  cuisine: state.filtersReducer.cuisine,
+  location: state.filtersReducer.location,
   yelpWeight: state.weighSourcesReducer.yelpWeight,
   tripAdvisorWeight: state.weighSourcesReducer.tripAdvisorWeight,
   googleWeight: state.weighSourcesReducer.googleWeight
