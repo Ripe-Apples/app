@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {Popup, Card, Image} from 'semantic-ui-react'
+import {Popup, Card, Image, Label} from 'semantic-ui-react'
 
 const RestaurantCard = props => {
   const restaurant = props.restaurant
@@ -9,6 +9,17 @@ const RestaurantCard = props => {
   const dollarSignHelper = expenseRating => {
     return '$'.repeat(expenseRating)
   }
+  const labelColor = score => {
+    if (score >= 80) {
+      return 'green'
+    } else if (score >= 50) {
+      return 'yellow'
+    } else {
+      return 'red'
+    }
+  }
+
+  let color = labelColor(restaurant.score)
 
   return (
     <Card>
@@ -18,7 +29,11 @@ const RestaurantCard = props => {
       <Card.Content>
         <Card.Header>
           {restaurant.name}
-          <span className="right floated">{restaurant.score}%</span>
+          <span className="right floated">
+            <Label color={color} key={color}>
+              {restaurant.score}%
+            </Label>
+          </span>
         </Card.Header>
         <Card.Meta>{restaurant.location}</Card.Meta>
         <Card.Description>
