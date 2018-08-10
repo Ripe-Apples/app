@@ -50,6 +50,9 @@ nav a {
   border-radius: 0px;
 }
 
+.reset > button {
+  margin: 0px !important;
+}
 .top-margin {
   margin-top: 1em;
 }
@@ -58,8 +61,3 @@ nav a {
   max-width: 400px;
   margin-bottom: 1em;
 }
-
-/* .auth-form {
-  width: '100%';
-  margin: '0px';
-} */
