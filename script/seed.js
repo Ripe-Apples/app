@@ -124,7 +124,7 @@ async function seed() {
       source: 'Trip Advisor',
       rating: 4,
       restaurantId: 8,
-      sourceLogo: 'https://image.flaticon.com/icons/svg/174/174882.svg'
+      sourceLogo: 'https://image.flaticon.com/icons/svg/732/732253.svg'
     }),
     Review.create({
       source: 'Google',

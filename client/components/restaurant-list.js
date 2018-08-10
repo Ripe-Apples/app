@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchRestaurants} from '../store/restaurant'
-import RestaurantCard from './restaurantCard'
+import RestaurantCard from './restaurant-card'
 import {Input} from 'semantic-ui-react'
 
 class RestaurantList extends Component {
@@ -16,19 +16,42 @@ class RestaurantList extends Component {
   componentDidMount() {
     this.props.fetchRestaurants()
   }
+  restaurantScore = reviews => {
+    return Math.round(
+      reviews
+        .map(review => {
+          if (review.source === 'Yelp') {
+            return review.rating / 5
+          } else if (review.source === 'Trip Advisor') {
+            return review.rating / 5
+          } else {
+            return review.rating / 5
+          }
+        })
+        .reduce((accum, currentVal) => accum + currentVal, 0) /
+        reviews.length *
+        100,
+      0
+    )
+  }
 
   handleChange(event) {
     this.setState({searchValue: event.target.value})
   }
 
   render() {
+    const restaurants = this.props.restaurants
+    restaurants.forEach(restaurant => {
+      restaurant.score = this.restaurantScore(restaurant.reviews)
+      console.log(restaurant.score)
+    })
     let restaurantsArray
     const lowercaseSearchValue = this.state.searchValue.toLowerCase()
 
     if (this.state.searchValue === '') {
-      restaurantsArray = this.props.restaurants
+      restaurantsArray = restaurants
     } else {
-      restaurantsArray = this.props.restaurants.filter(restaurant => {
+      restaurantsArray = restaurants.filter(restaurant => {
         return restaurant.name.toLowerCase().includes(lowercaseSearchValue)
       })
     }
@@ -44,11 +67,16 @@ class RestaurantList extends Component {
           <h1>Restaurants</h1>
         </div>
         <div className="ui cards">
-          {restaurantsArray.map(restaurant => {
-            return (
-              <RestaurantCard restaurant={restaurant} key={restaurant.id} />
+          {restaurantsArray
+            .sort(
+              (restaurant1, restaurant2) =>
+                restaurant2.score - restaurant1.score
             )
-          })}
+            .map(restaurant => {
+              return (
+                <RestaurantCard restaurant={restaurant} key={restaurant.id} />
+              )
+            })}
         </div>
       </div>
     )

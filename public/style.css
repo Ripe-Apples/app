@@ -26,10 +26,26 @@ form div {
 
 .card-image,
 .card-image > img {
+  width: 100% !important;
   height: 200px !important;
   object-fit: cover !important;
+  border-radius: 0.28571429rem;
 }
 
+.weigh-sources-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0.125em 0;
+}
+
+.weigh-sources-flex > .item-flex {
+  flex-grow: 1;
+}
+
+.right {
+  text-align: right;
+}
 .sourceLogo {
   height: 15px;
   width: 15px;

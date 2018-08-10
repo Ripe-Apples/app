@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {List, Button, Icon} from 'semantic-ui-react'
 
 class weighSources extends Component {
   constructor() {

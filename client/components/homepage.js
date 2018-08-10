@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import Restaurant from './restaurant'
+import Restaurant from './restaurant-list'
 import Options from './options'
 
 const Homepage = () => (
