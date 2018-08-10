@@ -16,16 +16,25 @@ class RestaurantList extends Component {
   componentDidMount() {
     this.props.fetchRestaurants()
   }
-  restaurantScore = reviews => {
+
+  restaurantScore = (reviews, yelpWeight, tripAdvisorWeight, googleWeight) => {
+    const totalWeight = yelpWeight + tripAdvisorWeight + googleWeight
+
+    function weighter(sourceWeight, review) {
+      const weight = sourceWeight / totalWeight * 3
+      const rating = review.rating / 5
+      return weight * rating
+    }
+
     return Math.round(
       reviews
         .map(review => {
           if (review.source === 'Yelp') {
-            return review.rating / 5
+            return weighter(yelpWeight, review)
           } else if (review.source === 'Trip Advisor') {
-            return review.rating / 5
-          } else {
-            return review.rating / 5
+            return weighter(tripAdvisorWeight, review)
+          } else if (review.source === 'Google') {
+            return weighter(googleWeight, review)
           }
         })
         .reduce((accum, currentVal) => accum + currentVal, 0) /
@@ -40,10 +49,20 @@ class RestaurantList extends Component {
   }
 
   render() {
-    const restaurants = this.props.restaurants
+    const {
+      restaurants,
+      yelpWeight,
+      tripAdvisorWeight,
+      googleWeight
+    } = this.props
+
     restaurants.forEach(restaurant => {
-      restaurant.score = this.restaurantScore(restaurant.reviews)
-      console.log(restaurant.score)
+      restaurant.score = this.restaurantScore(
+        restaurant.reviews,
+        yelpWeight,
+        tripAdvisorWeight,
+        googleWeight
+      )
     })
     let restaurantsArray
     const lowercaseSearchValue = this.state.searchValue.toLowerCase()
@@ -88,7 +107,10 @@ class RestaurantList extends Component {
 }
 
 const mapState = state => ({
-  restaurants: state.restaurantReducer.restaurants
+  restaurants: state.restaurantReducer.restaurants,
+  yelpWeight: state.weighSourcesReducer.yelpWeight,
+  tripAdvisorWeight: state.weighSourcesReducer.tripAdvisorWeight,
+  googleWeight: state.weighSourcesReducer.googleWeight
 })
 
 const mapDispatch = dispatch => ({
