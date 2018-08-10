@@ -19,11 +19,6 @@ nav a {
   margin: 1em;
 }
 
-form div {
-  margin: 1em;
-  display: inline-block;
-}
-
 .card-image,
 .card-image > img {
   width: 100% !important;
@@ -57,4 +52,12 @@ form div {
 
 .reset > button {
   margin: 0px !important;
+}
+.top-margin {
+  margin-top: 1em;
+}
+
+.form-max-width {
+  max-width: 400px;
+  margin-bottom: 1em;
 }

@@ -35,10 +35,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         // The navbar will show these links before you log in
         <React.Fragment>
           <Menu.Item>
-            <Link to="/login">Login</Link>
-          </Menu.Item>
-          <Menu.Item>
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/auth">Sign Up / Login</Link>
           </Menu.Item>
         </React.Fragment>
       )}
