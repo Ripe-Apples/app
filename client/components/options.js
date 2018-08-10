@@ -2,12 +2,23 @@ import React from 'react'
 import {connect} from 'react-redux'
 import WeighSources from './weigh-sources'
 import Filter from './filter'
-import {Header, List} from 'semantic-ui-react'
+import {Header, List, Button} from 'semantic-ui-react'
 
 const Options = () => (
-  <React.Fragment>
-    <Header as="h1">Advanced Options</Header>
+  <div>
     <List>
+      <List.Item>
+        <div className="weigh-sources-flex">
+          <Header as="h1">Advanced Options</Header>
+          <div className="item-flex right">
+            <div className="reset">
+              <Button size="tiny" negative type="submit">
+                Reset
+              </Button>
+            </div>
+          </div>
+        </div>
+      </List.Item>
       <List.Item>
         <WeighSources />
       </List.Item>
@@ -15,11 +26,7 @@ const Options = () => (
         <Filter />
       </List.Item>
     </List>
-  </React.Fragment>
+  </div>
 )
-
-const mapState = state => {}
-
-const mapDispatch = dispatch => {}
 
 export default connect()(Options)

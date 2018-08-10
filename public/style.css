@@ -54,3 +54,7 @@ form div {
 .top-menu > .menu {
   border-radius: 0px;
 }
+
+.reset > button {
+  margin: 0px !important;
+}
