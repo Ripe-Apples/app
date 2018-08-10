@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom'
 import RestaurantList from './restaurant-list'
 
 const Restaurant = () => (
-  // <React.Fragment>
   <div>
     <RestaurantList />
   </div>
