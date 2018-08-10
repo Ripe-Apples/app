@@ -6,7 +6,6 @@ import Filter from './filter'
 const Options = () => (
   <React.Fragment>
     <h1>Advanced Options</h1>
-
     <WeighSources />
     <Filter />
   </React.Fragment>
