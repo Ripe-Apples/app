@@ -1,6 +1,7 @@
 const CHANGE_PRICE = 'CHANGE_PRICE'
 const CHANGE_CUISINE = 'CHANGE_CUISINE'
 const CHANGE_LOCATION = 'CHANGE_LOCATION'
+const RESET = 'RESET'
 
 export const changePrice = price => ({
   type: CHANGE_PRICE,
@@ -15,6 +16,10 @@ export const changeCuisine = cuisine => ({
 export const changeLocation = location => ({
   type: CHANGE_LOCATION,
   payload: location
+})
+
+export const reset = () => ({
+  type: RESET
 })
 
 const initalState = {
@@ -40,6 +45,8 @@ const filtersReducer = (state = initalState, action) => {
         ...state,
         location: action.payload
       }
+    case RESET:
+      return initalState
     default:
       return state
   }
