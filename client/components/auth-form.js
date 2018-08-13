@@ -8,11 +8,11 @@ import {Form, Button, Icon, Container} from 'semantic-ui-react'
  * COMPONENT
  */
 const AuthForm = props => {
-  const {displayName, handleSubmit, error} = props
+  const {name, displayName, handleSubmit, error} = props
 
   return (
     <React.Fragment>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} name={name}>
         <div className="form-max-width">
           <Form.Field>
             <label htmlFor="email">Email</label>

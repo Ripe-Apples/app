@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {Menu, Grid} from 'semantic-ui-react'
+import {Menu, Grid, MenuItem} from 'semantic-ui-react'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn, userEmail}) => (
   <div className="top-menu">
     <Menu stackable inverted color="orange">
       <Menu.Item>
@@ -26,11 +26,14 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       </Menu.Item>
       {isLoggedIn ? (
         // The navbar will show these links after you log in
-        <Menu.Item>
-          <Link href="#" onClick={handleClick}>
-            Logout
-          </Link>
-        </Menu.Item>
+        <React.Fragment>
+          <Menu.Item>
+            <Link to="#" onClick={handleClick}>
+              Logout
+            </Link>
+          </Menu.Item>
+          <MenuItem>Logged in as: {userEmail}</MenuItem>
+        </React.Fragment>
       ) : (
         // The navbar will show these links before you log in
         <React.Fragment>
@@ -48,7 +51,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    userEmail: state.user.email
   }
 }
 
