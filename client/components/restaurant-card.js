@@ -1,12 +1,10 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {Popup, Card, Image, Label} from 'semantic-ui-react'
 
 const RestaurantCard = props => {
   const restaurant = props.restaurant
   const reviews = restaurant.reviews
   const dollarSignHelper = expenseRating => {
+    if (expenseRating === 0) return 'No Expense Rating Yet'
     return '$'.repeat(expenseRating)
   }
   const labelColor = score => {
@@ -37,7 +35,8 @@ const RestaurantCard = props => {
         </Card.Header>
         <Card.Meta>{restaurant.location}</Card.Meta>
         <Card.Description>
-          {dollarSignHelper(restaurant.expenseRating)}, {restaurant.cuisineType}
+          {dollarSignHelper(restaurant.expenseRating)},{' '}
+          {restaurant.cuisineType[0].title}
           <span className="right floated">
             <Popup trigger={<a>View Sources</a>} wide="very">
               {reviews.map(review => (
