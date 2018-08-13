@@ -46,7 +46,7 @@ const filtersReducer = (state = initalState, action) => {
         location: action.payload
       }
     case RESET:
-      return initalState
+      return {...state, price: '', cuisine: '', location: ''}
     default:
       return state
   }
