@@ -55,6 +55,7 @@ class filter extends Component {
       {text: steakhouse, value: steakhouse}
     ]
     const location = [{text: 'All', value: ''}, {text: newYork, value: newYork}]
+
     return (
       <React.Fragment>
         <List>
@@ -66,8 +67,10 @@ class filter extends Component {
               selection
               options={prices}
               onChange={this.handlePriceChange}
+              value={this.props.price}
             />
           </List.Item>
+
           <ListItem>
             <Dropdown
               placeholder="Cuisine"
@@ -75,6 +78,7 @@ class filter extends Component {
               selection
               options={cuisine}
               onChange={this.handleCuisineChange}
+              value={this.props.cuisine}
             />
           </ListItem>
           <ListItem>
@@ -84,6 +88,7 @@ class filter extends Component {
               selection
               options={location}
               onChange={this.handleLocationChange}
+              value={this.props.location}
             />
           </ListItem>
         </List>
@@ -92,10 +97,16 @@ class filter extends Component {
   }
 }
 
+const mapState = state => ({
+  price: state.filtersReducer.price,
+  cuisine: state.filtersReducer.cuisine,
+  location: state.filtersReducer.location
+})
+
 const mapDispatch = dispatch => ({
   changePrice: price => dispatch(changePrice(price)),
   changeCuisine: cuisine => dispatch(changeCuisine(cuisine)),
   changeLocation: location => dispatch(changeLocation(location))
 })
 
-export default connect(null, mapDispatch)(filter)
+export default connect(mapState, mapDispatch)(filter)

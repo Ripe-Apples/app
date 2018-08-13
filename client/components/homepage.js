@@ -21,8 +21,4 @@ const Homepage = () => (
  * CONTAINER
  */
 
-const mapState = state => {}
-
-const mapDispatch = dispatch => {}
-
 export default connect()(Homepage)
