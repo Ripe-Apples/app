@@ -1,5 +1,7 @@
 import React from 'react'
 import {Popup, Card, Image, Label} from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
+
 
 const RestaurantCard = props => {
   const restaurant = props.restaurant
@@ -21,6 +23,8 @@ const RestaurantCard = props => {
   let color = labelColor(restaurant.score)
 
   return (
+    <Link to={`/restaurant/${restaurant.id}`}>
+    <div>
     <Card>
       <div className="card-image">
         <Image src={restaurant.imageUrl} />
@@ -54,6 +58,8 @@ const RestaurantCard = props => {
         </Card.Description>
       </Card.Content>
     </Card>
+    </div>
+    </Link>
   )
 }
 
