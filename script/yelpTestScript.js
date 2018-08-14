@@ -39,7 +39,6 @@ async function createYelpRestaurants() {
     const location = restaurant.location.display_address.join(', ')
 
     let expenseRating = restaurant.price ? restaurant.price.length : 0
-
     return {
       name: restaurant.name,
       cuisineType: restaurant.categories,
