@@ -10,7 +10,7 @@ async function zomatoRestaurants() {
       }
     }
   )
-  console.log(Array.from(data.restaurants)[0])
+  console.log(Array.from(data.restaurants))
 }
 
 console.log(zomatoRestaurants())
