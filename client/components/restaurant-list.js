@@ -2,19 +2,26 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchRestaurants} from '../store/restaurant'
 import RestaurantCard from './restaurant-card'
-import {Input, Grid} from 'semantic-ui-react'
+import {Input, Grid, Pagination} from 'semantic-ui-react'
 
 class RestaurantList extends Component {
   constructor() {
     super()
     this.state = {
-      searchValue: ''
+      searchValue: '',
+      restaurants: []
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handlePageChange = this.handlePageChange.bind(this)
   }
 
-  componentDidMount() {
-    this.props.fetchRestaurants()
+  async componentDidMount() {
+    await this.props.fetchRestaurants()
+
+    // when the page first loads, load the first page
+    this.setState({
+      restaurants: this.props.restaurants.slice(0, 9)
+    })
   }
 
   restaurantScore = (reviews, yelpWeight, tripAdvisorWeight, googleWeight) => {
@@ -48,8 +55,19 @@ class RestaurantList extends Component {
     this.setState({searchValue: event.target.value})
   }
 
+  handlePageChange(event) {
+    const perPage = 9
+    const startIndex =
+      (parseInt(event.target.getAttribute('value'), 10) - 1) * perPage
+    const endIndex = startIndex + perPage
+
+    this.setState({
+      restaurants: this.props.restaurants.slice(startIndex, endIndex)
+    })
+  }
+
   render() {
-    let {restaurants} = this.props
+    let {restaurants} = this.state
     const {
       price,
       cuisine,
@@ -60,22 +78,14 @@ class RestaurantList extends Component {
     } = this.props
 
     restaurants =
-      price === ''
+      price === '' && cuisine === '' && location === ''
         ? restaurants
         : restaurants.filter(restaurant => {
-            return restaurant.expenseRating === price
-          })
-    restaurants =
-      cuisine === ''
-        ? restaurants
-        : restaurants.filter(restaurant => {
-            return restaurant.cuisineType === cuisine
-          })
-    restaurants =
-      location === ''
-        ? restaurants
-        : restaurants.filter(restaurant => {
-            return restaurant.location === location
+            return (
+              (restaurant.expenseRating === price || price === '') &&
+              (restaurant.cuisineType[0].title === cuisine || cuisine === '') &&
+              (restaurant.location === location || location === '')
+            )
           })
 
     restaurants.forEach(restaurant => {
@@ -97,6 +107,10 @@ class RestaurantList extends Component {
       })
     }
 
+    const totalRestaurants = 1000
+    const perPage = 9
+    const pages = Math.ceil(totalRestaurants / perPage)
+
     return (
       <div>
         <Grid>
@@ -111,6 +125,13 @@ class RestaurantList extends Component {
             />
           </Grid.Column>
         </Grid>
+
+        <Pagination
+          defaultActivePage={1}
+          totalPages={pages}
+          onClick={this.handlePageChange}
+        />
+
         <div className="ui cards">
           {restaurantsArray
             .sort(
