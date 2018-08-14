@@ -6,13 +6,16 @@ const apiRoute = 'https://maps.googleapis.com/maps/api/place/details/json?placei
 
 const apiRoute2 = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+New+York&key='
 
-async function getGoogleRestaurants (route, key) {
-  const res = await axios.get(route + key)
+async function getGoogleRestaurants (key) {
+  // const res = await axios.get(route + key)
+
+  const res = await axios.get(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Junzi%20Kitchen&inputtype=textquery&fields=name,rating&key=${key}`)
+
   console.log(res.data)
 }
 
 
-const googleRestaurants = getGoogleRestaurants(apiRoute2, key4)
+const googleRestaurants = getGoogleRestaurants(key4)
 
 console.log(googleRestaurants.length)
 

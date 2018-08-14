@@ -41,7 +41,7 @@ async function getGooglerestaurants() {
     let convertedName = restaurant.name.split(' ').join('%20');
 
     //this gets a single restaurant from google but will be repeated for each restaurant in yelp
-    const res = await axios.get(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${convertedName}&inputtype=textquery&fields=name,rating&key=${googleKey5}`)
+    const res = await axios.get(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${convertedName}&inputtype=textquery&fields=name,rating&key=AIzaSyAepzOU1K--7C2KRvrxdPTFN6p7JXTKCOU`)
 
     return res.data;
   }
