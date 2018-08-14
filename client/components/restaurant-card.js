@@ -1,3 +1,4 @@
+import React from 'react'
 import {Popup, Card, Image, Label} from 'semantic-ui-react'
 
 const RestaurantCard = props => {
