@@ -63,7 +63,7 @@ async function fetchRestaurants() {
   }
 }
 
-async function createDdRestaurantObj() {
+async function createDbRestaurantObj() {
   try {
     const restaurants = await fetchRestaurants()
     let restaurantObj = {}
@@ -83,7 +83,7 @@ async function createDdRestaurantObj() {
 async function mergeData() {
   try {
     const zomatoRestaurants = await createZomatoRestaurantObj()
-    const dbRestaurants = await createDdRestaurantObj()
+    const dbRestaurants = await createDbRestaurantObj()
     let reviewsForCreate = []
     zomatoRestaurants.forEach(restaurant => {
       if (dbRestaurants[restaurant.name]) {
