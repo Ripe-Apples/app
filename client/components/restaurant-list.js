@@ -125,6 +125,7 @@ class RestaurantList extends Component {
             />
           </Grid.Column>
         </Grid>
+        <Divider hidden />
         <Pagination
           defaultActivePage={1}
           totalPages={pages}
