@@ -1,12 +1,16 @@
 'use strict'
 
 const axios = require('axios')
-const {zomatoApiKey} = require('../secrets')
+let {zomatoApiKey} = require('../secrets')
 const db = require('../server/db')
 const {Restaurant, Review} = require('../server/db/models')
 
 const iconUrl =
   'https://images-na.ssl-images-amazon.com/images/I/21Wc%2BuzZURL._SY355_.png'
+
+if (!zomatoApiKey) {
+  zomatoApiKey = process.env.zomatoApiKey
+}
 
 async function getZomatoRestaurants(start) {
   try {

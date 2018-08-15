@@ -1,9 +1,13 @@
 'use strict'
 
 const axios = require('axios')
-const {yelpApiKey} = require('../secrets')
+let {yelpApiKey} = require('../secrets')
 const db = require('../server/db')
 const {Restaurant, Review} = require('../server/db/models')
+
+if (!yelpApiKey) {
+  yelpApiKey = process.env.yelpApiKey
+}
 
 const iconUrl = 'https://image.flaticon.com/icons/svg/174/174882.svg'
 
