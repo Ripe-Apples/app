@@ -1,10 +1,29 @@
 import axios from 'axios'
 
-const GET_RESTAURANTS = 'GET_RESTAURANTS';
-const GET_SINGLE_RESTAURANT = 'GET_SINGLE_RESTAURANT';
+const GET_RESTAURANTS = 'GET_RESTAURANTS'
+const CHANGE_FILTERED_RESTAURANTS = 'GET_FILTERED_RESTAURANTS'
+const CHANGE_RESTAURANTS_ON_CURRENT_PAGE = 'CHANGE_RESTAURANTS_ON_CURRENT_PAGE'
+const GET_SINGLE_RESTAURANT = 'GET_SINGLE_RESTAURANT'
 
-const getRestaurants = restaurants => ({ type: GET_RESTAURANTS, payload: restaurants });
-const getSingleRestaurant = singleRestaurant => ({ type: GET_SINGLE_RESTAURANT, payload: singleRestaurant });
+const getRestaurants = restaurants => ({
+  type: GET_RESTAURANTS,
+  payload: restaurants
+})
+
+export const changeFilteredRestaurants = filteredRestaurants => ({
+  type: CHANGE_FILTERED_RESTAURANTS,
+  payload: filteredRestaurants
+})
+
+export const changeRestaurantsOnCurrentPage = restaurants => ({
+  type: CHANGE_RESTAURANTS_ON_CURRENT_PAGE,
+  payload: restaurants
+})
+
+const getSingleRestaurant = singleRestaurant => ({
+  type: GET_SINGLE_RESTAURANT,
+  payload: singleRestaurant
+})
 
 export const fetchRestaurants = () => {
   return async dispatch => {
@@ -20,8 +39,10 @@ export const fetchSingleRestaurant = restaurantId => async dispatch => {
 
 const initalState = {
   restaurants: [],
+  filteredRestaurants: [],
+  restaurantsOnCurrentPage: [],
   singleRestaurant: {}
-};
+}
 
 const restaurantReducer = (state = initalState, action) => {
   switch (action.type) {
@@ -30,11 +51,21 @@ const restaurantReducer = (state = initalState, action) => {
         ...state,
         restaurants: action.payload
       }
-      case GET_SINGLE_RESTAURANT:
-        return {
-          ...state,
-          singleRestaurant: action.payload
-        }
+    case CHANGE_FILTERED_RESTAURANTS:
+      return {
+        ...state,
+        filteredRestaurants: action.payload
+      }
+    case CHANGE_RESTAURANTS_ON_CURRENT_PAGE:
+      return {
+        ...state,
+        restaurantsOnCurrentPage: action.payload
+      }
+    case GET_SINGLE_RESTAURANT:
+      return {
+        ...state,
+        singleRestaurant: action.payload
+      }
     default:
       return state
   }

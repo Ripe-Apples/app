@@ -1,6 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchRestaurants} from '../store/restaurant'
+import {
+  fetchRestaurants,
+  changeFilteredRestaurants,
+  changeRestaurantsOnCurrentPage
+} from '../store/restaurant'
 import RestaurantCard from './restaurant-card'
 import {Input, Grid, Pagination, Card, Divider} from 'semantic-ui-react'
 
@@ -8,8 +12,7 @@ class RestaurantList extends Component {
   constructor() {
     super()
     this.state = {
-      searchValue: '',
-      restaurants: []
+      searchValue: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
@@ -17,11 +20,10 @@ class RestaurantList extends Component {
 
   async componentDidMount() {
     await this.props.fetchRestaurants()
-
-    // when the page first loads, load the first page
-    this.setState({
-      restaurants: this.props.restaurants.slice(0, 9)
-    })
+    await this.props.changeFilteredRestaurants(this.props.restaurants)
+    await this.props.changeRestaurantsOnCurrentPage(
+      this.props.filteredRestaurants.slice(0, 9)
+    )
   }
 
   restaurantScore = (reviews, yelpWeight, tripAdvisorWeight, googleWeight) => {
@@ -55,38 +57,20 @@ class RestaurantList extends Component {
     this.setState({searchValue: event.target.value})
   }
 
-  handlePageChange(event) {
+  async handlePageChange(event) {
     const perPage = 9
     const startIndex =
       (parseInt(event.target.getAttribute('value'), 10) - 1) * perPage
     const endIndex = startIndex + perPage
 
-    this.setState({
-      restaurants: this.props.restaurants.slice(startIndex, endIndex)
-    })
+    await this.props.changeRestaurantsOnCurrentPage(
+      this.props.filteredRestaurants.slice(startIndex, endIndex)
+    )
   }
 
   render() {
-    let {restaurants} = this.state
-    const {
-      price,
-      cuisine,
-      location,
-      yelpWeight,
-      tripAdvisorWeight,
-      googleWeight
-    } = this.props
-
-    restaurants =
-      price === '' && cuisine === '' && location === ''
-        ? restaurants
-        : restaurants.filter(restaurant => {
-            return (
-              (restaurant.expenseRating === price || price === '') &&
-              (restaurant.cuisineType[0].title === cuisine || cuisine === '') &&
-              (restaurant.location === location || location === '')
-            )
-          })
+    let restaurants = this.props.restaurantsOnCurrentPage
+    const {yelpWeight, tripAdvisorWeight, googleWeight} = this.props
 
     restaurants.forEach(restaurant => {
       restaurant.score = this.restaurantScore(
@@ -107,12 +91,12 @@ class RestaurantList extends Component {
       })
     }
 
-    const totalRestaurants = 1000
+    const totalRestaurants = this.props.filteredRestaurants.length
     const perPage = 9
     const pages = Math.ceil(totalRestaurants / perPage)
 
     return (
-      <div>
+      <React.Fragment>
         <Grid>
           <Grid.Column width={8} floated="left">
             <h1>Restaurants</h1>
@@ -125,15 +109,14 @@ class RestaurantList extends Component {
             />
           </Grid.Column>
         </Grid>
-
+        <Divider hidden />
         <Pagination
           defaultActivePage={1}
           totalPages={pages}
           onClick={this.handlePageChange}
         />
-        <Divider hidden/>
-
-        <div className="ui cards">
+        <Divider hidden />
+        <Card.Group>
           {restaurantsArray
             .sort(
               (restaurant1, restaurant2) =>
@@ -141,19 +124,19 @@ class RestaurantList extends Component {
             )
             .map(restaurant => {
               return (
-                <RestaurantCard 
-                restaurant={restaurant} key={restaurant.id}
-               />
+                <RestaurantCard restaurant={restaurant} key={restaurant.id} />
               )
             })}
-        </div>
-      </div>
+        </Card.Group>
+      </React.Fragment>
     )
   }
 }
 
 const mapState = state => ({
   restaurants: state.restaurantReducer.restaurants,
+  filteredRestaurants: state.restaurantReducer.filteredRestaurants,
+  restaurantsOnCurrentPage: state.restaurantReducer.restaurantsOnCurrentPage,
   price: state.filtersReducer.price,
   cuisine: state.filtersReducer.cuisine,
   location: state.filtersReducer.location,
@@ -163,7 +146,11 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  fetchRestaurants: () => dispatch(fetchRestaurants())
+  fetchRestaurants: () => dispatch(fetchRestaurants()),
+  changeFilteredRestaurants: filteredRestaurants =>
+    dispatch(changeFilteredRestaurants(filteredRestaurants)),
+  changeRestaurantsOnCurrentPage: restaurants =>
+    dispatch(changeRestaurantsOnCurrentPage(restaurants))
 })
 
 export default connect(mapState, mapDispatch)(RestaurantList)
