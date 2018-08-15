@@ -61,3 +61,16 @@ nav a {
   max-width: 400px;
   margin-bottom: 1em;
 }
+
+.map-logo {
+  height: 20px;
+  width: 20px;
+}
+
+.cheap {
+  color: green;
+}
+
+.expensive {
+  color: red;
+}
