@@ -62,6 +62,19 @@ nav a {
   margin-bottom: 1em;
 }
 
+.map-logo {
+  height: 20px;
+  width: 20px;
+}
+
+.cheap {
+  color: green;
+}
+
+.expensive {
+  color: red;
+}
+
 .no-margin > i {
   margin: 0px !important;
 }
