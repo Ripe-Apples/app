@@ -2,7 +2,10 @@ import React, {Component} from 'react'
 import {List, Dropdown, ListItem} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {changePrice, changeCuisine, changeLocation} from '../store/filters.js'
-import {changeFilteredRestaurants} from '../store/restaurant'
+import {
+  changeFilteredRestaurants,
+  changeRestaurantsOnCurrentPage
+} from '../store/restaurant'
 
 class filter extends Component {
   constructor() {
@@ -17,16 +20,25 @@ class filter extends Component {
     const price = value
     await this.props.changePrice(price)
     await this.filterRestaurants()
+    await this.props.changeRestaurantsOnCurrentPage(
+      this.props.filteredRestaurants.slice(0, 9)
+    )
   }
   async handleCuisineChange(event, {value}) {
     const cuisine = value
     await this.props.changeCuisine(cuisine)
     await this.filterRestaurants()
+    await this.props.changeRestaurantsOnCurrentPage(
+      this.props.filteredRestaurants.slice(0, 9)
+    )
   }
   async handleLocationChange(event, {value}) {
     const location = value
     await this.props.changeLocation(location)
     await this.filterRestaurants()
+    await this.props.changeRestaurantsOnCurrentPage(
+      this.props.filteredRestaurants.slice(0, 9)
+    )
   }
 
   async filterRestaurants() {
@@ -124,7 +136,8 @@ const mapState = state => ({
   price: state.filtersReducer.price,
   cuisine: state.filtersReducer.cuisine,
   location: state.filtersReducer.location,
-  restaurants: state.restaurantReducer.restaurants
+  restaurants: state.restaurantReducer.restaurants,
+  filteredRestaurants: state.restaurantReducer.filteredRestaurants
 })
 
 const mapDispatch = dispatch => ({
@@ -132,7 +145,9 @@ const mapDispatch = dispatch => ({
   changeCuisine: cuisine => dispatch(changeCuisine(cuisine)),
   changeLocation: location => dispatch(changeLocation(location)),
   changeFilteredRestaurants: filteredRestaurants =>
-    dispatch(changeFilteredRestaurants(filteredRestaurants))
+    dispatch(changeFilteredRestaurants(filteredRestaurants)),
+  changeRestaurantsOnCurrentPage: restaurants =>
+    dispatch(changeRestaurantsOnCurrentPage(restaurants))
 })
 
 export default connect(mapState, mapDispatch)(filter)
