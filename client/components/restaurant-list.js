@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchRestaurants} from '../store/restaurant'
 import RestaurantCard from './restaurant-card'
-import {Input, Grid, Pagination} from 'semantic-ui-react'
+import {Input, Grid, Pagination, Card} from 'semantic-ui-react'
 
 class RestaurantList extends Component {
   constructor() {
@@ -140,7 +140,9 @@ class RestaurantList extends Component {
             )
             .map(restaurant => {
               return (
-                <RestaurantCard restaurant={restaurant} key={restaurant.id} />
+                <RestaurantCard 
+                restaurant={restaurant} key={restaurant.id}
+               />
               )
             })}
         </div>
