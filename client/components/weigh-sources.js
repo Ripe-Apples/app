@@ -45,7 +45,9 @@ class weighSources extends Component {
                     )
                   }}
                 >
-                  <Icon name="minus" />
+                  <div className="no-margin">
+                    <Icon name="minus" />
+                  </div>
                 </Button>
                 <Button.Or text={yelpWeight.toString()} />
                 <Button
@@ -54,7 +56,9 @@ class weighSources extends Component {
                     this.incrementBlock(yelpWeight, yelpChange)
                   }}
                 >
-                  <Icon name="plus" />
+                  <div className="no-margin">
+                    <Icon name="plus" />
+                  </div>
                 </Button>
               </Button.Group>
             </div>
@@ -76,7 +80,9 @@ class weighSources extends Component {
                     )
                   }}
                 >
-                  <Icon name="minus" />
+                  <div className="no-margin">
+                    <Icon name="minus" />
+                  </div>
                 </Button>
                 <Button.Or text={tripAdvisorWeight.toString()} />
                 <Button
@@ -85,7 +91,9 @@ class weighSources extends Component {
                     this.incrementBlock(tripAdvisorWeight, tripAdvisorChange)
                   }}
                 >
-                  <Icon name="plus" />
+                  <div className="no-margin">
+                    <Icon name="plus" />
+                  </div>
                 </Button>
               </Button.Group>
             </div>
@@ -107,7 +115,9 @@ class weighSources extends Component {
                     )
                   }}
                 >
-                  <Icon name="minus" />
+                  <div className="no-margin">
+                    <Icon name="minus" />
+                  </div>
                 </Button>
                 <Button.Or text={googleWeight.toString()} />
                 <Button
@@ -116,7 +126,9 @@ class weighSources extends Component {
                     this.incrementBlock(googleWeight, googleChange)
                   }}
                 >
-                  <Icon name="plus" />
+                  <div className="no-margin">
+                    <Icon name="plus" />
+                  </div>
                 </Button>
               </Button.Group>
             </div>
