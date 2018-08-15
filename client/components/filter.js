@@ -2,6 +2,10 @@ import React, {Component} from 'react'
 import {List, Dropdown, ListItem} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {changePrice, changeCuisine, changeLocation} from '../store/filters.js'
+import {
+  changeFilteredRestaurants,
+  changeRestaurantsOnCurrentPage
+} from '../store/restaurant'
 
 class filter extends Component {
   constructor() {
@@ -9,19 +13,50 @@ class filter extends Component {
     this.handlePriceChange = this.handlePriceChange.bind(this)
     this.handleCuisineChange = this.handleCuisineChange.bind(this)
     this.handleLocationChange = this.handleLocationChange.bind(this)
+    this.filterRestaurants = this.filterRestaurants.bind(this)
   }
 
-  handlePriceChange(event, {value}) {
+  async handlePriceChange(event, {value}) {
     const price = value
-    this.props.changePrice(price)
+    await this.props.changePrice(price)
+    await this.filterRestaurants()
+    await this.props.changeRestaurantsOnCurrentPage(
+      this.props.filteredRestaurants.slice(0, 9)
+    )
   }
-  handleCuisineChange(event, {value}) {
+  async handleCuisineChange(event, {value}) {
     const cuisine = value
-    this.props.changeCuisine(cuisine)
+    await this.props.changeCuisine(cuisine)
+    await this.filterRestaurants()
+    await this.props.changeRestaurantsOnCurrentPage(
+      this.props.filteredRestaurants.slice(0, 9)
+    )
   }
-  handleLocationChange(event, {value}) {
+  async handleLocationChange(event, {value}) {
     const location = value
-    this.props.changeLocation(location)
+    await this.props.changeLocation(location)
+    await this.filterRestaurants()
+    await this.props.changeRestaurantsOnCurrentPage(
+      this.props.filteredRestaurants.slice(0, 9)
+    )
+  }
+
+  async filterRestaurants() {
+    let {restaurants} = this.props
+    const {price, cuisine, location} = this.props
+
+    restaurants =
+      price === '' && cuisine === '' && location === ''
+        ? restaurants
+        : restaurants.filter(restaurant => {
+            return (
+              (restaurant.expenseRating === price || price === '') &&
+              (restaurant.cuisineType[0].title === cuisine || cuisine === '') &&
+              (restaurant.location === location || location === '')
+            )
+          })
+
+    await this.props.changeFilteredRestaurants(restaurants)
   }
 
   render() {
@@ -100,13 +135,19 @@ class filter extends Component {
 const mapState = state => ({
   price: state.filtersReducer.price,
   cuisine: state.filtersReducer.cuisine,
-  location: state.filtersReducer.location
+  location: state.filtersReducer.location,
+  restaurants: state.restaurantReducer.restaurants,
+  filteredRestaurants: state.restaurantReducer.filteredRestaurants
 })
 
 const mapDispatch = dispatch => ({
   changePrice: price => dispatch(changePrice(price)),
   changeCuisine: cuisine => dispatch(changeCuisine(cuisine)),
-  changeLocation: location => dispatch(changeLocation(location))
+  changeLocation: location => dispatch(changeLocation(location)),
+  changeFilteredRestaurants: filteredRestaurants =>
+    dispatch(changeFilteredRestaurants(filteredRestaurants)),
+  changeRestaurantsOnCurrentPage: restaurants =>
+    dispatch(changeRestaurantsOnCurrentPage(restaurants))
 })
 
 export default connect(mapState, mapDispatch)(filter)
