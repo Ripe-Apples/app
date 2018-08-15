@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchRestaurants} from '../store/restaurant'
+import {fetchRestaurants, changeFilteredRestaurants} from '../store/restaurant'
 import RestaurantCard from './restaurant-card'
 import {Input, Grid, Pagination, Card} from 'semantic-ui-react'
 
@@ -13,6 +13,7 @@ class RestaurantList extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
+    this.filterRestaurants = this.filterRestaurants.bind(this)
   }
 
   async componentDidMount() {
@@ -66,27 +67,36 @@ class RestaurantList extends Component {
     })
   }
 
-  render() {
-    let {restaurants} = this.state
+  async filterRestaurants() {
+    let {restaurants} = this.props
     const {
       price,
       cuisine,
       location,
+    } = this.props
+
+    restaurants =
+    price === '' && cuisine === '' && location === ''
+      ? restaurants
+      : restaurants.filter(restaurant => {
+          return (
+            (restaurant.expenseRating === price || price === '') &&
+            (restaurant.cuisineType[0].title === cuisine || cuisine === '') &&
+            (restaurant.location === location || location === '')
+          )
+        })
+    await this.props.changeFilteredRestaurants(restaurants);
+  }
+
+  render() {
+    let {restaurants} = this.state
+    const {
       yelpWeight,
       tripAdvisorWeight,
       googleWeight
     } = this.props
 
-    restaurants =
-      price === '' && cuisine === '' && location === ''
-        ? restaurants
-        : restaurants.filter(restaurant => {
-            return (
-              (restaurant.expenseRating === price || price === '') &&
-              (restaurant.cuisineType[0].title === cuisine || cuisine === '') &&
-              (restaurant.location === location || location === '')
-            )
-          })
+    this.filterRestaurants()
 
     restaurants.forEach(restaurant => {
       restaurant.score = this.restaurantScore(
@@ -142,7 +152,7 @@ class RestaurantList extends Component {
               return (
                 <RestaurantCard 
                 restaurant={restaurant} key={restaurant.id}
-               />
+              />
               )
             })}
         </div>
@@ -153,6 +163,7 @@ class RestaurantList extends Component {
 
 const mapState = state => ({
   restaurants: state.restaurantReducer.restaurants,
+  filteredRestaurants: state.restaurant,
   price: state.filtersReducer.price,
   cuisine: state.filtersReducer.cuisine,
   location: state.filtersReducer.location,
@@ -162,7 +173,8 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  fetchRestaurants: () => dispatch(fetchRestaurants())
+  fetchRestaurants: () => dispatch(fetchRestaurants()),
+  changeFilteredRestaurants: filteredRestaurants => dispatch(changeFilteredRestaurants(filteredRestaurants))
 })
 
 export default connect(mapState, mapDispatch)(RestaurantList)

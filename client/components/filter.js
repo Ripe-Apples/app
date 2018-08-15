@@ -100,13 +100,13 @@ class filter extends Component {
 const mapState = state => ({
   price: state.filtersReducer.price,
   cuisine: state.filtersReducer.cuisine,
-  location: state.filtersReducer.location
+  location: state.filtersReducer.location,
 })
 
 const mapDispatch = dispatch => ({
   changePrice: price => dispatch(changePrice(price)),
   changeCuisine: cuisine => dispatch(changeCuisine(cuisine)),
-  changeLocation: location => dispatch(changeLocation(location))
+  changeLocation: location => dispatch(changeLocation(location)),
 })
 
 export default connect(mapState, mapDispatch)(filter)

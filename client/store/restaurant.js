@@ -1,9 +1,11 @@
 import axios from 'axios'
 
 const GET_RESTAURANTS = 'GET_RESTAURANTS';
+const CHANGE_FILTERED_RESTAURANTS = 'GET_FILTERED_RESTAURANTS';
 const GET_SINGLE_RESTAURANT = 'GET_SINGLE_RESTAURANT';
 
 const getRestaurants = restaurants => ({ type: GET_RESTAURANTS, payload: restaurants });
+export const changeFilteredRestaurants = filteredRestaurants => ({ type: CHANGE_FILTERED_RESTAURANTS, payload: filteredRestaurants });
 const getSingleRestaurant = singleRestaurant => ({ type: GET_SINGLE_RESTAURANT, payload: singleRestaurant });
 
 export const fetchRestaurants = () => {
@@ -20,6 +22,7 @@ export const fetchSingleRestaurant = restaurantId => async dispatch => {
 
 const initalState = {
   restaurants: [],
+  filteredRestaurants: [],
   singleRestaurant: {}
 };
 
@@ -29,6 +32,11 @@ const restaurantReducer = (state = initalState, action) => {
       return {
         ...state,
         restaurants: action.payload
+      }
+      case CHANGE_FILTERED_RESTAURANTS:
+      return {
+        ...state,
+        filteredRestaurants: action.payload
       }
       case GET_SINGLE_RESTAURANT:
         return {
