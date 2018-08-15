@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {List, Dropdown, ListItem} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {changePrice, changeCuisine, changeLocation} from '../store/filters.js'
+import {changeFilteredRestaurants} from '../store/restaurant'
 
 class filter extends Component {
   constructor() {
@@ -9,19 +10,41 @@ class filter extends Component {
     this.handlePriceChange = this.handlePriceChange.bind(this)
     this.handleCuisineChange = this.handleCuisineChange.bind(this)
     this.handleLocationChange = this.handleLocationChange.bind(this)
+    this.filterRestaurants = this.filterRestaurants.bind(this)
   }
 
-  handlePriceChange(event, {value}) {
+  async handlePriceChange(event, {value}) {
     const price = value
-    this.props.changePrice(price)
+    await this.props.changePrice(price)
+    await this.filterRestaurants()
   }
-  handleCuisineChange(event, {value}) {
+  async handleCuisineChange(event, {value}) {
     const cuisine = value
-    this.props.changeCuisine(cuisine)
+    await this.props.changeCuisine(cuisine)
+    await this.filterRestaurants()
   }
-  handleLocationChange(event, {value}) {
+  async handleLocationChange(event, {value}) {
     const location = value
-    this.props.changeLocation(location)
+    await this.props.changeLocation(location)
+    await this.filterRestaurants()
+  }
+
+  async filterRestaurants() {
+    let {restaurants} = this.props
+    const {price, cuisine, location} = this.props
+
+    restaurants =
+      price === '' && cuisine === '' && location === ''
+        ? restaurants
+        : restaurants.filter(restaurant => {
+            return (
+              (restaurant.expenseRating === price || price === '') &&
+              (restaurant.cuisineType[0].title === cuisine || cuisine === '') &&
+              (restaurant.location === location || location === '')
+            )
+          })
+
+    await this.props.changeFilteredRestaurants(restaurants)
   }
 
   render() {
@@ -101,12 +124,15 @@ const mapState = state => ({
   price: state.filtersReducer.price,
   cuisine: state.filtersReducer.cuisine,
   location: state.filtersReducer.location,
+  restaurants: state.restaurantReducer.restaurants
 })
 
 const mapDispatch = dispatch => ({
   changePrice: price => dispatch(changePrice(price)),
   changeCuisine: cuisine => dispatch(changeCuisine(cuisine)),
   changeLocation: location => dispatch(changeLocation(location)),
+  changeFilteredRestaurants: filteredRestaurants =>
+    dispatch(changeFilteredRestaurants(filteredRestaurants))
 })
 
 export default connect(mapState, mapDispatch)(filter)
