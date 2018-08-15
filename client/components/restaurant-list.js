@@ -66,10 +66,6 @@ class RestaurantList extends Component {
     await this.props.changeRestaurantsOnCurrentPage(
       this.props.filteredRestaurants.slice(startIndex, endIndex)
     )
-
-    // this.setState({
-    //   restaurants: this.props.filteredRestaurants.slice(startIndex, endIndex)
-    // })
   }
 
   render() {
