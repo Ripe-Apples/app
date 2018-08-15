@@ -60,7 +60,8 @@
     "semantic-ui": "^2.3.3",
     "semantic-ui-react": "^0.82.2",
     "sequelize": "^4.38.0",
-    "socket.io": "^2.1.1"
+    "socket.io": "^2.1.1",
+    "utf8": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.55",

@@ -6,7 +6,7 @@ import {
   changeRestaurantsOnCurrentPage
 } from '../store/restaurant'
 import RestaurantCard from './restaurant-card'
-import {Input, Grid, Pagination} from 'semantic-ui-react'
+import {Input, Grid, Pagination, Card, Divider} from 'semantic-ui-react'
 
 class RestaurantList extends Component {
   constructor() {
@@ -96,7 +96,7 @@ class RestaurantList extends Component {
     const pages = Math.ceil(totalRestaurants / perPage)
 
     return (
-      <div>
+      <React.Fragment>
         <Grid>
           <Grid.Column width={8} floated="left">
             <h1>Restaurants</h1>
@@ -109,14 +109,14 @@ class RestaurantList extends Component {
             />
           </Grid.Column>
         </Grid>
-
+        <Divider hidden />
         <Pagination
           defaultActivePage={1}
           totalPages={pages}
           onClick={this.handlePageChange}
         />
-
-        <div className="ui cards">
+        <Divider hidden />
+        <Card.Group>
           {restaurantsArray
             .sort(
               (restaurant1, restaurant2) =>
@@ -127,8 +127,8 @@ class RestaurantList extends Component {
                 <RestaurantCard restaurant={restaurant} key={restaurant.id} />
               )
             })}
-        </div>
-      </div>
+        </Card.Group>
+      </React.Fragment>
     )
   }
 }
