@@ -7,7 +7,7 @@ const RestaurantCard = props => {
   const restaurant = props.restaurant
   const reviews = restaurant.reviews
   const dollarSignHelper = expenseRating => {
-    if (expenseRating === 0) return 'No Expense Rating Yet'
+    if (expenseRating === 0) return 'No Rating'
     return '$'.repeat(expenseRating)
   }
   const labelColor = score => {
@@ -24,7 +24,7 @@ const RestaurantCard = props => {
 
   return (
     <Link to={`/restaurant/${restaurant.id}`}>
-    <div>
+    
     <Card>
       <div className="card-image">
         <Image src={restaurant.imageUrl} />
@@ -38,7 +38,7 @@ const RestaurantCard = props => {
             </Label>
           </span>
         </Card.Header>
-        <Card.Meta>{restaurant.location}</Card.Meta>
+        <Card.Meta>{restaurant.location.slice(0, restaurant.location.indexOf(','))}...</Card.Meta>
         <Card.Description>
           {dollarSignHelper(restaurant.expenseRating)},{' '}
           {restaurant.cuisineType[0].title}
@@ -58,7 +58,7 @@ const RestaurantCard = props => {
         </Card.Description>
       </Card.Content>
     </Card>
-    </div>
+   
     </Link>
   )
 }

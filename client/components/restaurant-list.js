@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchRestaurants} from '../store/restaurant'
 import RestaurantCard from './restaurant-card'
-import {Input, Grid, Pagination, Card} from 'semantic-ui-react'
+import {Input, Grid, Pagination, Card, Divider} from 'semantic-ui-react'
 
 class RestaurantList extends Component {
   constructor() {
@@ -131,6 +131,7 @@ class RestaurantList extends Component {
           totalPages={pages}
           onClick={this.handlePageChange}
         />
+        <Divider hidden/>
 
         <div className="ui cards">
           {restaurantsArray

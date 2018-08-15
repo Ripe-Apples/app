@@ -6,6 +6,11 @@ import RestaurantCard from './restaurant-card'
 import {Input, Grid, Container, Image, Divider, Header} from 'semantic-ui-react'
 //import CircularProgress from '@material-ui/core/CircularProgress'
 
+const dollarSignHelper = expenseRating => {
+    if (expenseRating === 0) return 'No Expense Rating Yet'
+    return '$'.repeat(expenseRating)
+  }
+
 class SingleRestaurant extends Component {
     constructor() {
       super()
@@ -33,6 +38,11 @@ class SingleRestaurant extends Component {
                      <Image src={singleRestaurant.imageUrl} size ="big" rounded centered/>
                      <Divider hidden/>
                      <center><Header> {singleRestaurant.name} </Header></center> 
+                     
+                     {/* <center><Header> {singleRestaurant.expenseRating} </Header></center> 
+                      */}
+                     <center><Header> {singleRestaurant.location} </Header></center>
+                     <center> {dollarSignHelper(singleRestaurant.expenseRating)}</center> 
                      
                      <p>
                     {singleRestaurant.price}
