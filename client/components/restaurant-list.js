@@ -5,17 +5,16 @@ import {
   changeFilteredRestaurants,
   changeRestaurantsOnCurrentPage
 } from '../store/restaurant'
+import {updateSearchBar} from '../store/filters'
 import RestaurantCard from './restaurant-card'
 import {Input, Grid, Pagination, Card, Divider} from 'semantic-ui-react'
 
 class RestaurantList extends Component {
   constructor() {
     super()
-    this.state = {
-      searchValue: ''
-    }
     this.handleChange = this.handleChange.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
+    this.filterRestaurants = this.filterRestaurants.bind(this)
   }
 
   async componentDidMount() {
@@ -93,8 +92,42 @@ class RestaurantList extends Component {
     )
   }
 
-  handleChange(event) {
-    this.setState({searchValue: event.target.value})
+  async handleChange(event) {
+    await this.props.updateSearchBar(event.target.value)
+
+    await this.filterRestaurants()
+
+    await this.props.changeRestaurantsOnCurrentPage(
+      this.props.filteredRestaurants.slice(0, 9)
+    )
+  }
+
+  // This is a copy of the function in ./filter.js
+  async filterRestaurants() {
+    let {restaurants} = this.props
+    const {price, cuisine, location} = this.props
+
+    restaurants =
+      price === '' && cuisine === '' && location === ''
+        ? restaurants
+        : restaurants.filter(restaurant => {
+            return (
+              (restaurant.expenseRating === price || price === '') &&
+              (restaurant.cuisineType[0].title === cuisine || cuisine === '') &&
+              (restaurant.location === location || location === '')
+            )
+          })
+
+    // filter by what is in the search bar
+    const lowercaseSearchValue = this.props.searchValue.toLowerCase()
+
+    if (this.props.searchValue !== '') {
+      restaurants = restaurants.filter(restaurant => {
+        return restaurant.name.toLowerCase().includes(lowercaseSearchValue)
+      })
+    }
+
+    await this.props.changeFilteredRestaurants(restaurants)
   }
 
   async handlePageChange(event) {
@@ -111,6 +144,7 @@ class RestaurantList extends Component {
   render() {
     let restaurants = this.props.restaurantsOnCurrentPage
 
+<<<<<<< HEAD
     let restaurantsArray
     const lowercaseSearchValue = this.state.searchValue.toLowerCase()
 
@@ -138,6 +172,8 @@ class RestaurantList extends Component {
       )
     })
 
+=======
+>>>>>>> 7e3933ac75657738f215f63dda3b1edae05b417a
     const totalRestaurants = this.props.filteredRestaurants.length
     const perPage = 9
     const pages = Math.ceil(totalRestaurants / perPage)
@@ -164,7 +200,7 @@ class RestaurantList extends Component {
         />
         <Divider hidden />
         <Card.Group>
-          {restaurantsArray
+          {restaurants
             .sort((restaurant1, restaurant2) => {
               if (restaurant2.reviews.length === restaurant1.reviews.length) {
                 return restaurant2.score - restaurant1.score
@@ -191,6 +227,7 @@ const mapState = state => ({
   price: state.filtersReducer.price,
   cuisine: state.filtersReducer.cuisine,
   location: state.filtersReducer.location,
+  searchValue: state.filtersReducer.searchValue,
   yelpWeight: state.weighSourcesReducer.yelpWeight,
   zomatoWeight: state.weighSourcesReducer.zomatoWeight,
   googleWeight: state.weighSourcesReducer.googleWeight,
@@ -202,7 +239,8 @@ const mapDispatch = dispatch => ({
   changeFilteredRestaurants: filteredRestaurants =>
     dispatch(changeFilteredRestaurants(filteredRestaurants)),
   changeRestaurantsOnCurrentPage: restaurants =>
-    dispatch(changeRestaurantsOnCurrentPage(restaurants))
+    dispatch(changeRestaurantsOnCurrentPage(restaurants)),
+  updateSearchBar: searchValue => dispatch(updateSearchBar(searchValue))
 })
 
 export default connect(mapState, mapDispatch)(RestaurantList)
