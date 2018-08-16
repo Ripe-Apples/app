@@ -1,62 +1,58 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchRestaurants} from '../store/restaurant'
 import {fetchSingleRestaurant} from '../store/restaurant'
-import RestaurantCard from './restaurant-card'
-import {Input, Grid, Container, Image, Divider, Header} from 'semantic-ui-react'
-//import CircularProgress from '@material-ui/core/CircularProgress'
+import {Grid, Container, Image, Divider, Header, Label} from 'semantic-ui-react'
 
 const dollarSignHelper = expenseRating => {
     if (expenseRating === 0) return 'No Expense Rating Yet'
     return '$'.repeat(expenseRating)
-  }
+}
 
 class SingleRestaurant extends Component {
-    constructor() {
-      super()
-      this.state = {
-        isDisabled: false
-      }
-    }
-  
-    componentDidMount() {
-        console.log('ID!!', this.props.match.params.restaurantId)
-        this.props.fetchSingleRestaurant(this.props.match.params.restaurantId)
-     
-    }
-    render() {
-        const {singleRestaurant} = this.props
-        console.log('restaurant!!!!', singleRestaurant)
-        if (!singleRestaurant) {
-            return null;
-        } else {
-            return (
-                
-                <Container>
-                    <div>
-                    <Divider hidden/>
-                     <Image src={singleRestaurant.imageUrl} size ="big" rounded centered/>
-                     <Divider hidden/>
-                     <center><Header> {singleRestaurant.name} </Header></center> 
-                     
-                     {/* <center><Header> {singleRestaurant.expenseRating} </Header></center> 
-                      */}
-                     <center><Header> {singleRestaurant.location} </Header></center>
-                     <center> {dollarSignHelper(singleRestaurant.expenseRating)}</center> 
-                     
-                     <p>
-                    {singleRestaurant.price}
-                     </p>    
-                     </div>
-                </Container>
-            )
-        }
+  componentDidMount() {
+    this.props.fetchSingleRestaurant(this.props.match.params.restaurantId)
+  }
 
-}
+  render() {
+    const { singleRestaurant } = this.props
+
+    if (!singleRestaurant) {
+      return null;
+    } else {
+      return (
+        <Container>
+          <Divider hidden />
+          <Divider hidden />
+          <Divider hidden />
+          <Grid>
+            <Grid.Column width={10}>
+              <Image src={singleRestaurant.imageUrl} size="big" rounded />
+            </Grid.Column>
+            <Grid.Column width={6}>
+              <h1 className="single-Restaurant-header"> {singleRestaurant.name} </h1>
+              <Divider />
+              <h3>Expense Rating: <span className={singleRestaurant.expenseRating <= 2 ? "cheap" : "expensive"}>{dollarSignHelper(singleRestaurant.expenseRating)}</span>
+              </h3>
+              <Header size="medium">Address: {singleRestaurant.location}</Header>
+              <Divider hidden />
+              <Label>
+                <img className="map-logo" src="https://image.flaticon.com/icons/svg/281/281767.svg" />
+                <Label.Detail className="location-link">
+                  <a  href={"https://www.google.com/maps/search/" + singleRestaurant.location}> View Restaurant Location</a>
+                </Label.Detail>
+
+              </Label>
+            </Grid.Column>
+
+          </Grid>
+        </Container>
+      )
+    }
+
+  }
 }
 
 const mapState = state => {
-    console.log('state!!', state.restaurantReducer)
     return {
         singleRestaurant: state.restaurantReducer.singleRestaurant
     }

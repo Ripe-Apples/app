@@ -62,6 +62,29 @@ nav a {
   margin-bottom: 1em;
 }
 
+.map-logo {
+  height: 20px;
+  width: 20px;
+}
+
+.cheap {
+  color: green;
+}
+
+.expensive {
+  color: red;
+}
+
 .no-margin > i {
   margin: 0px !important;
+}
+
+.location-link {
+  vertical-align: middle !important; 
+}
+
+.single-Restaurant-header {
+  font-family: 'Playball', cursive !important;
+  font-size: 70px;
+  color: orange;
 }
