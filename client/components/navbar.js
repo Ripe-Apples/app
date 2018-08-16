@@ -20,9 +20,9 @@ class Navbar extends Component {
   // }
 
   render() {
-    const isLoggedIn = this.props.isLoggedIn;
-    const handleClick = this.props.handleClick;
-    const userEmail = this.props.userEmail;
+    const isLoggedIn = this.props.isLoggedIn
+    const handleClick = this.props.handleClick
+    const userEmail = this.props.userEmail
     return (
       <div className="top-menu">
         <Menu stackable inverted color="orange">

@@ -73,12 +73,7 @@ async function fetchFromYelp() {
     await createYelpRestaurants()
   } catch (err) {
     console.error(err)
-    process.exitCode = 1
-  } finally {
-    console.log('closing db connection')
-    await db.close()
-    console.log('db connection closed')
   }
 }
 
-fetchFromYelp()
+module.exports = fetchFromYelp

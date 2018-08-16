@@ -5,8 +5,8 @@ import {Grid, Container, Image, Divider, Header, Label} from 'semantic-ui-react'
 import ApplePie from './pie-chart'
 
 const dollarSignHelper = expenseRating => {
-    if (expenseRating === 0) return 'No Expense Rating Yet'
-    return '$'.repeat(expenseRating)
+  if (expenseRating === 0) return 'No Expense Rating Yet'
+  return '$'.repeat(expenseRating)
 }
 
 class SingleRestaurant extends Component {
@@ -15,7 +15,7 @@ class SingleRestaurant extends Component {
   }
 
   render() {
-    const { singleRestaurant } = this.props
+    const {singleRestaurant} = this.props
 
     if (!singleRestaurant.reviews) {
       return null;
@@ -45,34 +45,38 @@ class SingleRestaurant extends Component {
               <h3 className="pie-title"><img className="pie-logo" src="https://image.flaticon.com/icons/svg/440/440230.svg" /> Apple Pie Meter <img className="pie-logo" src="https://image.flaticon.com/icons/svg/440/440230.svg" /></h3> 
               <ApplePie singleRestaurant={singleRestaurant} averageScore={averageScore} />
               <Divider />
-              <h3>Expense Rating: <span className={singleRestaurant.expenseRating <= 2 ? "cheap" : "expensive"}>{dollarSignHelper(singleRestaurant.expenseRating)}</span>
+              <h3>
+                Expense Rating:{' '}
+                {dollarSignHelper(singleRestaurant.expenseRating)}
               </h3>
-              <Header size="medium">Address: {singleRestaurant.location}</Header>
+              <h3>Address: {singleRestaurant.location}</h3>
               <Divider hidden />
-              <Label>
-                <img className="map-logo" src="https://image.flaticon.com/icons/svg/281/281767.svg" />
+              <Label style={{margin: '0px'}}>
+                <img
+                  className="map-logo"
+                  src="https://image.flaticon.com/icons/svg/281/281767.svg"
+                />
                 <Label.Detail className="location-link">
                   <a  href={"https://www.google.com/maps/search/" + singleRestaurant.location }target="_blank"> View Restaurant Location</a>
                 </Label.Detail>
-
               </Label>
             </Grid.Column>
           </Grid>
         </Container>
       )
     }
-
   }
 }
 
 const mapState = state => {
-    return {
-        singleRestaurant: state.restaurantReducer.singleRestaurant
-    }
+  return {
+    singleRestaurant: state.restaurantReducer.singleRestaurant
   }
-  
-  const mapDispatch = dispatch => ({
-    fetchSingleRestaurant: (restaurantId) => dispatch(fetchSingleRestaurant(restaurantId))
-  })
-  
+}
+
+const mapDispatch = dispatch => ({
+  fetchSingleRestaurant: restaurantId =>
+    dispatch(fetchSingleRestaurant(restaurantId))
+})
+
 export default connect(mapState, mapDispatch)(SingleRestaurant)

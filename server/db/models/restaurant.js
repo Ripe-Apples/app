@@ -18,14 +18,8 @@ const Restaurant = db.define('restaurants', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  rating: {
-    type: Sequelize.INTEGER
-  },
-  menu: {
+  opentableUrl: {
     type: Sequelize.TEXT
-  },
-  michStars: {
-    type: Sequelize.INTEGER
   },
   imageUrl: {
     type: Sequelize.TEXT,
