@@ -1,7 +1,16 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleRestaurant} from '../store/restaurant'
-import {Grid, Container, Image, Divider, Label, Dimmer, Loader} from 'semantic-ui-react'
+import {
+  Grid,
+  Container,
+  Image,
+  Divider,
+  Header,
+  Label,
+  Dimmer,
+  Loader
+} from 'semantic-ui-react'
 import ApplePie from './pie-chart'
 
 const dollarSignHelper = expenseRating => {
@@ -27,53 +36,103 @@ class SingleRestaurant extends Component {
 
     if (!singleRestaurant.reviews) {
       return (
-      <div>
-        <Dimmer active inverted>
-          <Loader inverted>Loading</Loader>
-        </Dimmer>
-      </div>
+        <div>
+          <Dimmer active inverted>
+            <Loader inverted>Loading</Loader>
+          </Dimmer>
+        </div>
       )
     } else {
       const scoreSum = singleRestaurant.reviews.reduce((acc, review) => {
-        let score = review.rating > 5 ? review.rating - 5 : review.rating
-        return acc + score;
+        let score =
+          review.source === 'Foursquare' ? review.rating / 2 : review.rating
+        return acc + score
       }, 0)
-      const averageScore = (((scoreSum / singleRestaurant.reviews.length) / 5) * 100).toFixed(2);
+      const averageScore = (
+        scoreSum /
+        singleRestaurant.reviews.length /
+        5 *
+        100
+      ).toFixed(2)
 
       return (
         <Container>
           <Divider hidden />
-          <Divider hidden />
-          <Divider hidden />
           <Grid>
-            
             <Grid.Column width={16}>
-              <h1 className="single-restaurant-header"> {singleRestaurant.name} </h1>
+              <h1 className="single-restaurant-header">
+                {' '}
+                {singleRestaurant.name}{' '}
+              </h1>
               <Divider />
             </Grid.Column>
-            
+
             <Grid.Column width={10}>
               <Image src={singleRestaurant.imageUrl} size="big" rounded />
             </Grid.Column>
             <Grid.Column width={6}>
-              <h3 className="pie-title"><img className="pie-logo" src="https://image.flaticon.com/icons/svg/440/440230.svg" /> Apple Pie Score <img className="pie-logo" src="https://image.flaticon.com/icons/svg/440/440230.svg" /></h3> 
-              <ApplePie singleRestaurant={singleRestaurant} averageScore={averageScore} />
-              <Divider />
-              <h3>
-                Expense Rating:{' '}
-                {dollarSignHelper(singleRestaurant.expenseRating)}
+              <h3 className="pie-title">
+                <img
+                  className="pie-logo"
+                  src="https://image.flaticon.com/icons/svg/440/440230.svg"
+                />{' '}
+                Apple Pie Score{' '}
+                <img
+                  className="pie-logo"
+                  src="https://image.flaticon.com/icons/svg/440/440230.svg"
+                />
               </h3>
-              <h3>Address: {singleRestaurant.location}</h3>
+              <ApplePie
+                singleRestaurant={singleRestaurant}
+                averageScore={averageScore}
+              />
+              <Divider />
+              <h3>{dollarSignHelper(singleRestaurant.expenseRating)}</h3>
+              <h3>{singleRestaurant.location}</h3>
               <Divider hidden />
-              <Label style={{margin: '0px'}}>
+              <Label
+                style={{margin: '0px'}}
+                className="single-page-button-width"
+              >
                 <img
                   className="map-logo"
                   src="https://image.flaticon.com/icons/svg/281/281767.svg"
                 />
                 <Label.Detail className="location-link">
-                  <a  href={"https://www.google.com/maps/search/" + singleRestaurant.location }target="_blank"> View Restaurant Location</a>
+                  <a
+                    href={
+                      'https://www.google.com/maps/search/' +
+                      singleRestaurant.location
+                    }
+                    target="_blank"
+                  >
+                    {' '}
+                    View Restaurant Location
+                  </a>
                 </Label.Detail>
               </Label>
+              <Divider hidden />
+              {singleRestaurant.opentableUrl ? (
+                <div>
+                  {console.log(singleRestaurant.opentableUrl)}
+                  <Label
+                    style={{margin: '0px'}}
+                    className="single-page-button-width"
+                  >
+                    <img
+                      className="map-logo"
+                      src="https://images-na.ssl-images-amazon.com/images/I/51SdVVc%2BrBL.png"
+                    />
+                    <Label.Detail className="location-link">
+                      <a href={singleRestaurant.opentableUrl} target="_blank">
+                        Book on OpenTable
+                      </a>
+                    </Label.Detail>
+                  </Label>
+                </div>
+              ) : (
+                <div />
+              )}
             </Grid.Column>
           </Grid>
         </Container>

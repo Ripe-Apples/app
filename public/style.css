@@ -90,11 +90,16 @@ nav a {
 .single-restaurant-header {
   font-family: 'Playball', cursive !important;
   font-size: 50px;
-  color: orange;
+  color: #f2711c;
   text-align: center;
+  text-shadow: 1px 1px #bfbfbf;
 }
 
 .pie-logo {
   height: 25px;
   width: 25px;
+}
+
+.single-page-button-width {
+  width: 210px !important;
 }
