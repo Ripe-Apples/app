@@ -118,18 +118,14 @@ async function mergeData() {
     console.error(error)
   }
 }
-async function createZomato() {
+async function zomatoCreate() {
   console.log('Creating Zomato reviews, please wait...')
   try {
     await db.sync()
     await mergeData()
   } catch (error) {
     console.error(error)
-  } finally {
-    console.log('close the db connection')
-    await db.close()
-    console.log('done!')
   }
 }
 
-createZomato()
+module.exports = zomatoCreate

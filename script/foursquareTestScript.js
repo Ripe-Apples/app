@@ -84,8 +84,9 @@ async function createDbRestaurantObj() {
   }
 }
 
-async function mergeData() {
+async function foursquareCreate() {
   try {
+    console.log('Creating Foursquare reviews...')
     const fsqData = JSON.parse(
       fs.readFileSync('script/finalFoursquareData.json', 'utf8')
     )
@@ -106,10 +107,9 @@ async function mergeData() {
       })
     await Review.bulkCreate(bulkCreateArr)
     console.log('done!')
-    db.close()
   } catch (error) {
     console.error(error)
   }
 }
 
-mergeData()
+module.exports = foursquareCreate

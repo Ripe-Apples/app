@@ -7,6 +7,9 @@ const App = () => {
   return (
     <div>
       <Navbar />
+      <br />
+      <br />
+      <br />
       <Routes />
     </div>
   )

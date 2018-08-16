@@ -48,6 +48,10 @@ nav a {
 
 .top-menu > .menu {
   border-radius: 0px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 4;
 }
 
 .reset > button {
@@ -80,11 +84,11 @@ nav a {
 }
 
 .location-link {
-  vertical-align: middle !important; 
+  vertical-align: middle !important;
 }
 
-.single-Restaurant-header {
+.single-restaurant-header {
   font-family: 'Playball', cursive !important;
   font-size: 70px;
-  color: orange;
+  color: #f2711c;
 }
