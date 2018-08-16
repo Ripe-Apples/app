@@ -4,8 +4,8 @@ import {fetchSingleRestaurant} from '../store/restaurant'
 import {Grid, Container, Image, Divider, Header, Label} from 'semantic-ui-react'
 
 const dollarSignHelper = expenseRating => {
-    if (expenseRating === 0) return 'No Expense Rating Yet'
-    return '$'.repeat(expenseRating)
+  if (expenseRating === 0) return 'No Expense Rating Yet'
+  return '$'.repeat(expenseRating)
 }
 
 class SingleRestaurant extends Component {
@@ -14,10 +14,10 @@ class SingleRestaurant extends Component {
   }
 
   render() {
-    const { singleRestaurant } = this.props
+    const {singleRestaurant} = this.props
 
     if (!singleRestaurant) {
-      return null;
+      return null
     } else {
       return (
         <Container>
@@ -25,41 +25,54 @@ class SingleRestaurant extends Component {
           <Divider hidden />
           <Divider hidden />
           <Grid>
-            <Grid.Column width={10}>
+            <Grid.Column width={8}>
               <Image src={singleRestaurant.imageUrl} size="big" rounded />
             </Grid.Column>
-            <Grid.Column width={6}>
-              <h1 className="single-Restaurant-header"> {singleRestaurant.name} </h1>
+            <Grid.Column width={8}>
+              <h1 className="single-restaurant-header">
+                {singleRestaurant.name}
+              </h1>
               <Divider />
-              <h3>Expense Rating: <span className={singleRestaurant.expenseRating <= 2 ? "cheap" : "expensive"}>{dollarSignHelper(singleRestaurant.expenseRating)}</span>
+              <h3>
+                Expense Rating:{' '}
+                {dollarSignHelper(singleRestaurant.expenseRating)}
               </h3>
-              <Header size="medium">Address: {singleRestaurant.location}</Header>
+              <h3>Address: {singleRestaurant.location}</h3>
               <Divider hidden />
-              <Label>
-                <img className="map-logo" src="https://image.flaticon.com/icons/svg/281/281767.svg" />
+              <Label style={{margin: '0px'}}>
+                <img
+                  className="map-logo"
+                  src="https://image.flaticon.com/icons/svg/281/281767.svg"
+                />
                 <Label.Detail className="location-link">
-                  <a  href={"https://www.google.com/maps/search/" + singleRestaurant.location}> View Restaurant Location</a>
+                  <a
+                    href={
+                      'https://www.google.com/maps/search/' +
+                      singleRestaurant.location
+                    }
+                  >
+                    {' '}
+                    View Restaurant Location
+                  </a>
                 </Label.Detail>
-
               </Label>
             </Grid.Column>
-
           </Grid>
         </Container>
       )
     }
-
   }
 }
 
 const mapState = state => {
-    return {
-        singleRestaurant: state.restaurantReducer.singleRestaurant
-    }
+  return {
+    singleRestaurant: state.restaurantReducer.singleRestaurant
   }
-  
-  const mapDispatch = dispatch => ({
-    fetchSingleRestaurant: (restaurantId) => dispatch(fetchSingleRestaurant(restaurantId))
-  })
-  
+}
+
+const mapDispatch = dispatch => ({
+  fetchSingleRestaurant: restaurantId =>
+    dispatch(fetchSingleRestaurant(restaurantId))
+})
+
 export default connect(mapState, mapDispatch)(SingleRestaurant)
