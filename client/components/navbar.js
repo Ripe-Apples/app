@@ -81,7 +81,7 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
-    },
+    }
     // resetWeights: () => dispatch(resetWeights()),
     // resetFilters: () => dispatch(resetFilters()),
   }
