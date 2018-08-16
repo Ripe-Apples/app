@@ -40,10 +40,10 @@ async function get4sqRatings() {
       fs.readFileSync('script/foursquareData.json', 'utf-8')
     )
     let finalArr = []
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < idArr.length; i++) {
       const {data} = await axios.get(
         `https://api.foursquare.com/v2/venues/${
-          idArr[0].id
+          idArr[i].id
         }?client_id=${foursquareClientId}&client_secret=${foursquareApiKey}&v=20180814`
       )
       let venue = data.response.venue

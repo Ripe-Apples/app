@@ -45,12 +45,23 @@ async function getRestaurants() {
 
 const createZomatoRestaurantObj = async () => {
   try {
+    let shackCount = 0
     const restaurantsArr = await getRestaurants()
     return restaurantsArr.map(place => {
       let finalRestaurant = place.restaurant
-      return {
-        name: finalRestaurant.name,
-        rating: finalRestaurant.user_rating.aggregate_rating
+      if (finalRestaurant.name === 'Shake Shack') {
+        if (!shackCount) {
+          shackCount++
+          return {
+            name: finalRestaurant.name,
+            rating: finalRestaurant.user_rating.aggregate_rating
+          }
+        }
+      } else {
+        return {
+          name: finalRestaurant.name,
+          rating: finalRestaurant.user_rating.aggregate_rating
+        }
       }
     })
   } catch (error) {
@@ -86,7 +97,10 @@ async function createDbRestaurantObj() {
 
 async function mergeData() {
   try {
-    const zomatoRestaurants = await createZomatoRestaurantObj()
+    let zomatoRestaurants = await createZomatoRestaurantObj()
+    zomatoRestaurants = zomatoRestaurants.filter(restaurant => {
+      if (restaurant) return true
+    })
     const dbRestaurants = await createDbRestaurantObj()
     let reviewsForCreate = []
     zomatoRestaurants.forEach(restaurant => {
@@ -99,7 +113,6 @@ async function mergeData() {
         })
       }
     })
-    console.log(reviewsForCreate)
     await Review.bulkCreate(reviewsForCreate)
   } catch (error) {
     console.error(error)
