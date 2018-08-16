@@ -21,7 +21,7 @@ class Options extends Component {
     await this.props.resetFilters()
     await this.props.resetFilteredRestaurants(this.props.restaurants)
     await this.props.resetRestaurantsOnCurrentPage(
-      this.props.filteredRestaurants.slice(0, 9)
+      this.props.filteredRestaurants.slice(0, 12)
     )
   }
 
