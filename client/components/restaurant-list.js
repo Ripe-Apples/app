@@ -7,7 +7,8 @@ import {
 } from '../store/restaurant'
 import {updateSearchBar} from '../store/filters'
 import RestaurantCard from './restaurant-card'
-import {Input, Grid, Pagination, Card, Divider} from 'semantic-ui-react'
+import {Input, Grid, Pagination, Card, Divider,Loader,Segment, Dimmer, Image} from 'semantic-ui-react'
+
 
 class RestaurantList extends Component {
   constructor() {
@@ -175,7 +176,21 @@ class RestaurantList extends Component {
     const perPage = 9
     const pages = Math.ceil(totalRestaurants / perPage)
 
-    return (
+    return !totalRestaurants ? (
+      <div>
+        
+    
+    
+      <Dimmer active inverted>
+        <Loader inverted>Loading</Loader>
+      </Dimmer>
+
+      <Image src='/images/wireframe/short-paragraph.png' />
+   
+    
+
+  </div>
+    ) : (
       <React.Fragment>
         <Grid>
           <Grid.Column width={8} floated="left">
