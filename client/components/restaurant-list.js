@@ -7,7 +7,6 @@ import {
 } from '../store/restaurant'
 import RestaurantCard from './restaurant-card'
 import {Input, Grid, Pagination, Card, Divider} from 'semantic-ui-react'
-import {POINT_CONVERSION_COMPRESSED} from 'constants'
 
 class RestaurantList extends Component {
   constructor() {
@@ -21,13 +20,20 @@ class RestaurantList extends Component {
 
   async componentDidMount() {
     await this.props.fetchRestaurants()
-    const {yelpWeight, zomatoWeight, googleWeight, restaurants} = this.props
+    const {
+      yelpWeight,
+      zomatoWeight,
+      googleWeight,
+      foursquareWeight,
+      restaurants
+    } = this.props
     restaurants.forEach(restaurant => {
       restaurant.score = this.restaurantScore(
         restaurant.reviews,
         yelpWeight,
         zomatoWeight,
-        googleWeight
+        googleWeight,
+        foursquareWeight
       )
     })
     await this.props.changeFilteredRestaurants(this.props.restaurants)
@@ -36,7 +42,13 @@ class RestaurantList extends Component {
     )
   }
 
-  restaurantScore = (reviews, yelpWeight, zomatoWeight, googleWeight) => {
+  restaurantScore = (
+    reviews,
+    yelpWeight,
+    zomatoWeight,
+    googleWeight,
+    foursquareWeight
+  ) => {
     let totalWeight = yelpWeight
     let reviewsString = ''
     reviews.forEach(review => {
@@ -46,10 +58,18 @@ class RestaurantList extends Component {
 
     if (reviewsString.indexOf('Zomato') !== -1) totalWeight += zomatoWeight
     if (reviewsString.indexOf('Google') !== -1) totalWeight += googleWeight
+    if (reviewsString.indexOf('Foursquare') !== -1)
+      totalWeight += foursquareWeight
 
     function weighter(sourceWeight, review) {
       const weight = sourceWeight / totalWeight * reviewsLength
-      const rating = review.rating / 5
+      let denominator
+      if (review.source === 'Foursquare') {
+        denominator = 10
+      } else {
+        denominator = 5
+      }
+      const rating = review.rating / denominator
       return weight * rating
     }
 
@@ -62,6 +82,8 @@ class RestaurantList extends Component {
             return weighter(zomatoWeight, review)
           } else if (review.source === 'Google') {
             return weighter(googleWeight, review)
+          } else if (review.source === 'Foursquare') {
+            return weighter(foursquareWeight, review)
           }
         })
         .reduce((accum, currentVal) => accum + currentVal, 0) /
@@ -99,6 +121,22 @@ class RestaurantList extends Component {
         return restaurant.name.toLowerCase().includes(lowercaseSearchValue)
       })
     }
+    const {
+      yelpWeight,
+      zomatoWeight,
+      googleWeight,
+      foursquareWeight
+    } = this.props
+
+    restaurantsArray.forEach(restaurant => {
+      restaurant.score = this.restaurantScore(
+        restaurant.reviews,
+        yelpWeight,
+        zomatoWeight,
+        googleWeight,
+        foursquareWeight
+      )
+    })
 
     const totalRestaurants = this.props.filteredRestaurants.length
     const perPage = 9
@@ -135,6 +173,7 @@ class RestaurantList extends Component {
               }
             })
             .map(restaurant => {
+              console.log(restaurant.score)
               return (
                 <RestaurantCard restaurant={restaurant} key={restaurant.id} />
               )
@@ -154,7 +193,8 @@ const mapState = state => ({
   location: state.filtersReducer.location,
   yelpWeight: state.weighSourcesReducer.yelpWeight,
   zomatoWeight: state.weighSourcesReducer.zomatoWeight,
-  googleWeight: state.weighSourcesReducer.googleWeight
+  googleWeight: state.weighSourcesReducer.googleWeight,
+  foursquareWeight: state.weighSourcesReducer.foursquareWeight
 })
 
 const mapDispatch = dispatch => ({
