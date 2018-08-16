@@ -22,7 +22,7 @@ const RestaurantCard = props => {
   let color = labelColor(restaurant.score)
 
   let restaurantNameShortened = restaurant.name.slice(0, 20)
-  restaurantNameShortened += restaurant.name.length > 20  ? '...' : ''
+  restaurantNameShortened += restaurant.name.length > 20 ? '...' : ''
 
   return (
     <Card>
@@ -40,7 +40,7 @@ const RestaurantCard = props => {
             <Label color={color} key={color}>
               {restaurant.score}%
             </Label>
-          </span> 
+          </span>
         </Card.Header>
         <Card.Meta>
           {restaurant.location.slice(0, restaurant.location.indexOf(','))}...
@@ -50,7 +50,7 @@ const RestaurantCard = props => {
           {restaurant.cuisineType[0].title.slice(0, 17)}
           {restaurant.cuisineType[0].title.length > 17 ? '...' : ''}
           <span className="right floated">
-            <Popup trigger={<a>View Sources</a>} wide="very">
+            <Popup trigger={<a>View Sources ({reviews.length})</a>} wide="very">
               {reviews.map(review => (
                 <div key={review.id}>
                   <p>
