@@ -7,6 +7,14 @@ const dollarSignHelper = expenseRating => {
   if (expenseRating === 0) return 'No Expense Rating Yet'
   return '$'.repeat(expenseRating)
 }
+function myMap() {
+  var mapOptions = {
+      center: new google.maps.LatLng(51.5, -0.12),
+      zoom: 10,
+      mapTypeId: google.maps.MapTypeId.HYBRID
+  }
+var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+}
 
 class SingleRestaurant extends Component {
   componentDidMount() {
@@ -16,10 +24,14 @@ class SingleRestaurant extends Component {
   render() {
     const {singleRestaurant} = this.props
 
-    if (!singleRestaurant) {
-      return null
-    } else {
-      return (
+    return !singleRestaurant ? (
+      <div>
+      <Dimmer active inverted>
+        <Loader inverted>Loading</Loader>
+      </Dimmer>
+      <Image src='/images/wireframe/short-paragraph.png' />
+  </div>
+    ):(
         <Container>
           <Divider hidden />
           <Divider hidden />
@@ -62,7 +74,6 @@ class SingleRestaurant extends Component {
       )
     }
   }
-}
 
 const mapState = state => {
   return {
