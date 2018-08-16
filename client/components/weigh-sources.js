@@ -142,7 +142,7 @@ class weighSources extends Component {
         </List.Item>
         <List.Item>
           <div className="weigh-sources-flex">
-            <div className="item-flex">Foursquare</div>
+            <div className="item-flex"><img className="sourceLogo" src='https://image.flaticon.com/icons/svg/174/174850.svg' /> Foursquare</div>
             <div className="item-flex right">
               <Button.Group>
                 <Button

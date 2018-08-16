@@ -22,7 +22,8 @@ class SingleRestaurant extends Component {
 
     } else {
       const scoreSum = singleRestaurant.reviews.reduce((acc, review) => {
-        return acc + review.rating
+        let score = review.rating > 5 ? review.rating - 5 : review.rating
+        return acc + score;
       }, 0)
       const averageScore = (((scoreSum / singleRestaurant.reviews.length) / 5) * 100).toFixed(2);
 
@@ -34,7 +35,7 @@ class SingleRestaurant extends Component {
           <Grid>
             
             <Grid.Column width={16}>
-              <h1 className="single-Restaurant-header"> {singleRestaurant.name} </h1>
+              <h1 className="single-restaurant-header"> {singleRestaurant.name} </h1>
               <Divider />
             </Grid.Column>
             
@@ -42,7 +43,7 @@ class SingleRestaurant extends Component {
               <Image src={singleRestaurant.imageUrl} size="big" rounded />
             </Grid.Column>
             <Grid.Column width={6}>
-              <h3 className="pie-title"><img className="pie-logo" src="https://image.flaticon.com/icons/svg/440/440230.svg" /> Apple Pie Meter <img className="pie-logo" src="https://image.flaticon.com/icons/svg/440/440230.svg" /></h3> 
+              <h3 className="pie-title"><img className="pie-logo" src="https://image.flaticon.com/icons/svg/440/440230.svg" /> Apple Pie Score <img className="pie-logo" src="https://image.flaticon.com/icons/svg/440/440230.svg" /></h3> 
               <ApplePie singleRestaurant={singleRestaurant} averageScore={averageScore} />
               <Divider />
               <h3>
