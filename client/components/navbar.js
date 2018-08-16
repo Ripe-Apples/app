@@ -8,8 +8,8 @@ import {reset as resetWeights} from '../store/weighSources'
 import {reset as resetFilters} from '../store/filters'
 
 class Navbar extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.resetClick = this.resetClick.bind(this)
   }
 
@@ -18,8 +18,7 @@ class Navbar extends Component {
     await this.props.resetFilters()
   }
 
-  render(props) {
-    console.log('props', props);
+  render() {
     const isLoggedIn = this.props.isLoggedIn;
     const handleClick = this.props.handleClick;
     const userEmail = this.props.userEmail;

@@ -78,3 +78,13 @@ nav a {
 .no-margin > i {
   margin: 0px !important;
 }
+
+.location-link {
+  vertical-align: middle !important; 
+}
+
+.single-Restaurant-header {
+  font-family: 'Playball', cursive !important;
+  font-size: 70px;
+  color: orange;
+}
