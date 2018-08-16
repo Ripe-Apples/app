@@ -144,11 +144,10 @@ class RestaurantList extends Component {
   render() {
     let restaurants = this.props.restaurantsOnCurrentPage
 
-<<<<<<< HEAD
     let restaurantsArray
-    const lowercaseSearchValue = this.state.searchValue.toLowerCase()
+    const lowercaseSearchValue = this.props.searchValue.toLowerCase()
 
-    if (this.state.searchValue === '') {
+    if (this.props.searchValue === '') {
       restaurantsArray = restaurants
     } else {
       restaurantsArray = restaurants.filter(restaurant => {
@@ -172,8 +171,6 @@ class RestaurantList extends Component {
       )
     })
 
-=======
->>>>>>> 7e3933ac75657738f215f63dda3b1edae05b417a
     const totalRestaurants = this.props.filteredRestaurants.length
     const perPage = 9
     const pages = Math.ceil(totalRestaurants / perPage)
@@ -209,7 +206,6 @@ class RestaurantList extends Component {
               }
             })
             .map(restaurant => {
-              console.log(restaurant.score)
               return (
                 <RestaurantCard restaurant={restaurant} key={restaurant.id} />
               )
