@@ -1,21 +1,21 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleRestaurant} from '../store/restaurant'
-import {Grid, Container, Image, Divider, Header, Label} from 'semantic-ui-react'
+import {Grid, Container, Image, Divider, Header, Label, Dimmer, Loader} from 'semantic-ui-react'
 import ApplePie from './pie-chart'
 
 const dollarSignHelper = expenseRating => {
   if (expenseRating === 0) return 'No Expense Rating Yet'
   return '$'.repeat(expenseRating)
 }
-function myMap() {
-  var mapOptions = {
-      center: new google.maps.LatLng(51.5, -0.12),
-      zoom: 10,
-      mapTypeId: google.maps.MapTypeId.HYBRID
-  }
-var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-}
+// function myMap() {
+//   var mapOptions = {
+//       center: new google.maps.LatLng(51.5, -0.12),
+//       zoom: 10,
+//       mapTypeId: google.maps.MapTypeId.HYBRID
+//   }
+// var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+// }
 
 class SingleRestaurant extends Component {
   componentDidMount() {
@@ -31,7 +31,6 @@ class SingleRestaurant extends Component {
         <Dimmer active inverted>
           <Loader inverted>Loading</Loader>
         </Dimmer>
-        <Image src='/images/wireframe/short-paragraph.png' />
       </div>
       )
     } else {
@@ -81,7 +80,7 @@ class SingleRestaurant extends Component {
       )
     }
   }
-
+}
 const mapState = state => {
   return {
     singleRestaurant: state.restaurantReducer.singleRestaurant
