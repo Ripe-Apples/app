@@ -1,6 +1,5 @@
 const {googleApiKey} = require('../secrets')
 const axios = require('axios')
-const db = require('../server/db')
 const {Restaurant, Review} = require('../server/db/models')
 const fs = require('fs')
 const utf8 = require('utf8')
@@ -64,8 +63,9 @@ async function createDbRestaurantObj() {
 //   }
 // }
 
-async function matchData() {
+async function googleCreate() {
   try {
+    console.log('Creating Google reviews...')
     const googleData = JSON.parse(
       fs.readFileSync('script/googleData.json', 'utf8')
     )
@@ -91,10 +91,9 @@ async function matchData() {
       })
     await Review.bulkCreate(bulkCreateArr)
     console.log('Done!')
-    db.close()
   } catch (error) {
     console.error(error)
   }
 }
 
-matchData()
+module.exports = googleCreate
