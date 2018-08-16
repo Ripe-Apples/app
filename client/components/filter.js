@@ -56,6 +56,15 @@ class filter extends Component {
             )
           })
 
+    // filter by what is in the search bar
+    const lowercaseSearchValue = this.props.searchValue.toLowerCase()
+
+    if (this.props.searchValue !== '') {
+      restaurants = restaurants.filter(restaurant => {
+        return restaurant.name.toLowerCase().includes(lowercaseSearchValue)
+      })
+    }
+
     await this.props.changeFilteredRestaurants(restaurants)
   }
 
@@ -136,6 +145,7 @@ const mapState = state => ({
   price: state.filtersReducer.price,
   cuisine: state.filtersReducer.cuisine,
   location: state.filtersReducer.location,
+  searchValue: state.filtersReducer.searchValue,
   restaurants: state.restaurantReducer.restaurants,
   filteredRestaurants: state.restaurantReducer.filteredRestaurants
 })
