@@ -23,7 +23,6 @@ const RestaurantCard = props => {
 
   let restaurantNameShortened = restaurant.name.slice(0, 20)
   restaurantNameShortened += restaurant.name.length > 20  ? '...' : ''
-  console.log('SHORT', restaurantNameShortened)
 
   return (
     <Card>
@@ -43,7 +42,7 @@ const RestaurantCard = props => {
             </Label>
           </span> 
         </Card.Header>
-        
+   
         <Card.Meta>
           {restaurant.location.slice(0, restaurant.location.indexOf(','))}...
         </Card.Meta>
