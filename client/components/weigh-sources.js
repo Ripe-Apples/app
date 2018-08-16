@@ -1,7 +1,12 @@
 import React, {Component} from 'react'
 import {List, Button, Icon} from 'semantic-ui-react'
 import {connect} from 'react-redux'
-import {yelpChange, zomatoChange, googleChange} from '../store/weighSources'
+import {
+  yelpChange,
+  zomatoChange,
+  googleChange,
+  foursquareChange
+} from '../store/weighSources'
 
 class weighSources extends Component {
   decrementBlock(val, callback, yelpWeight, zomatoWeight, googleWeight) {
@@ -18,9 +23,14 @@ class weighSources extends Component {
   }
 
   render() {
-    let {yelpWeight, zomatoWeight, googleWeight} = this.props
+    let {yelpWeight, zomatoWeight, googleWeight, foursquareWeight} = this.props
 
-    const {yelpChange, zomatoChange, googleChange} = this.props
+    const {
+      yelpChange,
+      zomatoChange,
+      googleChange,
+      foursquareChange
+    } = this.props
 
     return (
       <List>
@@ -130,6 +140,41 @@ class weighSources extends Component {
             </div>
           </div>
         </List.Item>
+        <List.Item>
+          <div className="weigh-sources-flex">
+            <div className="item-flex">Foursquare</div>
+            <div className="item-flex right">
+              <Button.Group>
+                <Button
+                  onClick={() => {
+                    this.decrementBlock(
+                      foursquareWeight,
+                      foursquareChange,
+                      yelpWeight,
+                      zomatoWeight,
+                      googleWeight
+                    )
+                  }}
+                >
+                  <div className="no-margin">
+                    <Icon name="minus" />
+                  </div>
+                </Button>
+                <Button.Or text={foursquareWeight.toString()} />
+                <Button
+                  positive
+                  onClick={() => {
+                    this.incrementBlock(foursquareWeight, foursquareChange)
+                  }}
+                >
+                  <div className="no-margin">
+                    <Icon name="plus" />
+                  </div>
+                </Button>
+              </Button.Group>
+            </div>
+          </div>
+        </List.Item>
       </List>
     )
   }
@@ -138,13 +183,15 @@ class weighSources extends Component {
 const mapState = state => ({
   yelpWeight: state.weighSourcesReducer.yelpWeight,
   zomatoWeight: state.weighSourcesReducer.zomatoWeight,
-  googleWeight: state.weighSourcesReducer.googleWeight
+  googleWeight: state.weighSourcesReducer.googleWeight,
+  foursquareWeight: state.weighSourcesReducer.foursquareWeight
 })
 
 const mapDispatch = dispatch => ({
   yelpChange: value => dispatch(yelpChange(value)),
   zomatoChange: value => dispatch(zomatoChange(value)),
-  googleChange: value => dispatch(googleChange(value))
+  googleChange: value => dispatch(googleChange(value)),
+  foursquareChange: value => dispatch(foursquareChange(value))
 })
 
 export default connect(mapState, mapDispatch)(weighSources)

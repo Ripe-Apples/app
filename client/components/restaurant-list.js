@@ -5,29 +5,34 @@ import {
   changeFilteredRestaurants,
   changeRestaurantsOnCurrentPage
 } from '../store/restaurant'
+import {updateSearchBar} from '../store/filters'
 import RestaurantCard from './restaurant-card'
 import {Input, Grid, Pagination, Card, Divider} from 'semantic-ui-react'
-import {POINT_CONVERSION_COMPRESSED} from 'constants'
 
 class RestaurantList extends Component {
   constructor() {
     super()
-    this.state = {
-      searchValue: ''
-    }
     this.handleChange = this.handleChange.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
+    this.filterRestaurants = this.filterRestaurants.bind(this)
   }
 
   async componentDidMount() {
     await this.props.fetchRestaurants()
-    const {yelpWeight, zomatoWeight, googleWeight, restaurants} = this.props
+    const {
+      yelpWeight,
+      zomatoWeight,
+      googleWeight,
+      foursquareWeight,
+      restaurants
+    } = this.props
     restaurants.forEach(restaurant => {
       restaurant.score = this.restaurantScore(
         restaurant.reviews,
         yelpWeight,
         zomatoWeight,
-        googleWeight
+        googleWeight,
+        foursquareWeight
       )
     })
     await this.props.changeFilteredRestaurants(this.props.restaurants)
@@ -36,7 +41,13 @@ class RestaurantList extends Component {
     )
   }
 
-  restaurantScore = (reviews, yelpWeight, zomatoWeight, googleWeight) => {
+  restaurantScore = (
+    reviews,
+    yelpWeight,
+    zomatoWeight,
+    googleWeight,
+    foursquareWeight
+  ) => {
     let totalWeight = yelpWeight
     let reviewsString = ''
     reviews.forEach(review => {
@@ -46,10 +57,18 @@ class RestaurantList extends Component {
 
     if (reviewsString.indexOf('Zomato') !== -1) totalWeight += zomatoWeight
     if (reviewsString.indexOf('Google') !== -1) totalWeight += googleWeight
+    if (reviewsString.indexOf('Foursquare') !== -1)
+      totalWeight += foursquareWeight
 
     function weighter(sourceWeight, review) {
       const weight = sourceWeight / totalWeight * reviewsLength
-      const rating = review.rating / 5
+      let denominator
+      if (review.source === 'Foursquare') {
+        denominator = 10
+      } else {
+        denominator = 5
+      }
+      const rating = review.rating / denominator
       return weight * rating
     }
 
@@ -62,6 +81,8 @@ class RestaurantList extends Component {
             return weighter(zomatoWeight, review)
           } else if (review.source === 'Google') {
             return weighter(googleWeight, review)
+          } else if (review.source === 'Foursquare') {
+            return weighter(foursquareWeight, review)
           }
         })
         .reduce((accum, currentVal) => accum + currentVal, 0) /
@@ -71,8 +92,42 @@ class RestaurantList extends Component {
     )
   }
 
-  handleChange(event) {
-    this.setState({searchValue: event.target.value})
+  async handleChange(event) {
+    await this.props.updateSearchBar(event.target.value)
+
+    await this.filterRestaurants()
+
+    await this.props.changeRestaurantsOnCurrentPage(
+      this.props.filteredRestaurants.slice(0, 9)
+    )
+  }
+
+  // This is a copy of the function in ./filter.js
+  async filterRestaurants() {
+    let {restaurants} = this.props
+    const {price, cuisine, location} = this.props
+
+    restaurants =
+      price === '' && cuisine === '' && location === ''
+        ? restaurants
+        : restaurants.filter(restaurant => {
+            return (
+              (restaurant.expenseRating === price || price === '') &&
+              (restaurant.cuisineType[0].title === cuisine || cuisine === '') &&
+              (restaurant.location === location || location === '')
+            )
+          })
+
+    // filter by what is in the search bar
+    const lowercaseSearchValue = this.props.searchValue.toLowerCase()
+
+    if (this.props.searchValue !== '') {
+      restaurants = restaurants.filter(restaurant => {
+        return restaurant.name.toLowerCase().includes(lowercaseSearchValue)
+      })
+    }
+
+    await this.props.changeFilteredRestaurants(restaurants)
   }
 
   async handlePageChange(event) {
@@ -90,15 +145,31 @@ class RestaurantList extends Component {
     let restaurants = this.props.restaurantsOnCurrentPage
 
     let restaurantsArray
-    const lowercaseSearchValue = this.state.searchValue.toLowerCase()
+    const lowercaseSearchValue = this.props.searchValue.toLowerCase()
 
-    if (this.state.searchValue === '') {
+    if (this.props.searchValue === '') {
       restaurantsArray = restaurants
     } else {
       restaurantsArray = restaurants.filter(restaurant => {
         return restaurant.name.toLowerCase().includes(lowercaseSearchValue)
       })
     }
+    const {
+      yelpWeight,
+      zomatoWeight,
+      googleWeight,
+      foursquareWeight
+    } = this.props
+
+    restaurantsArray.forEach(restaurant => {
+      restaurant.score = this.restaurantScore(
+        restaurant.reviews,
+        yelpWeight,
+        zomatoWeight,
+        googleWeight,
+        foursquareWeight
+      )
+    })
 
     const totalRestaurants = this.props.filteredRestaurants.length
     const perPage = 9
@@ -126,11 +197,14 @@ class RestaurantList extends Component {
         />
         <Divider hidden />
         <Card.Group>
-          {restaurantsArray
-            .sort(
-              (restaurant1, restaurant2) =>
-                restaurant2.score - restaurant1.score
-            )
+          {restaurants
+            .sort((restaurant1, restaurant2) => {
+              if (restaurant2.reviews.length === restaurant1.reviews.length) {
+                return restaurant2.score - restaurant1.score
+              } else {
+                return restaurant2.reviews.length - restaurant1.reviews.length
+              }
+            })
             .map(restaurant => {
               return (
                 <RestaurantCard restaurant={restaurant} key={restaurant.id} />
@@ -149,9 +223,11 @@ const mapState = state => ({
   price: state.filtersReducer.price,
   cuisine: state.filtersReducer.cuisine,
   location: state.filtersReducer.location,
+  searchValue: state.filtersReducer.searchValue,
   yelpWeight: state.weighSourcesReducer.yelpWeight,
   zomatoWeight: state.weighSourcesReducer.zomatoWeight,
-  googleWeight: state.weighSourcesReducer.googleWeight
+  googleWeight: state.weighSourcesReducer.googleWeight,
+  foursquareWeight: state.weighSourcesReducer.foursquareWeight
 })
 
 const mapDispatch = dispatch => ({
@@ -159,7 +235,8 @@ const mapDispatch = dispatch => ({
   changeFilteredRestaurants: filteredRestaurants =>
     dispatch(changeFilteredRestaurants(filteredRestaurants)),
   changeRestaurantsOnCurrentPage: restaurants =>
-    dispatch(changeRestaurantsOnCurrentPage(restaurants))
+    dispatch(changeRestaurantsOnCurrentPage(restaurants)),
+  updateSearchBar: searchValue => dispatch(updateSearchBar(searchValue))
 })
 
 export default connect(mapState, mapDispatch)(RestaurantList)
