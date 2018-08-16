@@ -127,10 +127,13 @@ class RestaurantList extends Component {
         <Divider hidden />
         <Card.Group>
           {restaurantsArray
-            .sort(
-              (restaurant1, restaurant2) =>
-                restaurant2.score - restaurant1.score
-            )
+            .sort((restaurant1, restaurant2) => {
+              if (restaurant2.reviews.length === restaurant1.reviews.length) {
+                return restaurant2.score - restaurant1.score
+              } else {
+                return restaurant2.reviews.length - restaurant1.reviews.length
+              }
+            })
             .map(restaurant => {
               return (
                 <RestaurantCard restaurant={restaurant} key={restaurant.id} />
