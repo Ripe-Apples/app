@@ -37,7 +37,7 @@ class RestaurantList extends Component {
     })
     await this.props.changeFilteredRestaurants(this.props.restaurants)
     await this.props.changeRestaurantsOnCurrentPage(
-      this.props.filteredRestaurants.slice(0, 9)
+      this.props.filteredRestaurants.slice(0, 12)
     )
   }
 
@@ -98,23 +98,22 @@ class RestaurantList extends Component {
     await this.filterRestaurants()
 
     await this.props.changeRestaurantsOnCurrentPage(
-      this.props.filteredRestaurants.slice(0, 9)
+      this.props.filteredRestaurants.slice(0, 12)
     )
   }
 
   // This is a copy of the function in ./filter.js
   async filterRestaurants() {
     let {restaurants} = this.props
-    const {price, cuisine, location} = this.props
+    const {price, cuisine} = this.props
 
     restaurants =
-      price === '' && cuisine === '' && location === ''
+      price === '' && cuisine === ''
         ? restaurants
         : restaurants.filter(restaurant => {
             return (
               (restaurant.expenseRating === price || price === '') &&
-              (restaurant.cuisineType[0].title === cuisine || cuisine === '') &&
-              (restaurant.location === location || location === '')
+              (restaurant.cuisineType[0].title === cuisine || cuisine === '')
             )
           })
 
@@ -131,7 +130,7 @@ class RestaurantList extends Component {
   }
 
   async handlePageChange(event) {
-    const perPage = 9
+    const perPage = 12
     const startIndex =
       (parseInt(event.target.getAttribute('value'), 10) - 1) * perPage
     const endIndex = startIndex + perPage
@@ -172,7 +171,7 @@ class RestaurantList extends Component {
     })
 
     const totalRestaurants = this.props.filteredRestaurants.length
-    const perPage = 9
+    const perPage = 12
     const pages = Math.ceil(totalRestaurants / perPage)
 
     return (
@@ -186,6 +185,7 @@ class RestaurantList extends Component {
               onChange={this.handleChange}
               icon="search"
               placeholder="Search..."
+              value={this.props.searchValue}
             />
           </Grid.Column>
         </Grid>
@@ -222,7 +222,6 @@ const mapState = state => ({
   restaurantsOnCurrentPage: state.restaurantReducer.restaurantsOnCurrentPage,
   price: state.filtersReducer.price,
   cuisine: state.filtersReducer.cuisine,
-  location: state.filtersReducer.location,
   searchValue: state.filtersReducer.searchValue,
   yelpWeight: state.weighSourcesReducer.yelpWeight,
   zomatoWeight: state.weighSourcesReducer.zomatoWeight,
