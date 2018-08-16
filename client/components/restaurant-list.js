@@ -7,7 +7,7 @@ import {
 } from '../store/restaurant'
 import {updateSearchBar} from '../store/filters'
 import RestaurantCard from './restaurant-card'
-import {Input, Grid, Pagination, Card, Divider,Loader,Segment, Dimmer, Image} from 'semantic-ui-react'
+import {Input, Grid, Pagination, Card, Divider, Loader, Dimmer} from 'semantic-ui-react'
 
 
 class RestaurantList extends Component {

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleRestaurant} from '../store/restaurant'
-import {Grid, Container, Image, Divider, Header, Label, Dimmer, Loader} from 'semantic-ui-react'
+import {Grid, Container, Image, Divider, Label, Dimmer, Loader} from 'semantic-ui-react'
 import ApplePie from './pie-chart'
 
 const dollarSignHelper = expenseRating => {
