@@ -85,6 +85,12 @@ nav a {
 
 .single-Restaurant-header {
   font-family: 'Playball', cursive !important;
-  font-size: 70px;
+  font-size: 50px;
   color: orange;
+  text-align: center;
+}
+
+.pie-logo {
+  height: 25px;
+  width: 25px;
 }

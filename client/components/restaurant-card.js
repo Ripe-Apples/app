@@ -32,7 +32,7 @@ const RestaurantCard = props => {
         </Link>
       </div>
       <Card.Content>
-       <Card.Header>
+        <Card.Header>
           <Popup trigger={<span>{restaurantNameShortened}</span>}>
             {restaurant.name}
           </Popup>
@@ -42,7 +42,6 @@ const RestaurantCard = props => {
             </Label>
           </span> 
         </Card.Header>
-   
         <Card.Meta>
           {restaurant.location.slice(0, restaurant.location.indexOf(','))}...
         </Card.Meta>

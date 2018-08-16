@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleRestaurant} from '../store/restaurant'
 import {Grid, Container, Image, Divider, Header, Label} from 'semantic-ui-react'
-import pieChart from './pie-chart'
+import ApplePie from './pie-chart'
 
 const dollarSignHelper = expenseRating => {
     if (expenseRating === 0) return 'No Expense Rating Yet'
@@ -17,25 +17,34 @@ class SingleRestaurant extends Component {
   render() {
     const { singleRestaurant } = this.props
 
-    if (!singleRestaurant) {
+    if (!singleRestaurant.reviews) {
       return null;
+
     } else {
+      const scoreSum = singleRestaurant.reviews.reduce((acc, review) => {
+        return acc + review.rating
+      }, 0)
+      const averageScore = (((scoreSum / singleRestaurant.reviews.length) / 5) * 100).toFixed(2);
+
       return (
         <Container>
           <Divider hidden />
           <Divider hidden />
           <Divider hidden />
           <Grid>
+            
+            <Grid.Column width={16}>
+              <h1 className="single-Restaurant-header"> {singleRestaurant.name} </h1>
+              <Divider />
+            </Grid.Column>
+            
             <Grid.Column width={10}>
               <Image src={singleRestaurant.imageUrl} size="big" rounded />
             </Grid.Column>
             <Grid.Column width={6}>
-              <h1 className="single-Restaurant-header"> {singleRestaurant.name} </h1>
-
+              <h3 className="pie-title"><img className="pie-logo" src="https://image.flaticon.com/icons/svg/440/440230.svg" /> Apple Pie Meter <img className="pie-logo" src="https://image.flaticon.com/icons/svg/440/440230.svg" /></h3> 
+              <ApplePie singleRestaurant={singleRestaurant} averageScore={averageScore} />
               <Divider />
-              <pieChart singleRestaurant={singleRestaurant} />
-              <Divider />
-
               <h3>Expense Rating: <span className={singleRestaurant.expenseRating <= 2 ? "cheap" : "expensive"}>{dollarSignHelper(singleRestaurant.expenseRating)}</span>
               </h3>
               <Header size="medium">Address: {singleRestaurant.location}</Header>
@@ -48,7 +57,6 @@ class SingleRestaurant extends Component {
 
               </Label>
             </Grid.Column>
-
           </Grid>
         </Container>
       )
