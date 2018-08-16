@@ -34,8 +34,6 @@ async function getRestaurants() {
 
 async function createYelpRestaurants() {
   const restaurants = await getRestaurants()
-  await db.sync({force: true})
-
   const restaurantsArr = restaurants.map(restaurant => {
     const location = restaurant.location.display_address.join(', ')
 

@@ -1,6 +1,6 @@
 const {googleApiKey} = require('../secrets')
 const axios = require('axios')
-const {Restaurant, Review} = require('../server/db/models')
+const {Review} = require('../server/db/models')
 const fs = require('fs')
 const utf8 = require('utf8')
 
