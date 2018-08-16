@@ -1,5 +1,3 @@
-'use strict'
-
 const axios = require('axios')
 let {yelpApiKey} = require('../secrets')
 const db = require('../server/db')
@@ -37,7 +35,6 @@ async function getRestaurants() {
 async function createYelpRestaurants() {
   const restaurants = await getRestaurants()
   await db.sync({force: true})
-  console.log('db synced!')
 
   const restaurantsArr = restaurants.map(restaurant => {
     const location = restaurant.location.display_address.join(', ')
@@ -67,13 +64,14 @@ async function createYelpRestaurants() {
   await Review.bulkCreate(ratingsArr)
 }
 
-async function fetchFromYelp() {
-  console.log('Fetching from Yelp, please wait...')
+async function yelpCreate() {
   try {
+    console.log('Fetching from Yelp, please wait...')
     await createYelpRestaurants()
+    console.log('Yelp is done!')
   } catch (err) {
     console.error(err)
   }
 }
 
-module.exports = fetchFromYelp
+module.exports = yelpCreate

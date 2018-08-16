@@ -1,10 +1,41 @@
-const {Restaurant, Review} = require('../server/db/models')
+const {Review} = require('../server/db/models')
 const axios = require('axios')
 const {foursquareClientId, foursquareApiKey} = require('../secrets')
+
 const fs = require('fs')
-const db = require('../server/db')
 
 const iconUrl = 'https://image.flaticon.com/icons/svg/174/174850.svg'
+
+async function foursquareCreate(createDbRestaurantObj) {
+  try {
+    console.log('Creating Foursquare reviews...')
+    const fsqData = JSON.parse(
+      fs.readFileSync('script/finalFoursquareData.json', 'utf8')
+    )
+    const restaurantDbObj = await createDbRestaurantObj()
+    const bulkCreateArr = fsqData
+      .filter(restaurant => {
+        if (restaurantDbObj[restaurant.name]) {
+          return true
+        }
+      })
+      .map(restaurant => {
+        return {
+          source: 'Foursquare',
+          rating: restaurant.rating,
+          restaurantId: restaurantDbObj[restaurant.name].id,
+          sourceLogo: iconUrl
+        }
+      })
+    await Review.bulkCreate(bulkCreateArr)
+    console.log('Foursquare is done!')
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+module.exports = foursquareCreate
+
 // async function get4sq(offset) {
 //   try {
 //     const {data} = await axios.get(
@@ -57,59 +88,3 @@ const iconUrl = 'https://image.flaticon.com/icons/svg/174/174850.svg'
 //     console.error(error)
 //   }
 // }
-
-async function fetchRestaurants() {
-  try {
-    const restaurants = await Restaurant.findAll()
-    return restaurants
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-async function createDbRestaurantObj() {
-  try {
-    const restaurants = await fetchRestaurants()
-    let restaurantObj = {}
-
-    restaurants.forEach(restaurant => {
-      let tempRestaurant = restaurant.dataValues
-      if (!restaurantObj[tempRestaurant.name]) {
-        restaurantObj[tempRestaurant.name] = tempRestaurant
-      }
-    })
-    return restaurantObj
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-async function foursquareCreate() {
-  try {
-    console.log('Creating Foursquare reviews...')
-    const fsqData = JSON.parse(
-      fs.readFileSync('script/finalFoursquareData.json', 'utf8')
-    )
-    const restaurantDbObj = await createDbRestaurantObj()
-    const bulkCreateArr = fsqData
-      .filter(restaurant => {
-        if (restaurantDbObj[restaurant.name]) {
-          return true
-        }
-      })
-      .map(restaurant => {
-        return {
-          source: 'Foursquare',
-          rating: restaurant.rating,
-          restaurantId: restaurantDbObj[restaurant.name].id,
-          sourceLogo: iconUrl
-        }
-      })
-    await Review.bulkCreate(bulkCreateArr)
-    console.log('done!')
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-module.exports = foursquareCreate

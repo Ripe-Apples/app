@@ -1,5 +1,4 @@
 const axios = require('axios')
-const db = require('../server/db')
 const {Restaurant} = require('../server/db/models')
 
 const getOpenTableRestaurants = async pageNumber => {
@@ -26,34 +25,9 @@ const getOpenTableArray = async () => {
   }
 }
 
-async function fetchRestaurants() {
+const opentableCreate = async createDbRestaurantObj => {
   try {
-    const restaurants = await Restaurant.findAll()
-    return restaurants
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-async function createDbRestaurantObj() {
-  try {
-    const restaurants = await fetchRestaurants()
-    let restaurantObj = {}
-
-    restaurants.forEach(restaurant => {
-      let tempRestaurant = restaurant.dataValues
-      if (!restaurantObj[tempRestaurant.name]) {
-        restaurantObj[tempRestaurant.name] = tempRestaurant
-      }
-    })
-    return restaurantObj
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-const opentableCreate = async () => {
-  try {
+    console.log('Creating OpenTable links...')
     const restaurantDbObj = await createDbRestaurantObj()
     const opentableArray = await getOpenTableArray()
     const arrayForUpdate = opentableArray
@@ -67,6 +41,7 @@ const opentableCreate = async () => {
     for (let i = 0; i < arrayForUpdate.length; i++) {
       await Restaurant.update(arrayForUpdate[i][0], arrayForUpdate[i][1])
     }
+    console.log('OpenTable is done!')
   } catch (error) {
     console.error(error)
   }

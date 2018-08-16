@@ -7,6 +7,7 @@ const zomatoCreate = require('./zomatoTestScript')
 const googleCreate = require('./googleTestScript')
 const foursquareCreate = require('./foursquareTestScript')
 const openTableCreate = require('./openTableTestScript')
+const createDbRestaurantObj = require('./helperFunctions')
 
 async function seed() {
   await db.sync({force: true})
@@ -18,10 +19,10 @@ async function seed() {
   ])
   console.log(`seeded ${users.length} users`)
   await yelpCreate()
-  await zomatoCreate()
-  await googleCreate()
-  await foursquareCreate()
-  await openTableCreate()
+  await zomatoCreate(createDbRestaurantObj)
+  await googleCreate(createDbRestaurantObj)
+  await foursquareCreate(createDbRestaurantObj)
+  await openTableCreate(createDbRestaurantObj)
   console.log(`seeded successfully`)
 }
 
