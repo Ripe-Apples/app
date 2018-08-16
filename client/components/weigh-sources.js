@@ -37,7 +37,7 @@ class weighSources extends Component {
         <List.Header>Weigh Sources</List.Header>
         <List.Item>
           <div className="weigh-sources-flex">
-            <div className="item-flex">Yelp</div>
+            <div className="item-flex"><img className="sourceLogo" src="https://image.flaticon.com/icons/svg/174/174882.svg" /> Yelp</div>
             <div className="item-flex right">
               <Button.Group>
                 <Button
@@ -72,7 +72,7 @@ class weighSources extends Component {
         </List.Item>
         <List.Item>
           <div className="weigh-sources-flex">
-            <div className="item-flex">Zomato</div>
+            <div className="item-flex"><img className="sourceLogo" src="https://images-na.ssl-images-amazon.com/images/I/21Wc%2BuzZURL._SY355_.png" /> Zomato</div>
             <div className="item-flex right">
               <Button.Group>
                 <Button
@@ -107,7 +107,7 @@ class weighSources extends Component {
         </List.Item>
         <List.Item>
           <div className="weigh-sources-flex">
-            <div className="item-flex">Google</div>
+            <div className="item-flex"><img className="sourceLogo" src="https://image.flaticon.com/icons/svg/281/281781.svg" /> Google</div>
             <div className="item-flex right">
               <Button.Group>
                 <Button
@@ -142,7 +142,7 @@ class weighSources extends Component {
         </List.Item>
         <List.Item>
           <div className="weigh-sources-flex">
-            <div className="item-flex">Foursquare</div>
+            <div className="item-flex"><img className="sourceLogo" src='https://image.flaticon.com/icons/svg/174/174850.svg' /> Foursquare</div>
             <div className="item-flex right">
               <Button.Group>
                 <Button

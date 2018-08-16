@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleRestaurant} from '../store/restaurant'
 import {Grid, Container, Image, Divider, Header, Label} from 'semantic-ui-react'
+import ApplePie from './pie-chart'
 
 const dollarSignHelper = expenseRating => {
   if (expenseRating === 0) return 'No Expense Rating Yet'
@@ -24,26 +25,40 @@ class SingleRestaurant extends Component {
   render() {
     const {singleRestaurant} = this.props
 
-    return !singleRestaurant ? (
+    if (!singleRestaurant.reviews) {
+      return (
       <div>
-      <Dimmer active inverted>
-        <Loader inverted>Loading</Loader>
-      </Dimmer>
-      <Image src='/images/wireframe/short-paragraph.png' />
-  </div>
-    ):(
+        <Dimmer active inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
+        <Image src='/images/wireframe/short-paragraph.png' />
+      </div>
+      )
+    } else {
+      const scoreSum = singleRestaurant.reviews.reduce((acc, review) => {
+        let score = review.rating > 5 ? review.rating - 5 : review.rating
+        return acc + score;
+      }, 0)
+      const averageScore = (((scoreSum / singleRestaurant.reviews.length) / 5) * 100).toFixed(2);
+
+      return (
         <Container>
           <Divider hidden />
           <Divider hidden />
           <Divider hidden />
           <Grid>
-            <Grid.Column width={8}>
+            
+            <Grid.Column width={16}>
+              <h1 className="single-restaurant-header"> {singleRestaurant.name} </h1>
+              <Divider />
+            </Grid.Column>
+            
+            <Grid.Column width={10}>
               <Image src={singleRestaurant.imageUrl} size="big" rounded />
             </Grid.Column>
-            <Grid.Column width={8}>
-              <h1 className="single-restaurant-header">
-                {singleRestaurant.name}
-              </h1>
+            <Grid.Column width={6}>
+              <h3 className="pie-title"><img className="pie-logo" src="https://image.flaticon.com/icons/svg/440/440230.svg" /> Apple Pie Score <img className="pie-logo" src="https://image.flaticon.com/icons/svg/440/440230.svg" /></h3> 
+              <ApplePie singleRestaurant={singleRestaurant} averageScore={averageScore} />
               <Divider />
               <h3>
                 Expense Rating:{' '}
@@ -57,15 +72,7 @@ class SingleRestaurant extends Component {
                   src="https://image.flaticon.com/icons/svg/281/281767.svg"
                 />
                 <Label.Detail className="location-link">
-                  <a
-                    href={
-                      'https://www.google.com/maps/search/' +
-                      singleRestaurant.location
-                    }
-                  >
-                    {' '}
-                    View Restaurant Location
-                  </a>
+                  <a  href={"https://www.google.com/maps/search/" + singleRestaurant.location }target="_blank"> View Restaurant Location</a>
                 </Label.Detail>
               </Label>
             </Grid.Column>

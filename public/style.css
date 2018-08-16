@@ -42,7 +42,7 @@ nav a {
   text-align: right;
 }
 .sourceLogo {
-  height: 15px;
+  height: 12px;
   width: 15px;
 }
 
@@ -89,6 +89,12 @@ nav a {
 
 .single-restaurant-header {
   font-family: 'Playball', cursive !important;
-  font-size: 70px;
-  color: #f2711c;
+  font-size: 50px;
+  color: orange;
+  text-align: center;
+}
+
+.pie-logo {
+  height: 25px;
+  width: 25px;
 }
