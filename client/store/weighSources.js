@@ -1,5 +1,5 @@
 const YELP_CHANGE = 'YELP_CHANGE'
-const TRIP_ADVISOR_CHANGE = 'TRIP_ADVISOR_CHANGE'
+const ZOMATO_CHANGE = 'ZOMATO_CHANGE'
 const GOOGLE_CHANGE = 'GOOGLE_CHANGE'
 const RESET = 'RESET'
 
@@ -8,8 +8,8 @@ export const yelpChange = value => ({
   value
 })
 
-export const tripAdvisorChange = value => ({
-  type: TRIP_ADVISOR_CHANGE,
+export const zomatoChange = value => ({
+  type: ZOMATO_CHANGE,
   value
 })
 
@@ -24,7 +24,7 @@ export const reset = () => ({
 
 const initialState = {
   yelpWeight: 5,
-  tripAdvisorWeight: 5,
+  zomatoWeight: 5,
   googleWeight: 5
 }
 
@@ -35,10 +35,10 @@ export default function(state = initialState, action) {
         ...state,
         yelpWeight: action.value
       }
-    case TRIP_ADVISOR_CHANGE:
+    case ZOMATO_CHANGE:
       return {
         ...state,
-        tripAdvisorWeight: action.value
+        zomatoWeight: action.value
       }
     case GOOGLE_CHANGE:
       return {

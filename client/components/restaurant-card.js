@@ -6,7 +6,7 @@ const RestaurantCard = props => {
   const restaurant = props.restaurant
   const reviews = restaurant.reviews
   const dollarSignHelper = expenseRating => {
-    if (expenseRating === 0) return 'No Rating'
+    if (expenseRating === 0) return 'N/A'
     return '$'.repeat(expenseRating)
   }
   const labelColor = score => {
@@ -30,7 +30,8 @@ const RestaurantCard = props => {
       </div>
       <Card.Content>
         <Card.Header>
-          {restaurant.name}
+          {restaurant.name.slice(0, 20)}
+          {restaurant.name.length > 15 ? '...' : ''}
           <span className="right floated">
             <Label color={color} key={color}>
               {restaurant.score}%
@@ -42,7 +43,8 @@ const RestaurantCard = props => {
         </Card.Meta>
         <Card.Description>
           {dollarSignHelper(restaurant.expenseRating)},{' '}
-          {restaurant.cuisineType[0].title}
+          {restaurant.cuisineType[0].title.slice(0, 17)}
+          {restaurant.cuisineType[0].title.length > 17 ? '...' : ''}
           <span className="right floated">
             <Popup trigger={<a>View Sources</a>} wide="very">
               {reviews.map(review => (

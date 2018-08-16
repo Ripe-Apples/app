@@ -1,15 +1,11 @@
 import React, {Component} from 'react'
 import {List, Button, Icon} from 'semantic-ui-react'
 import {connect} from 'react-redux'
-import {
-  yelpChange,
-  tripAdvisorChange,
-  googleChange
-} from '../store/weighSources'
+import {yelpChange, zomatoChange, googleChange} from '../store/weighSources'
 
 class weighSources extends Component {
-  decrementBlock(val, callback, yelpWeight, tripAdvisorWeight, googleWeight) {
-    if (val && yelpWeight + tripAdvisorWeight + googleWeight > 1) {
+  decrementBlock(val, callback, yelpWeight, zomatoWeight, googleWeight) {
+    if (val > 1) {
       val--
       callback(val)
     }
@@ -22,9 +18,9 @@ class weighSources extends Component {
   }
 
   render() {
-    let {yelpWeight, tripAdvisorWeight, googleWeight} = this.props
+    let {yelpWeight, zomatoWeight, googleWeight} = this.props
 
-    const {yelpChange, tripAdvisorChange, googleChange} = this.props
+    const {yelpChange, zomatoChange, googleChange} = this.props
 
     return (
       <List>
@@ -40,7 +36,7 @@ class weighSources extends Component {
                       yelpWeight,
                       yelpChange,
                       yelpWeight,
-                      tripAdvisorWeight,
+                      zomatoWeight,
                       googleWeight
                     )
                   }}
@@ -66,16 +62,16 @@ class weighSources extends Component {
         </List.Item>
         <List.Item>
           <div className="weigh-sources-flex">
-            <div className="item-flex">Trip Advisor</div>
+            <div className="item-flex">Zomato</div>
             <div className="item-flex right">
               <Button.Group>
                 <Button
                   onClick={() => {
                     this.decrementBlock(
-                      tripAdvisorWeight,
-                      tripAdvisorChange,
+                      zomatoWeight,
+                      zomatoChange,
                       yelpWeight,
-                      tripAdvisorWeight,
+                      zomatoWeight,
                       googleWeight
                     )
                   }}
@@ -84,11 +80,11 @@ class weighSources extends Component {
                     <Icon name="minus" />
                   </div>
                 </Button>
-                <Button.Or text={tripAdvisorWeight.toString()} />
+                <Button.Or text={zomatoWeight.toString()} />
                 <Button
                   positive
                   onClick={() => {
-                    this.incrementBlock(tripAdvisorWeight, tripAdvisorChange)
+                    this.incrementBlock(zomatoWeight, zomatoChange)
                   }}
                 >
                   <div className="no-margin">
@@ -110,7 +106,7 @@ class weighSources extends Component {
                       googleWeight,
                       googleChange,
                       yelpWeight,
-                      tripAdvisorWeight,
+                      zomatoWeight,
                       googleWeight
                     )
                   }}
@@ -141,13 +137,13 @@ class weighSources extends Component {
 
 const mapState = state => ({
   yelpWeight: state.weighSourcesReducer.yelpWeight,
-  tripAdvisorWeight: state.weighSourcesReducer.tripAdvisorWeight,
+  zomatoWeight: state.weighSourcesReducer.zomatoWeight,
   googleWeight: state.weighSourcesReducer.googleWeight
 })
 
 const mapDispatch = dispatch => ({
   yelpChange: value => dispatch(yelpChange(value)),
-  tripAdvisorChange: value => dispatch(tripAdvisorChange(value)),
+  zomatoChange: value => dispatch(zomatoChange(value)),
   googleChange: value => dispatch(googleChange(value))
 })
 
