@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleRestaurant} from '../store/restaurant'
 import {Grid, Container, Image, Divider, Header, Label} from 'semantic-ui-react'
+import pieChart from './pie-chart'
 
 const dollarSignHelper = expenseRating => {
     if (expenseRating === 0) return 'No Expense Rating Yet'
@@ -30,7 +31,11 @@ class SingleRestaurant extends Component {
             </Grid.Column>
             <Grid.Column width={6}>
               <h1 className="single-Restaurant-header"> {singleRestaurant.name} </h1>
+
               <Divider />
+              <pieChart singleRestaurant={singleRestaurant} />
+              <Divider />
+
               <h3>Expense Rating: <span className={singleRestaurant.expenseRating <= 2 ? "cheap" : "expensive"}>{dollarSignHelper(singleRestaurant.expenseRating)}</span>
               </h3>
               <Header size="medium">Address: {singleRestaurant.location}</Header>
@@ -38,7 +43,7 @@ class SingleRestaurant extends Component {
               <Label>
                 <img className="map-logo" src="https://image.flaticon.com/icons/svg/281/281767.svg" />
                 <Label.Detail className="location-link">
-                  <a  href={"https://www.google.com/maps/search/" + singleRestaurant.location}> View Restaurant Location</a>
+                  <a  href={"https://www.google.com/maps/search/" + singleRestaurant.location }target="_blank"> View Restaurant Location</a>
                 </Label.Detail>
 
               </Label>

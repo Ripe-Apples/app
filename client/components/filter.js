@@ -10,6 +10,11 @@ import {
 class filter extends Component {
   constructor() {
     super()
+    this.state = {
+      price: '',
+      cuisineType: '',
+      location: ''
+    }
     this.handlePriceChange = this.handlePriceChange.bind(this)
     this.handleCuisineChange = this.handleCuisineChange.bind(this)
     this.handleLocationChange = this.handleLocationChange.bind(this)
@@ -18,11 +23,14 @@ class filter extends Component {
 
   async handlePriceChange(event, {value}) {
     const price = value
-    await this.props.changePrice(price)
-    await this.filterRestaurants()
-    await this.props.changeRestaurantsOnCurrentPage(
-      this.props.filteredRestaurants.slice(0, 9)
-    )
+    console.log('filter 21', price)
+    if (prevState.value !== '') {
+      await this.props.changePrice(price)
+      await this.filterRestaurants()
+      await this.props.changeRestaurantsOnCurrentPage(
+        this.props.filteredRestaurants.slice(0, 9)
+      )
+    }
   }
   async handleCuisineChange(event, {value}) {
     const cuisine = value

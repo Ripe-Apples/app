@@ -10,13 +10,14 @@ import {reset as resetFilters} from '../store/filters'
 class Navbar extends Component {
   constructor() {
     super()
-    this.resetClick = this.resetClick.bind(this)
+    //this.resetClick = this.resetClick.bind(this)
   }
 
-  async resetClick() {
-    await this.props.resetWeights()
-    await this.props.resetFilters()
-  }
+  //used if we want to have page reset when clicking home
+  // async resetClick() {
+  //   await this.props.resetWeights()
+  //   await this.props.resetFilters()
+  // }
 
   render() {
     const isLoggedIn = this.props.isLoggedIn;
@@ -81,8 +82,8 @@ const mapDispatch = dispatch => {
     handleClick() {
       dispatch(logout())
     },
-    resetWeights: () => dispatch(resetWeights()),
-    resetFilters: () => dispatch(resetFilters()),
+    // resetWeights: () => dispatch(resetWeights()),
+    // resetFilters: () => dispatch(resetFilters()),
   }
 }
 
