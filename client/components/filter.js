@@ -69,15 +69,23 @@ class filter extends Component {
   }
 
   render() {
-    //Cuisines
+    const {restaurants} = this.props
 
-    const chinese = 'Chinese',
-      deli = 'Deli',
-      italian = 'Italian',
-      ramen = 'Ramen',
-      seafood = 'Seafood',
-      steakhouse = 'Steakhouse'
+    const cuisines = {}
+    restaurants.forEach(restaurant => {
+      let cuisineType = restaurant.cuisineType[0].title
+      if (!cuisines[cuisineType]) {
+        cuisines[cuisineType] = true
+      }
+    })
 
+    const cuisine = [{text: 'All', value: ''}]
+
+    for (let key in cuisines) {
+      if (cuisines.hasOwnProperty(key)) {
+        cuisine.push({text: key, value: key})
+      }
+    }
     //Locations
 
     const newYork = 'New York'
@@ -89,15 +97,7 @@ class filter extends Component {
       {text: '$$$', value: 3},
       {text: '$$$$', value: 4}
     ]
-    const cuisine = [
-      {text: 'All', value: ''},
-      {text: chinese, value: chinese},
-      {text: deli, value: deli},
-      {text: italian, value: italian},
-      {text: ramen, value: ramen},
-      {text: seafood, value: seafood},
-      {text: steakhouse, value: steakhouse}
-    ]
+
     const location = [{text: 'All', value: ''}, {text: newYork, value: newYork}]
 
     return (
@@ -120,7 +120,13 @@ class filter extends Component {
               placeholder="Cuisine"
               fluid
               selection
-              options={cuisine}
+              options={cuisine.sort((cuisine1, cuisine2) => {
+                if (cuisine1.text > cuisine2.text) {
+                  return 1
+                } else {
+                  return -1
+                }
+              })}
               onChange={this.handleCuisineChange}
               value={this.props.cuisine}
             />
