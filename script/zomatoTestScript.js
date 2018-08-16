@@ -1,9 +1,6 @@
-'use strict'
-
 const axios = require('axios')
 let {zomatoApiKey} = require('../secrets')
-const db = require('../server/db')
-const {Restaurant, Review} = require('../server/db/models')
+const {Review} = require('../server/db/models')
 
 const iconUrl =
   'https://images-na.ssl-images-amazon.com/images/I/21Wc%2BuzZURL._SY355_.png'
@@ -69,34 +66,9 @@ const createZomatoRestaurantObj = async () => {
   }
 }
 
-async function fetchRestaurants() {
+async function zomatoCreate(createDbRestaurantObj) {
   try {
-    const restaurants = await Restaurant.findAll()
-    return restaurants
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-async function createDbRestaurantObj() {
-  try {
-    const restaurants = await fetchRestaurants()
-    let restaurantObj = {}
-
-    restaurants.forEach(restaurant => {
-      let tempRestaurant = restaurant.dataValues
-      if (!restaurantObj[tempRestaurant.name]) {
-        restaurantObj[tempRestaurant.name] = tempRestaurant
-      }
-    })
-    return restaurantObj
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-async function mergeData() {
-  try {
+    console.log('Creating Zomato reviews...')
     let zomatoRestaurants = await createZomatoRestaurantObj()
     zomatoRestaurants = zomatoRestaurants.filter(restaurant => {
       if (restaurant) return true
@@ -114,15 +86,7 @@ async function mergeData() {
       }
     })
     await Review.bulkCreate(reviewsForCreate)
-  } catch (error) {
-    console.error(error)
-  }
-}
-async function zomatoCreate() {
-  console.log('Creating Zomato reviews, please wait...')
-  try {
-    await db.sync()
-    await mergeData()
+    console.log('Zomato is done!')
   } catch (error) {
     console.error(error)
   }
