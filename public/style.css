@@ -80,11 +80,11 @@ nav a {
 }
 
 .location-link {
-  vertical-align: middle !important; 
+  vertical-align: middle !important;
 }
 
-.single-Restaurant-header {
+.single-restaurant-header {
   font-family: 'Playball', cursive !important;
   font-size: 70px;
-  color: orange;
+  color: #f2711c;
 }
