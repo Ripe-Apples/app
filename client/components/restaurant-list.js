@@ -19,13 +19,20 @@ class RestaurantList extends Component {
 
   async componentDidMount() {
     await this.props.fetchRestaurants()
-    const {yelpWeight, zomatoWeight, googleWeight, restaurants} = this.props
+    const {
+      yelpWeight,
+      zomatoWeight,
+      googleWeight,
+      foursquareWeight,
+      restaurants
+    } = this.props
     restaurants.forEach(restaurant => {
       restaurant.score = this.restaurantScore(
         restaurant.reviews,
         yelpWeight,
         zomatoWeight,
-        googleWeight
+        googleWeight,
+        foursquareWeight
       )
     })
     await this.props.changeFilteredRestaurants(this.props.restaurants)
@@ -34,7 +41,13 @@ class RestaurantList extends Component {
     )
   }
 
-  restaurantScore = (reviews, yelpWeight, zomatoWeight, googleWeight) => {
+  restaurantScore = (
+    reviews,
+    yelpWeight,
+    zomatoWeight,
+    googleWeight,
+    foursquareWeight
+  ) => {
     let totalWeight = yelpWeight
     let reviewsString = ''
     reviews.forEach(review => {
@@ -44,10 +57,18 @@ class RestaurantList extends Component {
 
     if (reviewsString.indexOf('Zomato') !== -1) totalWeight += zomatoWeight
     if (reviewsString.indexOf('Google') !== -1) totalWeight += googleWeight
+    if (reviewsString.indexOf('Foursquare') !== -1)
+      totalWeight += foursquareWeight
 
     function weighter(sourceWeight, review) {
       const weight = sourceWeight / totalWeight * reviewsLength
-      const rating = review.rating / 5
+      let denominator
+      if (review.source === 'Foursquare') {
+        denominator = 10
+      } else {
+        denominator = 5
+      }
+      const rating = review.rating / denominator
       return weight * rating
     }
 
@@ -60,6 +81,8 @@ class RestaurantList extends Component {
             return weighter(zomatoWeight, review)
           } else if (review.source === 'Google') {
             return weighter(googleWeight, review)
+          } else if (review.source === 'Foursquare') {
+            return weighter(foursquareWeight, review)
           }
         })
         .reduce((accum, currentVal) => accum + currentVal, 0) /
@@ -121,6 +144,33 @@ class RestaurantList extends Component {
   render() {
     let restaurants = this.props.restaurantsOnCurrentPage
 
+    let restaurantsArray
+    const lowercaseSearchValue = this.props.searchValue.toLowerCase()
+
+    if (this.props.searchValue === '') {
+      restaurantsArray = restaurants
+    } else {
+      restaurantsArray = restaurants.filter(restaurant => {
+        return restaurant.name.toLowerCase().includes(lowercaseSearchValue)
+      })
+    }
+    const {
+      yelpWeight,
+      zomatoWeight,
+      googleWeight,
+      foursquareWeight
+    } = this.props
+
+    restaurantsArray.forEach(restaurant => {
+      restaurant.score = this.restaurantScore(
+        restaurant.reviews,
+        yelpWeight,
+        zomatoWeight,
+        googleWeight,
+        foursquareWeight
+      )
+    })
+
     const totalRestaurants = this.props.filteredRestaurants.length
     const perPage = 9
     const pages = Math.ceil(totalRestaurants / perPage)
@@ -176,7 +226,8 @@ const mapState = state => ({
   searchValue: state.filtersReducer.searchValue,
   yelpWeight: state.weighSourcesReducer.yelpWeight,
   zomatoWeight: state.weighSourcesReducer.zomatoWeight,
-  googleWeight: state.weighSourcesReducer.googleWeight
+  googleWeight: state.weighSourcesReducer.googleWeight,
+  foursquareWeight: state.weighSourcesReducer.foursquareWeight
 })
 
 const mapDispatch = dispatch => ({

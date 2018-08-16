@@ -52,7 +52,12 @@ const RestaurantCard = props => {
                   <p>
                     {' '}
                     <img className="sourceLogo" src={review.sourceLogo} />{' '}
-                    {review.source}: {review.rating}{' '}
+                    {review.source}: {review.rating}
+                    {review.source === 'Yelp' ||
+                    review.source === 'Zomato' ||
+                    review.source === 'Google'
+                      ? ' / 5'
+                      : ' / 10'}
                   </p>
                 </div>
               ))}
