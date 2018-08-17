@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchLikes, addLike, deleteLike} from '../store/like'
 import { Button, Icon, Label } from 'semantic-ui-react'
+import SingleRestaurant from './SingleRestaurant';
 
 class LikeButton extends Component {
   constructor(props) {
@@ -12,11 +13,11 @@ class LikeButton extends Component {
     }
   }
 
-  componentDidMount() {
-    this.props.fetchLikes()
-  }
-
   render(props) {
+    console.log('propssingleRest' , props);
+    // const {singleRestaurant} = this.props
+
+    // {singleRestaurant.likes.length}
     return (
       <div>
         <Button as='div' labelPosition='right'>
@@ -25,7 +26,7 @@ class LikeButton extends Component {
             Like
         </Button>
           <Label as='a' basic color='white' pointing='left'>
-            2,048
+            100
           </Label>
         </Button>
       </div>
@@ -34,9 +35,10 @@ class LikeButton extends Component {
 }
 
 const mapState = state => {
-  // return {
-  //   likes: state.likeReducer.likes
-  // }
+  console.log('state', state)
+  return {
+    likes: state.likeReducer.likes
+  }
 }
 
 const mapDispatch = dispatch => ({

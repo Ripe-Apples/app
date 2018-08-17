@@ -8,7 +8,9 @@ import {
   Divider,
   Label,
   Dimmer,
-  Loader
+  Loader,
+  Button,
+  Icon
 } from 'semantic-ui-react'
 import ApplePie from './pie-chart'
 import LikeButton from './like-button'
@@ -70,7 +72,17 @@ class SingleRestaurant extends Component {
             <Grid.Column width={10}>
               <Image src={singleRestaurant.imageUrl} size="big" rounded />
               <Divider />
-              <LikeButton singleRestaurant={singleRestaurant} />
+              <div>
+                <Button as='div' labelPosition='right'>
+                  <Button color="red">
+                    <Icon name='heart' />
+                    Like
+                  </Button>
+                  <Label as='a' pointing='left'>
+                    {singleRestaurant.likes.length}
+                  </Label>
+                </Button>
+              </div>
             </Grid.Column>
             <Grid.Column width={6}>
               <h3 className="pie-title">
@@ -116,7 +128,6 @@ class SingleRestaurant extends Component {
               <Divider hidden />
               {singleRestaurant.opentableUrl ? (
                 <div>
-                  {console.log(singleRestaurant.opentableUrl)}
                   <Label
                     style={{margin: '0px'}}
                     className="single-page-button-width"

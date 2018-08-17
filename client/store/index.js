@@ -6,8 +6,9 @@ import user from './user'
 import restaurantReducer from './restaurant'
 import weighSourcesReducer from './weighSources'
 import filtersReducer from './filters'
+import likeReducer from './like'
 
-const reducer = combineReducers({user, restaurantReducer, filtersReducer, weighSourcesReducer})
+const reducer = combineReducers({user, restaurantReducer, filtersReducer, weighSourcesReducer, likeReducer})
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
