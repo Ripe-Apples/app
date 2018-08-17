@@ -56,7 +56,6 @@ class SingleRestaurant extends Component {
 
       return (
         <Container>
-          <Divider hidden />
           <Grid>
             <Grid.Column width={16}>
               <h1 className="single-restaurant-header">

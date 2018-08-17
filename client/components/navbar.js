@@ -46,6 +46,9 @@ class Navbar extends Component {
             // The navbar will show these links after you log in
             <React.Fragment>
               <Menu.Item>
+                <Link to="/profile">Profile</Link>
+              </Menu.Item>
+              <Menu.Item>
                 <Link to="#" onClick={handleClick}>
                   Logout
                 </Link>
