@@ -28,7 +28,6 @@ async function getRestaurants() {
     let response = await getYelp(i * 50)
     restaurants = restaurants.concat(Array.from(response))
   }
-
   return restaurants
 }
 
@@ -43,7 +42,9 @@ async function createYelpRestaurants() {
       cuisineType: restaurant.categories,
       expenseRating,
       location,
-      imageUrl: restaurant.image_url
+      imageUrl: restaurant.image_url,
+      latitude: restaurant.coordinates.latitude,
+      longitude: restaurant.coordinates.longitude
     }
   })
 
@@ -55,7 +56,8 @@ async function createYelpRestaurants() {
       source: 'Yelp',
       rating: restaurant.rating,
       restaurantId: id,
-      sourceLogo: iconUrl
+      sourceLogo: iconUrl,
+      reviewUrl: restaurant.url
     }
   })
 
