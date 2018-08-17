@@ -5,10 +5,17 @@ import {
   changeFilteredRestaurants,
   changeRestaurantsOnCurrentPage
 } from '../store/restaurant'
-import {updateSearchBar} from '../store/filters'
+import {updateSearchBar, changeCurrentPage} from '../store/filters'
 import RestaurantCard from './restaurant-card'
-import {Input, Grid, Pagination, Card, Divider, Loader, Dimmer} from 'semantic-ui-react'
-
+import {
+  Input,
+  Grid,
+  Pagination,
+  Card,
+  Divider,
+  Loader,
+  Dimmer
+} from 'semantic-ui-react'
 
 class RestaurantList extends Component {
   constructor() {
@@ -132,9 +139,12 @@ class RestaurantList extends Component {
   }
 
   async handlePageChange(event) {
+    await this.props.changeCurrentPage(
+      parseInt(event.target.getAttribute('value'), 10)
+    )
+
     const perPage = 12
-    const startIndex =
-      (parseInt(event.target.getAttribute('value'), 10) - 1) * perPage
+    const startIndex = (this.props.currentPage - 1) * perPage
     const endIndex = startIndex + perPage
 
     await this.props.changeRestaurantsOnCurrentPage(
@@ -176,14 +186,12 @@ class RestaurantList extends Component {
     const perPage = 12
     const pages = Math.ceil(totalRestaurants / perPage)
 
-    return !totalRestaurants ? (
+    return !totalRestaurants && this.props.searchValue === '' ? (
       <div>
-    
-      <Dimmer active inverted>
-        <Loader inverted>Loading</Loader>
-      </Dimmer>
-
-  </div>
+        <Dimmer active inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
+      </div>
     ) : (
       <React.Fragment>
         <Grid>
@@ -201,7 +209,7 @@ class RestaurantList extends Component {
         </Grid>
         <Divider hidden />
         <Pagination
-          defaultActivePage={1}
+          activePage={this.props.currentPage}
           totalPages={pages}
           onClick={this.handlePageChange}
         />
@@ -210,7 +218,11 @@ class RestaurantList extends Component {
           {restaurants
             .sort((restaurant1, restaurant2) => {
               if (restaurant2.reviews.length === restaurant1.reviews.length) {
-                return restaurant2.score - restaurant1.score
+                if (restaurant2.score === restaurant1.score) {
+                  return restaurant2.id - restaurant1.id
+                } else {
+                  return restaurant2.score - restaurant1.score
+                }
               } else {
                 return restaurant2.reviews.length - restaurant1.reviews.length
               }
@@ -233,6 +245,7 @@ const mapState = state => ({
   price: state.filtersReducer.price,
   cuisine: state.filtersReducer.cuisine,
   searchValue: state.filtersReducer.searchValue,
+  currentPage: state.filtersReducer.currentPage,
   yelpWeight: state.weighSourcesReducer.yelpWeight,
   zomatoWeight: state.weighSourcesReducer.zomatoWeight,
   googleWeight: state.weighSourcesReducer.googleWeight,
@@ -245,7 +258,8 @@ const mapDispatch = dispatch => ({
     dispatch(changeFilteredRestaurants(filteredRestaurants)),
   changeRestaurantsOnCurrentPage: restaurants =>
     dispatch(changeRestaurantsOnCurrentPage(restaurants)),
-  updateSearchBar: searchValue => dispatch(updateSearchBar(searchValue))
+  updateSearchBar: searchValue => dispatch(updateSearchBar(searchValue)),
+  changeCurrentPage: newPage => dispatch(changeCurrentPage(newPage))
 })
 
 export default connect(mapState, mapDispatch)(RestaurantList)

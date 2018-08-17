@@ -1,7 +1,11 @@
 import React, {Component} from 'react'
 import {List, Dropdown, ListItem} from 'semantic-ui-react'
 import {connect} from 'react-redux'
-import {changePrice, changeCuisine} from '../store/filters.js'
+import {
+  changePrice,
+  changeCuisine,
+  changeCurrentPage
+} from '../store/filters.js'
 import {
   changeFilteredRestaurants,
   changeRestaurantsOnCurrentPage
@@ -16,20 +20,26 @@ class filter extends Component {
   }
 
   async handlePriceChange(event, {value}) {
-    const price = value
-    await this.props.changePrice(price)
-    await this.filterRestaurants()
-    await this.props.changeRestaurantsOnCurrentPage(
-      this.props.filteredRestaurants.slice(0, 12)
-    )
+    if (value !== this.props.price) {
+      const price = value
+      await this.props.changePrice(price)
+      await this.filterRestaurants()
+      await this.props.changeRestaurantsOnCurrentPage(
+        this.props.filteredRestaurants.slice(0, 12)
+      )
+      await this.props.changeCurrentPage(1)
+    }
   }
   async handleCuisineChange(event, {value}) {
-    const cuisine = value
-    await this.props.changeCuisine(cuisine)
-    await this.filterRestaurants()
-    await this.props.changeRestaurantsOnCurrentPage(
-      this.props.filteredRestaurants.slice(0, 12)
-    )
+    if (value !== this.props.cuisine) {
+      const cuisine = value
+      await this.props.changeCuisine(cuisine)
+      await this.filterRestaurants()
+      await this.props.changeRestaurantsOnCurrentPage(
+        this.props.filteredRestaurants.slice(0, 12)
+      )
+      await this.props.changeCurrentPage(1)
+    }
   }
 
   async filterRestaurants() {
@@ -136,7 +146,8 @@ const mapDispatch = dispatch => ({
   changeFilteredRestaurants: filteredRestaurants =>
     dispatch(changeFilteredRestaurants(filteredRestaurants)),
   changeRestaurantsOnCurrentPage: restaurants =>
-    dispatch(changeRestaurantsOnCurrentPage(restaurants))
+    dispatch(changeRestaurantsOnCurrentPage(restaurants)),
+  changeCurrentPage: newPage => dispatch(changeCurrentPage(newPage))
 })
 
 export default connect(mapState, mapDispatch)(filter)
