@@ -9,7 +9,8 @@ import {
   Label,
   Dimmer,
   Loader,
-  List
+  List,
+  ListItem
 } from 'semantic-ui-react'
 import ApplePie from './pie-chart'
 import Map from './GoogleMap'
@@ -26,7 +27,6 @@ class SingleRestaurant extends Component {
 
   render() {
     const {singleRestaurant} = this.props
-
     if (!singleRestaurant.reviews) {
       return (
         <div>
@@ -72,18 +72,16 @@ class SingleRestaurant extends Component {
               />
             </Grid.Column>
             <Grid.Column width={6}>
-              <h3 className="pie-title">
-                <img
-                  className="pie-logo"
-                  src="https://image.flaticon.com/icons/svg/440/440230.svg"
-                />{' '}
-                Apple Pie Score{' '}
-                <img
-                  className="pie-logo"
-                  src="https://image.flaticon.com/icons/svg/440/440230.svg"
-                />
-              </h3>
+              <h3 className="pie-title">🥧 Pie Score 🥧</h3>
               <ApplePie averageScore={averageScore} />
+              {averageScore >= 90 ? (
+                <div>
+                  <span className="knew-wave">This 🥧 is hot!!!</span>{' '}
+                  <Divider hidden />
+                </div>
+              ) : (
+                <div />
+              )}
               <List>
                 {singleRestaurant.reviews.map(review => {
                   return (
@@ -109,31 +107,38 @@ class SingleRestaurant extends Component {
                 })}
               </List>
               <Divider />
-              <h3>{dollarSignHelper(singleRestaurant.expenseRating)}</h3>
-              <h3>{singleRestaurant.location}</h3>
-
-              <Divider hidden />
-              {singleRestaurant.opentableUrl ? (
-                <div>
-                  {console.log(singleRestaurant.opentableUrl)}
-                  <Label
-                    style={{margin: '0px'}}
-                    className="single-page-button-width"
-                  >
-                    <img
-                      className="map-logo"
-                      src="https://images-na.ssl-images-amazon.com/images/I/51SdVVc%2BrBL.png"
-                    />
-                    <Label.Detail className="location-link">
-                      <a href={singleRestaurant.opentableUrl} target="_blank">
-                        Book on OpenTable
-                      </a>
-                    </Label.Detail>
-                  </Label>
-                </div>
-              ) : (
-                <div />
-              )}
+              <List>
+                <List.Item>
+                  {dollarSignHelper(singleRestaurant.expenseRating)}
+                </List.Item>
+                <ListItem>{singleRestaurant.location}</ListItem>
+                <List.Item>
+                  {singleRestaurant.opentableUrl ? (
+                    <div>
+                      {console.log(singleRestaurant.opentableUrl)}
+                      <Label
+                        style={{margin: '0px'}}
+                        className="single-page-button-width"
+                      >
+                        <img
+                          className="map-logo"
+                          src="https://images-na.ssl-images-amazon.com/images/I/51SdVVc%2BrBL.png"
+                        />
+                        <Label.Detail className="location-link">
+                          <a
+                            href={singleRestaurant.opentableUrl}
+                            target="_blank"
+                          >
+                            Book on OpenTable
+                          </a>
+                        </Label.Detail>
+                      </Label>
+                    </div>
+                  ) : (
+                    <div />
+                  )}
+                </List.Item>
+              </List>
             </Grid.Column>
           </Grid>
         </Container>
