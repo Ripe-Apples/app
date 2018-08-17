@@ -36,6 +36,7 @@ class RestaurantList extends Component {
         foursquareWeight
       )
     })
+
     await this.props.changeFilteredRestaurants(this.props.restaurants)
     await this.props.changeRestaurantsOnCurrentPage(
       this.props.filteredRestaurants.slice(0, 12)

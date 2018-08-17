@@ -27,7 +27,7 @@ class Navbar extends Component {
       <div className="top-menu">
         <Menu stackable inverted color="orange">
           <Menu.Item>
-            <Link to="/" onClick={this.resetClick}>
+            <Link to="/">
               <Grid centered verticalAlign="middle" columns={2}>
                 <Grid.Column width={4}>
                   <img

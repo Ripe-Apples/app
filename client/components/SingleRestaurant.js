@@ -6,12 +6,12 @@ import {
   Container,
   Image,
   Divider,
-  Header,
   Label,
   Dimmer,
   Loader
 } from 'semantic-ui-react'
 import ApplePie from './pie-chart'
+import LikeButton from './like-button'
 
 const dollarSignHelper = expenseRating => {
   if (expenseRating === 0) return 'No Expense Rating Yet'
@@ -69,6 +69,8 @@ class SingleRestaurant extends Component {
 
             <Grid.Column width={10}>
               <Image src={singleRestaurant.imageUrl} size="big" rounded />
+              <Divider />
+              <LikeButton singleRestaurant={singleRestaurant} />
             </Grid.Column>
             <Grid.Column width={6}>
               <h3 className="pie-title">
