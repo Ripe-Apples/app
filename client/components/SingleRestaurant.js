@@ -6,7 +6,6 @@ import {
   Container,
   Image,
   Divider,
-  Header,
   Label,
   Dimmer,
   Loader

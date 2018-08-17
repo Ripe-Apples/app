@@ -16,6 +16,9 @@ const Review = db.define('reviews', {
       min: 0,
       max: 10
     }
+  },
+  reviewUrl: {
+    type: Sequelize.TEXT
   }
 })
 

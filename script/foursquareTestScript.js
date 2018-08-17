@@ -24,7 +24,8 @@ async function foursquareCreate(createDbRestaurantObj) {
           source: 'Foursquare',
           rating: restaurant.rating,
           restaurantId: restaurantDbObj[restaurant.name].id,
-          sourceLogo: iconUrl
+          sourceLogo: iconUrl,
+          reviewUrl: restaurant.reviewUrl
         }
       })
     await Review.bulkCreate(bulkCreateArr)
@@ -80,7 +81,11 @@ module.exports = foursquareCreate
 //         }?client_id=${foursquareClientId}&client_secret=${foursquareApiKey}&v=20180814`
 //       )
 //       let venue = data.response.venue
-//       finalArr.push({name: venue.name, rating: venue.rating})
+//       finalArr.push({
+//         name: venue.name,
+//         rating: venue.rating,
+//         reviewUrl: venue.canonicalUrl
+//       })
 //     }
 //     fs.writeFile('script/finalFoursquareData.json', JSON.stringify(finalArr))
 //     console.log('done!')
