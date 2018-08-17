@@ -7,10 +7,9 @@ const App = () => {
   return (
     <div>
       <Navbar />
-      <br />
-      <br />
-      <br />
-      <Routes />
+      <div className="body-top view-padding">
+        <Routes />
+      </div>
     </div>
   )
 }

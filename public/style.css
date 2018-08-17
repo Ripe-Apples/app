@@ -103,3 +103,7 @@ nav a {
 .single-page-button-width {
   width: 210px !important;
 }
+
+.body-top {
+  margin-top: 55px;
+}
