@@ -12,6 +12,8 @@ import {
   Loader
 } from 'semantic-ui-react'
 import ApplePie from './pie-chart'
+import { GoogleMap, Marker } from "react-google-maps"
+import Map from './GoogleMap'
 
 const dollarSignHelper = expenseRating => {
   if (expenseRating === 0) return 'No Expense Rating Yet'
@@ -25,6 +27,9 @@ const dollarSignHelper = expenseRating => {
 //   }
 // var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 // }
+
+
+
 
 class SingleRestaurant extends Component {
   componentDidMount() {
@@ -98,6 +103,10 @@ class SingleRestaurant extends Component {
                   className="map-logo"
                   src="https://image.flaticon.com/icons/svg/281/281767.svg"
                 />
+               
+               <Map defaultPosition = {'https://www.google.com/maps/search/' + singleRestaurant.location}/>
+
+                
                 <Label.Detail className="location-link">
                   <a
                     href={
