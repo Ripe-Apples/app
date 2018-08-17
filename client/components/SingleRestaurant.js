@@ -11,6 +11,8 @@ import {
   Loader
 } from 'semantic-ui-react'
 import ApplePie from './pie-chart'
+import { GoogleMap, Marker } from "react-google-maps"
+import Map from './GoogleMap'
 
 const dollarSignHelper = expenseRating => {
   if (expenseRating === 0) return 'No Expense Rating Yet'
@@ -24,6 +26,9 @@ const dollarSignHelper = expenseRating => {
 //   }
 // var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 // }
+
+
+
 
 class SingleRestaurant extends Component {
   componentDidMount() {
@@ -81,34 +86,12 @@ class SingleRestaurant extends Component {
                 />
               </h3>
               <ApplePie
-                singleRestaurant={singleRestaurant}
                 averageScore={averageScore}
               />
               <Divider />
               <h3>{dollarSignHelper(singleRestaurant.expenseRating)}</h3>
               <h3>{singleRestaurant.location}</h3>
-              <Divider hidden />
-              <Label
-                style={{margin: '0px'}}
-                className="single-page-button-width"
-              >
-                <img
-                  className="map-logo"
-                  src="https://image.flaticon.com/icons/svg/281/281767.svg"
-                />
-                <Label.Detail className="location-link">
-                  <a
-                    href={
-                      'https://www.google.com/maps/search/' +
-                      singleRestaurant.location
-                    }
-                    target="_blank"
-                  >
-                    {' '}
-                    View Restaurant Location
-                  </a>
-                </Label.Detail>
-              </Label>
+              
               <Divider hidden />
               {singleRestaurant.opentableUrl ? (
                 <div>
@@ -131,6 +114,9 @@ class SingleRestaurant extends Component {
               ) : (
                 <div />
               )}
+            </Grid.Column>
+            <Grid.Column width={10}>
+              <Map longitude={singleRestaurant.longitude} latitude={singleRestaurant.latitude} />
             </Grid.Column>
           </Grid>
         </Container>
