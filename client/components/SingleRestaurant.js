@@ -87,38 +87,12 @@ class SingleRestaurant extends Component {
                 />
               </h3>
               <ApplePie
-                singleRestaurant={singleRestaurant}
                 averageScore={averageScore}
               />
               <Divider />
               <h3>{dollarSignHelper(singleRestaurant.expenseRating)}</h3>
               <h3>{singleRestaurant.location}</h3>
-              <Divider hidden />
-              <Label
-                style={{margin: '0px'}}
-                className="single-page-button-width"
-              >
-                <img
-                  className="map-logo"
-                  src="https://image.flaticon.com/icons/svg/281/281767.svg"
-                />
-               
-               <Map defaultPosition = {'https://www.google.com/maps/search/' + singleRestaurant.location}/>
-
-                
-                <Label.Detail className="location-link">
-                  <a
-                    href={
-                      'https://www.google.com/maps/search/' +
-                      singleRestaurant.location
-                    }
-                    target="_blank"
-                  >
-                    {' '}
-                    View Restaurant Location
-                  </a>
-                </Label.Detail>
-              </Label>
+              
               <Divider hidden />
               {singleRestaurant.opentableUrl ? (
                 <div>
@@ -141,6 +115,9 @@ class SingleRestaurant extends Component {
               ) : (
                 <div />
               )}
+            </Grid.Column>
+            <Grid.Column width={10}>
+              <Map longitude={singleRestaurant.longitude} latitude={singleRestaurant.latitude} />
             </Grid.Column>
           </Grid>
         </Container>
