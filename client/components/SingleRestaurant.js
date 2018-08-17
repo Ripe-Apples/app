@@ -14,24 +14,12 @@ import {
 } from 'semantic-ui-react'
 import ApplePie from './pie-chart'
 import LikeButton from './like-button'
-import { GoogleMap, Marker } from "react-google-maps"
 import Map from './GoogleMap'
 
 const dollarSignHelper = expenseRating => {
   if (expenseRating === 0) return 'No Expense Rating Yet'
   return '$'.repeat(expenseRating)
 }
-// function myMap() {
-//   var mapOptions = {
-//       center: new google.maps.LatLng(51.5, -0.12),
-//       zoom: 10,
-//       mapTypeId: google.maps.MapTypeId.HYBRID
-//   }
-// var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-// }
-
-
-
 
 class SingleRestaurant extends Component {
   componentDidMount() {

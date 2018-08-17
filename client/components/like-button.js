@@ -1,31 +1,40 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchLikes, addLike, deleteLike} from '../store/like'
+import {addLike, deleteLike} from '../store/like'
 import { Button, Icon, Label } from 'semantic-ui-react'
 
 class LikeButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      likes: 0,
       isLiked: false
+    }
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick() {
+    const restaurantId = this.props.singleRestaurant.id
+    this.setState((prevState) => ({
+      isLiked: !prevState.isLiked
+    }))
+    if (this.state.isLiked) {
+      this.props.addLike(restaurantId)
+    } else {
+      this.props.deleteLike(restaurantId)
     }
   }
 
-  render(props) {
-    console.log('propssingleRest' , props);
-    // const {singleRestaurant} = this.props
-
-    // {singleRestaurant.likes.length}
+  render() {
+    const {singleRestaurant} = this.props
     return (
       <div>
-        <Button as='div' labelPosition='right'>
+        <Button onClick={this.handleClick} as='div' labelPosition='right'>
           <Button color="red">
             <Icon name='heart' />
             Like
         </Button>
           <Label as='a' pointing='left'>
-            100
+            {singleRestaurant.likes.length}
           </Label>
         </Button>
       </div>
@@ -36,12 +45,11 @@ class LikeButton extends Component {
 const mapState = state => {
   console.log('state', state)
   return {
-    likes: state.likeReducer
+    user: state.user
   }
 }
 
 const mapDispatch = dispatch => ({
-  fetchLikes: restaurantId => dispatch(fetchLikes(restaurantId)),
   addLike: restaurantId => dispatch(addLike(restaurantId)),
   deleteLike: restaurantId => dispatch(deleteLike(restaurantId)),
 })
