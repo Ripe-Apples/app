@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {MergedAuth, UserHome, Homepage} from './components'
+import {MergedAuth, Homepage, Profile} from './components'
 import SingleRestaurant from './components/SingleRestaurant'
 import {me} from './store'
 
@@ -22,11 +22,16 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/" component={Homepage} />
         <Route exact path="/auth" component={MergedAuth} />
-        <Route exact path="/restaurant/:restaurantId" component={SingleRestaurant} />
+        <Route
+          exact
+          path="/restaurant/:restaurantId"
+          component={SingleRestaurant}
+        />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={Homepage} />
+            <Route path="/profile" component={Profile} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
