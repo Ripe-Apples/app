@@ -296,11 +296,6 @@
       "https://foursquare.com/v/bobwhite-counter/4f00dea9f9abd5b3917d422c"
   },
   {
-    "name": "Cocoron",
-    "rating": 9.4,
-    "reviewUrl": "https://foursquare.com/v/cocoron/4cf9655334c1a09374cb390e"
-  },
-  {
     "name": "Miss Lily's 7A",
     "rating": 9.3,
     "reviewUrl":
@@ -708,12 +703,6 @@
     "reviewUrl": "https://foursquare.com/casamono"
   },
   {
-    "name": "Xi'an Famous Foods",
-    "rating": 9.3,
-    "reviewUrl":
-      "https://foursquare.com/v/xian-famous-foods/4c2a81398abca59393c8fe1f"
-  },
-  {
     "name": "Sotto Le Stelle",
     "rating": 9.3,
     "reviewUrl":
@@ -799,11 +788,6 @@
     "name": "Hillstone",
     "rating": 9.2,
     "reviewUrl": "https://foursquare.com/v/hillstone/4a01d7b8f964a52001711fe3"
-  },
-  {
-    "name": "CAVA",
-    "rating": 9.2,
-    "reviewUrl": "https://foursquare.com/v/cava/59573747123a195de61b71b3"
   },
   {
     "name": "Raku",
@@ -1133,11 +1117,6 @@
       "https://foursquare.com/v/omars-mediterranean-cuisine--bakery/4dbf42196e8124d25db2ab1d"
   },
   {
-    "name": "CAVA",
-    "rating": 9.2,
-    "reviewUrl": "https://foursquare.com/v/cava/57bcd600498e81d153625a1a"
-  },
-  {
     "name": "Pizzeria Sirenetta",
     "rating": 9.2,
     "reviewUrl": "https://foursquare.com/sirenetta_nyc"
@@ -1298,12 +1277,6 @@
     "name": "The Smith",
     "rating": 9.1,
     "reviewUrl": "https://foursquare.com/v/the-smith/4e73cf3a2271ffa4e63183bd"
-  },
-  {
-    "name": "The Meatball Shop",
-    "rating": 9.1,
-    "reviewUrl":
-      "https://foursquare.com/v/the-meatball-shop/4b709d01f964a5204c252de3"
   },
   {
     "name": "Sweet Chick",
