@@ -111,3 +111,9 @@ nav a {
 .body-top {
   margin-top: 55px;
 }
+
+.knew-wave {
+  font-family: 'Knewave', cursive;
+  color: red;
+  font-size: 20px;
+}
