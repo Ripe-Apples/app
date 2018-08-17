@@ -28,12 +28,10 @@ async function getZomatoRestaurants(start) {
 async function getRestaurants() {
   try {
     let restaurants = []
-
     for (let i = 0; i < 5; i++) {
       let response = await getZomatoRestaurants(i * 20)
       restaurants = restaurants.concat(Array.from(response))
     }
-
     return restaurants
   } catch (error) {
     console.error(error)
@@ -51,13 +49,15 @@ const createZomatoRestaurantObj = async () => {
           shackCount++
           return {
             name: finalRestaurant.name,
-            rating: finalRestaurant.user_rating.aggregate_rating
+            rating: finalRestaurant.user_rating.aggregate_rating,
+            reviewUrl: finalRestaurant.url
           }
         }
       } else {
         return {
           name: finalRestaurant.name,
-          rating: finalRestaurant.user_rating.aggregate_rating
+          rating: finalRestaurant.user_rating.aggregate_rating,
+          reviewUrl: finalRestaurant.url
         }
       }
     })
@@ -81,7 +81,8 @@ async function zomatoCreate(createDbRestaurantObj) {
           source: 'Zomato',
           rating: restaurant.rating,
           restaurantId: dbRestaurants[restaurant.name].id,
-          sourceLogo: iconUrl
+          sourceLogo: iconUrl,
+          reviewUrl: restaurant.reviewUrl
         })
       }
     })
