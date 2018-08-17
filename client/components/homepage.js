@@ -18,12 +18,14 @@ class Homepage extends Component {
     return (
       <div>
         {this.state.visible ? (
-          <Message
-            onDismiss={this.handleDismiss}
-            header="Welcome to Ripe Apples!"
-            content="Our goal is to make your search for the perfect restaurant easier by aggregating ratings from the top sites out there.  Basically think of us as a Rotten Tomatoes for restaurants 😉"
-            color="orange"
-          />
+          <div className="bottom-margin">
+            <Message
+              onDismiss={this.handleDismiss}
+              header="Welcome to Ripe Apples!"
+              content="Our goal is to make your search for the perfect restaurant easier by aggregating ratings from the top sites out there.  Basically think of us as a Rotten Tomatoes for restaurants 😉"
+              color="orange"
+            />
+          </div>
         ) : (
           <div />
         )}

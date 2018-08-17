@@ -61,6 +61,10 @@ nav a {
   margin-top: 1em;
 }
 
+.bottom-margin {
+  margin-bottom: 2em;
+}
+
 .form-max-width {
   max-width: 400px;
   margin-bottom: 1em;
