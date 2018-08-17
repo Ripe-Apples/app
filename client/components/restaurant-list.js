@@ -7,8 +7,15 @@ import {
 } from '../store/restaurant'
 import {updateSearchBar} from '../store/filters'
 import RestaurantCard from './restaurant-card'
-import {Input, Grid, Pagination, Card, Divider,Loader,Segment, Dimmer, Image} from 'semantic-ui-react'
-
+import {
+  Input,
+  Grid,
+  Pagination,
+  Card,
+  Divider,
+  Loader,
+  Dimmer
+} from 'semantic-ui-react'
 
 class RestaurantList extends Component {
   constructor() {
@@ -175,14 +182,12 @@ class RestaurantList extends Component {
     const perPage = 12
     const pages = Math.ceil(totalRestaurants / perPage)
 
-    return !totalRestaurants ? (
+    return !totalRestaurants && this.props.searchValue === '' ? (
       <div>
-    
-      <Dimmer active inverted>
-        <Loader inverted>Loading</Loader>
-      </Dimmer>
-
-  </div>
+        <Dimmer active inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
+      </div>
     ) : (
       <React.Fragment>
         <Grid>
@@ -209,7 +214,11 @@ class RestaurantList extends Component {
           {restaurants
             .sort((restaurant1, restaurant2) => {
               if (restaurant2.reviews.length === restaurant1.reviews.length) {
-                return restaurant2.score - restaurant1.score
+                if (restaurant2.score === restaurant1.score) {
+                  return restaurant2.id - restaurant1.id
+                } else {
+                  return restaurant2.score - restaurant1.score
+                }
               } else {
                 return restaurant2.reviews.length - restaurant1.reviews.length
               }
