@@ -11,11 +11,13 @@ const createDbRestaurantObj = require('./helperFunctions')
 
 async function seed() {
   await db.sync({force: true})
-  console.log('db synced!')
+  console.log('Database synced!')
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({email: 'kevin@email.com', password: '123'}),
+    User.create({email: 'lucas@email.com', password: '123'}),
+    User.create({email: 'jordan@email.com', password: '123'}),
+    User.create({email: 'victor@email.com', password: '123'})
   ])
   console.log(`seeded ${users.length} users`)
   await yelpCreate()
@@ -23,7 +25,7 @@ async function seed() {
   await googleCreate(createDbRestaurantObj)
   await foursquareCreate(createDbRestaurantObj)
   await openTableCreate(createDbRestaurantObj)
-  console.log(`seeded successfully`)
+  console.log(`Seeded successfully`)
 }
 
 // We've separated the `seed` function from the `runSeed` function.
