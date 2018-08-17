@@ -5,7 +5,7 @@ import {
   changeFilteredRestaurants,
   changeRestaurantsOnCurrentPage
 } from '../store/restaurant'
-import {updateSearchBar} from '../store/filters'
+import {updateSearchBar, changeCurrentPage} from '../store/filters'
 import RestaurantCard from './restaurant-card'
 import {
   Input,
@@ -138,9 +138,12 @@ class RestaurantList extends Component {
   }
 
   async handlePageChange(event) {
+    await this.props.changeCurrentPage(
+      parseInt(event.target.getAttribute('value'), 10)
+    )
+
     const perPage = 12
-    const startIndex =
-      (parseInt(event.target.getAttribute('value'), 10) - 1) * perPage
+    const startIndex = (this.props.currentPage - 1) * perPage
     const endIndex = startIndex + perPage
 
     await this.props.changeRestaurantsOnCurrentPage(
@@ -205,7 +208,7 @@ class RestaurantList extends Component {
         </Grid>
         <Divider hidden />
         <Pagination
-          defaultActivePage={1}
+          activePage={this.props.currentPage}
           totalPages={pages}
           onClick={this.handlePageChange}
         />
@@ -241,6 +244,7 @@ const mapState = state => ({
   price: state.filtersReducer.price,
   cuisine: state.filtersReducer.cuisine,
   searchValue: state.filtersReducer.searchValue,
+  currentPage: state.filtersReducer.currentPage,
   yelpWeight: state.weighSourcesReducer.yelpWeight,
   zomatoWeight: state.weighSourcesReducer.zomatoWeight,
   googleWeight: state.weighSourcesReducer.googleWeight,
@@ -253,7 +257,8 @@ const mapDispatch = dispatch => ({
     dispatch(changeFilteredRestaurants(filteredRestaurants)),
   changeRestaurantsOnCurrentPage: restaurants =>
     dispatch(changeRestaurantsOnCurrentPage(restaurants)),
-  updateSearchBar: searchValue => dispatch(updateSearchBar(searchValue))
+  updateSearchBar: searchValue => dispatch(updateSearchBar(searchValue)),
+  changeCurrentPage: newPage => dispatch(changeCurrentPage(newPage))
 })
 
 export default connect(mapState, mapDispatch)(RestaurantList)
