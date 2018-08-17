@@ -39,7 +39,7 @@ const pieOptions = {
 
 const ApplePie = props => {
 
-  const {singleRestaurant, averageScore} = props;
+  const {averageScore} = props;
 
   const data = [["Ripe", "Rotten"], ["Ripe", Number(averageScore)], ["Rotten", 100 - Number(averageScore)]]
 

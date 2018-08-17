@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchLikes, addLike, deleteLike} from '../store/like'
 import { Button, Icon, Label } from 'semantic-ui-react'
-import SingleRestaurant from './SingleRestaurant';
 
 class LikeButton extends Component {
   constructor(props) {
@@ -25,7 +24,7 @@ class LikeButton extends Component {
             <Icon name='heart' />
             Like
         </Button>
-          <Label as='a' basic color='white' pointing='left'>
+          <Label as='a' pointing='left'>
             100
           </Label>
         </Button>
@@ -37,7 +36,7 @@ class LikeButton extends Component {
 const mapState = state => {
   console.log('state', state)
   return {
-    likes: state.likeReducer.likes
+    likes: state.likeReducer
   }
 }
 

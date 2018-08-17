@@ -72,17 +72,6 @@ class SingleRestaurant extends Component {
             <Grid.Column width={10}>
               <Image src={singleRestaurant.imageUrl} size="big" rounded />
               <Divider />
-              <div>
-                <Button as='div' labelPosition='right'>
-                  <Button color="red">
-                    <Icon name='heart' />
-                    Like
-                  </Button>
-                  <Label as='a' pointing='left'>
-                    {singleRestaurant.likes.length}
-                  </Label>
-                </Button>
-              </div>
             </Grid.Column>
             <Grid.Column width={6}>
               <h3 className="pie-title">
@@ -101,6 +90,9 @@ class SingleRestaurant extends Component {
                 averageScore={averageScore}
               />
               <Divider />
+
+              <LikeButton singleRestaurant={singleRestaurant} />
+
               <h3>{dollarSignHelper(singleRestaurant.expenseRating)}</h3>
               <h3>{singleRestaurant.location}</h3>
               <Divider hidden />
