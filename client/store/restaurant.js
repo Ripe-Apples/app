@@ -56,7 +56,11 @@ const restaurantReducer = (state = initalState, action) => {
         ...state,
         filteredRestaurants: action.payload.sort((restaurant1, restaurant2) => {
           if (restaurant2.reviews.length === restaurant1.reviews.length) {
-            return restaurant2.score - restaurant1.score
+            if (restaurant2.score === restaurant1.score) {
+              return restaurant2.id - restaurant1.id
+            } else {
+              return restaurant2.score - restaurant1.score
+            }
           } else {
             return restaurant2.reviews.length - restaurant1.reviews.length
           }

@@ -1,6 +1,7 @@
 const CHANGE_PRICE = 'CHANGE_PRICE'
 const CHANGE_CUISINE = 'CHANGE_CUISINE'
 const UPDATE_SEARCH = 'UPDATE_SEARCH'
+const CHANGE_CURRENT_PAGE = 'CHANGE_CURRENT_PAGE'
 const RESET = 'RESET'
 
 export const changePrice = price => ({
@@ -18,6 +19,11 @@ export const updateSearchBar = searchValue => ({
   payload: searchValue
 })
 
+export const changeCurrentPage = newPage => ({
+  type: CHANGE_CURRENT_PAGE,
+  payload: newPage
+})
+
 export const reset = () => ({
   type: RESET
 })
@@ -25,7 +31,8 @@ export const reset = () => ({
 const initalState = {
   price: '',
   cuisine: '',
-  searchValue: ''
+  searchValue: '',
+  currentPage: 1
 }
 
 const filtersReducer = (state = initalState, action) => {
@@ -45,8 +52,10 @@ const filtersReducer = (state = initalState, action) => {
         ...state,
         searchValue: action.payload
       }
+    case CHANGE_CURRENT_PAGE:
+      return {...state, currentPage: action.payload}
     case RESET:
-      return {...state, price: '', cuisine: '', searchValue: ''}
+      return {...state, price: '', cuisine: '', searchValue: '', currentPage: 1}
     default:
       return state
   }
