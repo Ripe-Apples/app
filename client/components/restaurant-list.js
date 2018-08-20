@@ -178,35 +178,7 @@ class RestaurantList extends Component {
   }
 
   render() {
-    let restaurants = this.props.restaurantsOnCurrentPage
-
-    const lowercaseSearchValue = this.props.searchValue.toLowerCase()
-
-    let restaurantsArray
-    if (this.props.searchValue === '') {
-      restaurantsArray = restaurants
-    } else {
-      restaurantsArray = restaurants.filter(restaurant => {
-        return restaurant.name.toLowerCase().includes(lowercaseSearchValue)
-      })
-    }
-    const {
-      yelpWeight,
-      zomatoWeight,
-      googleWeight,
-      foursquareWeight
-    } = this.props
-
-    restaurantsArray.forEach(restaurant => {
-      restaurant.score = this.restaurantScore(
-        restaurant.reviews,
-        yelpWeight,
-        zomatoWeight,
-        googleWeight,
-        foursquareWeight
-      )
-    })
-
+    const restaurants = this.props.restaurantsOnCurrentPage
     const totalRestaurants = this.props.filteredRestaurants.length
     const perPage = 12
     const pages = Math.ceil(totalRestaurants / perPage)
