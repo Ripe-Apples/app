@@ -20,6 +20,9 @@ import {
 class RestaurantList extends Component {
   constructor() {
     super()
+    this.state = {
+      loading: true
+    }
     this.handleChange = this.handleChange.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.filterRestaurants = this.filterRestaurants.bind(this)
@@ -47,6 +50,7 @@ class RestaurantList extends Component {
     await this.props.changeRestaurantsOnCurrentPage(
       this.props.filteredRestaurants.slice(0, 12)
     )
+    this.setState({loading: false})
   }
 
   restaurantScore = (
@@ -185,7 +189,7 @@ class RestaurantList extends Component {
     const perPage = 12
     const pages = Math.ceil(totalRestaurants / perPage)
 
-    return !totalRestaurants && this.props.searchValue === '' ? (
+    return this.state.loading ? (
       <div>
         <Dimmer active inverted>
           <Loader inverted>Loading</Loader>
