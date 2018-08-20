@@ -29,7 +29,11 @@ class RestaurantList extends Component {
   }
 
   async componentDidMount() {
-    await this.props.fetchRestaurants()
+    // if there are no restaurants in the store then fetch them from the database (first time the page is loaded)
+    if (this.props.restaurants.length === 0) {
+      await this.props.fetchRestaurants()
+    }
+
     const {
       yelpWeight,
       zomatoWeight,
@@ -46,10 +50,25 @@ class RestaurantList extends Component {
         foursquareWeight
       )
     })
-    await this.props.changeFilteredRestaurants(this.props.restaurants)
+
+    // populates filteredRestaurants in the store on first navigation to the page
+    if (
+      this.props.filteredRestaurants.length === 0 &&
+      this.props.price === '' &&
+      this.props.cuisine === '' &&
+      this.props.searchValue === ''
+    ) {
+      await this.filterRestaurants()
+    }
+
+    // loads the page that the user was on
     await this.props.changeRestaurantsOnCurrentPage(
-      this.props.filteredRestaurants.slice(0, 12)
+      this.props.filteredRestaurants.slice(
+        (this.props.currentPage - 1) * 12,
+        (this.props.currentPage - 1) * 12 + 12
+      )
     )
+
     this.setState({loading: false})
   }
 
@@ -109,6 +128,9 @@ class RestaurantList extends Component {
 
     await this.filterRestaurants()
 
+    // resets the current page to 1 upon typing into the searchbar
+    await this.props.changeCurrentPage(1)
+
     await this.props.changeRestaurantsOnCurrentPage(
       this.props.filteredRestaurants.slice(0, 12)
     )
@@ -158,9 +180,9 @@ class RestaurantList extends Component {
   render() {
     let restaurants = this.props.restaurantsOnCurrentPage
 
-    let restaurantsArray
     const lowercaseSearchValue = this.props.searchValue.toLowerCase()
 
+    let restaurantsArray
     if (this.props.searchValue === '') {
       restaurantsArray = restaurants
     } else {
