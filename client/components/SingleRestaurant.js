@@ -21,13 +21,21 @@ const dollarSignHelper = expenseRating => {
 }
 
 class SingleRestaurant extends Component {
-  componentDidMount() {
-    this.props.fetchSingleRestaurant(this.props.match.params.restaurantId)
+  constructor() {
+    super()
+    this.state = {
+      loading: true
+    }
+  }
+
+  async componentDidMount() {
+    await this.props.fetchSingleRestaurant(this.props.match.params.restaurantId)
+    this.setState({loading: false})
   }
 
   render() {
     const {singleRestaurant} = this.props
-    if (!singleRestaurant.reviews) {
+    if (this.state.loading) {
       return (
         <div>
           <Dimmer active inverted>
