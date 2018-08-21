@@ -178,6 +178,24 @@ class RestaurantList extends Component {
   }
 
   render() {
+    // recalculates each restaurant's score on each render
+    const {
+      yelpWeight,
+      zomatoWeight,
+      googleWeight,
+      foursquareWeight
+    } = this.props
+
+    this.props.restaurants.forEach(restaurant => {
+      restaurant.score = this.restaurantScore(
+        restaurant.reviews,
+        yelpWeight,
+        zomatoWeight,
+        googleWeight,
+        foursquareWeight
+      )
+    })
+
     const restaurants = this.props.restaurantsOnCurrentPage
     const totalRestaurants = this.props.filteredRestaurants.length
     const perPage = 12
