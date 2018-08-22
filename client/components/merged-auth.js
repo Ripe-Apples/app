@@ -9,6 +9,10 @@ class mergedAuth extends Component {
         <Grid columns={2} divided>
           <Grid.Column>
             <h1>Sign Up</h1>
+            <p>
+              Create an account to get personalized recommendations based on
+              your favorite cuisines.
+            </p>
             <Signup />
           </Grid.Column>
           <Grid.Column>
