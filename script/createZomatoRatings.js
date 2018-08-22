@@ -69,7 +69,6 @@ const createZomatoRestaurantObj = async () => {
 async function zomatoCreate(restaurantObj) {
   try {
     console.log('Creating Zomato reviews...')
-    console.log(restaurantObj)
     let zomatoRestaurants = await createZomatoRestaurantObj()
     zomatoRestaurants = zomatoRestaurants.filter(restaurant => {
       if (restaurant) return true
