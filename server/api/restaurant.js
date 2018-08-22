@@ -21,12 +21,3 @@ router.get('/:restaurantId', async (req, res, next) => {
     next(err)
   }
 })
-
-router.post('/', async (req, res, next) => {
-  try {
-    const newRestaurant = await Restaurant.create(req.body)
-    res.json(newRestaurant)
-  } catch (err) {
-    next(err)
-  }
-})
