@@ -14,15 +14,15 @@ const addLikeAction = likeObj => ({
   payload: likeObj
 })
 
-const removeLike = (restaurantId, userId) => ({
+const removeLike = likeId => ({
   type: DELETE_LIKE,
-  payload: [restaurantId, userId]
+  payload: likeId
 })
 
-export const fetchLikes = restaurantId => {
+export const fetchLikes = () => {
   return async dispatch => {
     try {
-      const res = await axios.get('/api/like', {restaurantId})
+      const res = await axios.get('/api/like')
       dispatch(getLikes(res.data))
     } catch(err) {
       console.log(err)
@@ -41,11 +41,11 @@ export const addLike = (restaurantId, userId) => {
   }
 }
 
-export const deleteLike = (restaurantId, userId) => {
+export const deleteLike = likeId => {
   return async dispatch => {
     try {
-      await axios.delete('/api/like', {restaurantId})
-      dispatch(removeLike(restaurantId, userId))
+      await axios.delete(`/api/like/${likeId}`)
+      dispatch(removeLike(likeId))
     } catch (err) {
       console.log(err)
     }
@@ -57,8 +57,7 @@ const likeReducer = (state = [], action) => {
     case ADD_LIKE:
       return [...state, action.payload];
     case DELETE_LIKE:
-      const likesToKeep =  state.filter(like => like.restaurantId !== action.payload[0] && like.userId !== action.payload[1]);
-      console.log('likestokeep', likesToKeep)
+      const likesToKeep =  state.filter(likeObj => Number(likeObj.id) !== Number(action.payload));
       return likesToKeep
     case GET_LIKES:
       return action.payload;

@@ -1,10 +1,19 @@
 const router = require('express').Router()
-const {Like, User} = require('../db/models')
+const {Like} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const likes = await Like.findAll({where: {restaurantId: req.body.restaurantId} })
+    const likes = await Like.findAll()
+    res.json(likes)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:likeId', async (req, res, next) => {
+  try {
+    const likes = await Like.findAll({where: {id: req.params.likeId} })
     res.json(likes)
   } catch (err) {
     next(err)
@@ -20,11 +29,10 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.delete('/', async (req, res, next) => {
+router.delete('/:likeId', async (req, res, next) => {
   try {
-    const likeToDelete = await Like.findOne({where: {restaurantId: req.body.restaurantId, userId: req.user.id}})
-    await Like.destroy({where: {restaurantId: req.body.restaurantId, userId: req.user.id}})
-    res.json(likeToDelete)
+    await Like.destroy({where: {id: req.params.likeId}})
+    res.sendStatus(200)
   } catch (err) {
     next(err)
   }
