@@ -4,8 +4,6 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {Menu, Grid, MenuItem} from 'semantic-ui-react'
-import {reset as resetWeights} from '../store/weighSources'
-import {reset as resetFilters} from '../store/filters'
 
 class Navbar extends Component {
   constructor() {
@@ -46,7 +44,7 @@ class Navbar extends Component {
             // The navbar will show these links after you log in
             <React.Fragment>
               <Menu.Item>
-                <Link to="/profile">Profile</Link>
+                <Link to="/recommendations">Recommendations</Link>
               </Menu.Item>
               <Menu.Item>
                 <Link to="#" onClick={handleClick}>

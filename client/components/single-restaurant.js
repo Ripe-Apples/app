@@ -13,7 +13,7 @@ import {
   ListItem
 } from 'semantic-ui-react'
 import ApplePie from './pie-chart'
-import Map from './GoogleMap'
+import Map from './google-map'
 
 const dollarSignHelper = expenseRating => {
   if (expenseRating === 0) return 'No Expense Rating Yet'
