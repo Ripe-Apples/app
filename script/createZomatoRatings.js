@@ -66,21 +66,21 @@ const createZomatoRestaurantObj = async () => {
   }
 }
 
-async function zomatoCreate(createDbRestaurantObj) {
+async function zomatoCreate(restaurantObj) {
   try {
     console.log('Creating Zomato reviews...')
+    console.log(restaurantObj)
     let zomatoRestaurants = await createZomatoRestaurantObj()
     zomatoRestaurants = zomatoRestaurants.filter(restaurant => {
       if (restaurant) return true
     })
-    const dbRestaurants = await createDbRestaurantObj()
     let reviewsForCreate = []
     zomatoRestaurants.forEach(restaurant => {
-      if (dbRestaurants[restaurant.name]) {
+      if (restaurantObj[restaurant.name]) {
         reviewsForCreate.push({
           source: 'Zomato',
           rating: restaurant.rating,
-          restaurantId: dbRestaurants[restaurant.name].id,
+          restaurantId: restaurantObj[restaurant.name].id,
           sourceLogo: iconUrl,
           reviewUrl: restaurant.reviewUrl
         })

@@ -2,11 +2,11 @@
 
 const db = require('../server/db')
 const {User} = require('../server/db/models')
-const yelpCreate = require('./yelpTestScript')
-const zomatoCreate = require('./zomatoTestScript')
-const googleCreate = require('./googleTestScript')
-const foursquareCreate = require('./foursquareTestScript')
-const openTableCreate = require('./openTableTestScript')
+const {yelpCreate, createYelpRatings} = require('./createYelpRestaurants')
+const zomatoCreate = require('./createZomatoRatings')
+const googleCreate = require('./createGoogleRatings')
+const foursquareCreate = require('./createFoursquareRatings')
+const openTableCreate = require('./createOpentableLinks')
 const createDbRestaurantObj = require('./helperFunctions')
 
 async function seed() {
@@ -20,11 +20,18 @@ async function seed() {
     User.create({email: 'victor@email.com', password: '123'})
   ])
   console.log(`seeded ${users.length} users`)
+  //DB depends on Yelp to create restaurants before creating reviews
   await yelpCreate()
-  await zomatoCreate(createDbRestaurantObj)
-  await googleCreate(createDbRestaurantObj)
-  await foursquareCreate(createDbRestaurantObj)
-  await openTableCreate(createDbRestaurantObj)
+  //Creates object of existing restaurants to use in other create functions
+  const restaurantObj = await createDbRestaurantObj()
+  //Runs all async functions for creating reviews and adding OpenTable links in parallel
+  await Promise.all([
+    createYelpRatings(restaurantObj),
+    zomatoCreate(restaurantObj),
+    googleCreate(restaurantObj),
+    foursquareCreate(restaurantObj),
+    openTableCreate(restaurantObj)
+  ])
   console.log(`Seeded successfully`)
 }
 

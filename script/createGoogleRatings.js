@@ -6,7 +6,7 @@ const utf8 = require('utf8')
 
 const iconUrl = 'https://image.flaticon.com/icons/svg/281/281781.svg'
 
-async function googleCreate(createDbRestaurantObj) {
+async function googleCreate(restaurantObj) {
   try {
     console.log('Creating Google reviews...')
     const googleData = JSON.parse(
@@ -16,11 +16,9 @@ async function googleCreate(createDbRestaurantObj) {
       if (restaurant) return true
     })
 
-    const restaurantDbObj = await createDbRestaurantObj()
-
     const bulkCreateArr = newGoogleData
       .filter(restaurant => {
-        if (restaurantDbObj[restaurant.name]) {
+        if (restaurantObj[restaurant.name]) {
           return true
         }
       })
@@ -28,7 +26,7 @@ async function googleCreate(createDbRestaurantObj) {
         return {
           source: 'Google',
           rating: restaurant.rating,
-          restaurantId: restaurantDbObj[restaurant.name].id,
+          restaurantId: restaurantObj[restaurant.name].id,
           sourceLogo: iconUrl
         }
       })

@@ -25,17 +25,16 @@ const getOpenTableArray = async () => {
   }
 }
 
-const opentableCreate = async createDbRestaurantObj => {
+const opentableCreate = async restaurantObj => {
   try {
     console.log('Creating OpenTable links...')
-    const restaurantDbObj = await createDbRestaurantObj()
     const opentableArray = await getOpenTableArray()
     const arrayForUpdate = opentableArray
-      .filter(restaurant => (restaurantDbObj[restaurant.name] ? true : false))
+      .filter(restaurant => (restaurantObj[restaurant.name] ? true : false))
       .map(restaurant => {
         return [
           {opentableUrl: restaurant.reserve_url},
-          {where: {id: restaurantDbObj[restaurant.name].id}}
+          {where: {id: restaurantObj[restaurant.name].id}}
         ]
       })
     for (let i = 0; i < arrayForUpdate.length; i++) {

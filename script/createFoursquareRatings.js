@@ -6,16 +6,16 @@ const fs = require('fs')
 
 const iconUrl = 'https://image.flaticon.com/icons/svg/174/174850.svg'
 
-async function foursquareCreate(createDbRestaurantObj) {
+async function foursquareCreate(restaurantObj) {
   try {
     console.log('Creating Foursquare reviews...')
     const fsqData = JSON.parse(
       fs.readFileSync('script/finalFoursquareData.json', 'utf8')
     )
-    const restaurantDbObj = await createDbRestaurantObj()
+
     const bulkCreateArr = fsqData
       .filter(restaurant => {
-        if (restaurantDbObj[restaurant.name]) {
+        if (restaurantObj[restaurant.name]) {
           return true
         }
       })
@@ -23,7 +23,7 @@ async function foursquareCreate(createDbRestaurantObj) {
         return {
           source: 'Foursquare',
           rating: restaurant.rating,
-          restaurantId: restaurantDbObj[restaurant.name].id,
+          restaurantId: restaurantObj[restaurant.name].id,
           sourceLogo: iconUrl,
           reviewUrl: restaurant.reviewUrl
         }

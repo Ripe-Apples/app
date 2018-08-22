@@ -1,0 +1,1 @@
+const {getRestaurants} = require('./createYelpRestaurants')
