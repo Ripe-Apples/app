@@ -1,31 +1,54 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {addLike, deleteLike} from '../store/like'
+import {fetchLikes, addLike, deleteLike} from '../store/like'
 import { Button, Icon, Label } from 'semantic-ui-react'
 
 class LikeButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLiked: false
+      isLiked: false,
+      localLikeCount: 0
     }
     this.handleClick = this.handleClick.bind(this)
   }
 
+  componentDidMount() {
+    const { singleRestaurant, user, numLikes } = this.props
+    console.log('numLikes', numLikes)
+    console.log('togg', this.state.isLiked)
+    const checkArr = singleRestaurant.likes.filter(likeObj => {
+      return likeObj.userId === user.id
+    })
+    console.log(checkArr);
+    if (checkArr.length > 0) {
+      console.log('yesss');
+      this.setState({isLiked: !this.state.isLiked, localLikeCount: singleRestaurant.likes.length})
+    }
+  }
+
   handleClick() {
-    const restaurantId = this.props.singleRestaurant.id
-    this.setState((prevState) => ({
-      isLiked: !prevState.isLiked
-    }))
+    const { singleRestaurant, user } = this.props
+    let likeCount = this.props.numLikes
+    //checks if a user has already like the restaurant on the current page
+    let isLikedArr = []
+    isLikedArr = singleRestaurant.likes.filter(likeObj => {
+      return likeObj.userId === user.id
+    })
     if (this.state.isLiked) {
-      this.props.addLike(restaurantId)
+      this.props.deleteLike(singleRestaurant.id, user.id)
+      // likeCount--
+      this.setState({isLiked: !this.state.isLiked, localLikeCount: this.state.localLikeCount-1})
     } else {
-      this.props.deleteLike(restaurantId)
+      this.props.addLike(singleRestaurant.id, user.id)
+      // likeCount++
+      this.setState({isLiked: !this.state.isLiked, localLikeCount: this.state.localLikeCount+1})
     }
   }
 
   render() {
-    const {singleRestaurant} = this.props
+    const { singleRestaurant, numLikes } = this.props
+    let likeCount = numLikes + singleRestaurant.likes.length //total likes = 
     return (
       <div>
         <Button onClick={this.handleClick} as='div' labelPosition='right'>
@@ -34,7 +57,7 @@ class LikeButton extends Component {
             Like
         </Button>
           <Label as='a' pointing='left'>
-            {singleRestaurant.likes.length}
+            {this.state.localLikeCount}
           </Label>
         </Button>
       </div>
@@ -43,15 +66,16 @@ class LikeButton extends Component {
 }
 
 const mapState = state => {
-  console.log('state', state)
   return {
-    user: state.user
+    user: state.user,
+    numLikes: state.likeReducer.length,
   }
 }
 
 const mapDispatch = dispatch => ({
-  addLike: restaurantId => dispatch(addLike(restaurantId)),
-  deleteLike: restaurantId => dispatch(deleteLike(restaurantId)),
+  addLike: (restaurantId, userId) => dispatch(addLike(restaurantId, userId)),
+  deleteLike: (restaurantId, userId) => dispatch(deleteLike(restaurantId, userId)),
+  fetchLikes: (restaurantId) => dispatch(fetchLikes(restaurantId)),
 })
 
 export default connect(mapState, mapDispatch)(LikeButton)

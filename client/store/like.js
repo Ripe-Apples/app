@@ -1,34 +1,51 @@
 import axios from 'axios'
 
+const GET_LIKES = 'GET_LIKES'
 const ADD_LIKE = 'ADD_LIKE'
 const DELETE_LIKE = 'DELETE_LIKE'
 
-const incrementLikes = likeId => ({
+const getLikes  = likes => ({
+  type: GET_LIKES,
+  payload: likes
+})
+
+const addLikeAction = likeObj => ({
   type: ADD_LIKE,
-  payload: likeId
+  payload: likeObj
 })
 
-const decrementLikes = likeId => ({
+const removeLike = (restaurantId, userId) => ({
   type: DELETE_LIKE,
-  payload: likeId
+  payload: [restaurantId, userId]
 })
 
-export const addLike = restaurantId => {
+export const fetchLikes = restaurantId => {
   return async dispatch => {
     try {
-      const res = await axios.post('/api/like', {restaurantId})
-      dispatch(incrementLikes(res.data))
+      const res = await axios.get('/api/like', {restaurantId})
+      dispatch(getLikes(res.data))
     } catch(err) {
       console.log(err)
     }
   }
 }
 
-export const deleteLike = restaurantId => {
+export const addLike = (restaurantId, userId) => {
   return async dispatch => {
     try {
-      const res = await axios.delete('/api/like', {restaurantId})
-      dispatch(decrementLikes(res.data))
+      const res = await axios.post('/api/like', {restaurantId, userId})
+      dispatch(addLikeAction(res.data))
+    } catch(err) {
+      console.log(err)
+    }
+  }
+}
+
+export const deleteLike = (restaurantId, userId) => {
+  return async dispatch => {
+    try {
+      await axios.delete('/api/like', {restaurantId})
+      dispatch(removeLike(restaurantId, userId))
     } catch (err) {
       console.log(err)
     }
@@ -40,7 +57,10 @@ const likeReducer = (state = [], action) => {
     case ADD_LIKE:
       return [...state, action.payload];
     case DELETE_LIKE:
-      return state.filter(like => like.id !== action.payload);
+      const likesToKeep =  state.filter(like => like.restaurantId !== action.payload[0] && like.userId !== action.payload[1]);
+      return [...state, likesToKeep]
+    case GET_LIKES:
+      return action.payload;
     default:
       return state
   }
