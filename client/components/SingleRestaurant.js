@@ -91,7 +91,9 @@ class SingleRestaurant extends Component {
                   <Divider hidden />
                 </div>
               ) : (
-                <div />
+                <div>
+                  <LikeButton singleRestaurant={singleRestaurant} />
+                </div>
               )}
               <List>
                 {singleRestaurant.reviews.map(review => {
