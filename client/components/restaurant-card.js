@@ -21,9 +21,6 @@ const RestaurantCard = props => {
 
   let color = labelColor(restaurant.score)
 
-  let restaurantNameShortened = restaurant.name.slice(0, 20)
-  restaurantNameShortened += restaurant.name.length > 20 ? '...' : ''
-
   return (
     <Card>
       <div>
@@ -33,9 +30,13 @@ const RestaurantCard = props => {
       </div>
       <Card.Content>
         <Card.Header>
-          <Popup trigger={<span>{restaurantNameShortened}</span>}>
+          <Link
+            to={`/restaurant/${restaurant.id}`}
+            className="card-image"
+            style={{color: 'black'}}
+          >
             {restaurant.name}
-          </Popup>
+          </Link>
           <span className="right floated">
             <Label color={color} key={color}>
               {restaurant.score}%

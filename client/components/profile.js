@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import TastePreferences from './tastePreferences'
 
 class Profile extends Component {
   render() {
@@ -9,7 +10,9 @@ class Profile extends Component {
     return (
       <div>
         <h1>{userStr}'s Profile</h1>
-        <h3>Liked Restaurants:</h3>
+        <h3>Recommended</h3>
+        <TastePreferences />
+        <h3>Liked Restaurants</h3>
       </div>
     )
   }
