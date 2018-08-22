@@ -11,39 +11,45 @@ class Profile extends Component {
     return (
       <div>
         <h1>Recommendations for {userStr}</h1>
-        <h3>Based on cuisines you've liked, we recommend:</h3>
-        {user.likedCuisines.map(cuisine => {
-          return (
-            <React.Fragment key={cuisine}>
-              <h4>{cuisine}</h4>
-              <Card.Group>
-                {restaurantSort(
-                  restaurants.filter(restaurant => {
-                    if (restaurant.cuisineType[0].title === cuisine) {
-                      restaurant.score = restaurantScorer(
-                        restaurant.reviews,
-                        5,
-                        5,
-                        5,
-                        5
-                      )
-                      return true
-                    }
-                  })
-                )
-                  .slice(0, 8)
-                  .map(restaurant => {
-                    return (
-                      <RestaurantCard
-                        restaurant={restaurant}
-                        key={restaurant.id}
-                      />
+        {user.likedCuisines ? (
+          <React.Fragment>
+            <h3>Based on cuisines you've liked, we recommend:</h3>
+            {user.likedCuisines.map(cuisine => {
+              return (
+                <React.Fragment key={cuisine}>
+                  <h4>{cuisine}</h4>
+                  <Card.Group>
+                    {restaurantSort(
+                      restaurants.filter(restaurant => {
+                        if (restaurant.cuisineType[0].title === cuisine) {
+                          restaurant.score = restaurantScorer(
+                            restaurant.reviews,
+                            5,
+                            5,
+                            5,
+                            5
+                          )
+                          return true
+                        }
+                      })
                     )
-                  })}
-              </Card.Group>
-            </React.Fragment>
-          )
-        })}
+                      .slice(0, 8)
+                      .map(restaurant => {
+                        return (
+                          <RestaurantCard
+                            restaurant={restaurant}
+                            key={restaurant.id}
+                          />
+                        )
+                      })}
+                  </Card.Group>
+                </React.Fragment>
+              )
+            })}
+          </React.Fragment>
+        ) : (
+          <p>Unfortunately you haven't liked any cuisines.</p>
+        )}
       </div>
     )
   }

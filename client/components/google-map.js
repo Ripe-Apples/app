@@ -1,13 +1,12 @@
-import React, {Component} from 'react'
-import {withGoogleMap, GoogleMap, Marker} from 'react-google-maps'
+import React from 'react'
+import {withGoogleMap, GoogleMap} from 'react-google-maps'
 const {
   MarkerWithLabel
 } = require('react-google-maps/lib/components/addons/MarkerWithLabel')
 
 const Map = props => {
   const {longitude, latitude} = props
-  console.log(props)
-  const GoogleMapExample = withGoogleMap(props => (
+  const GoogleMapExample = withGoogleMap(() => (
     <GoogleMap defaultCenter={{lat: latitude, lng: longitude}} defaultZoom={13}>
       <MarkerWithLabel
         position={{lat: latitude, lng: longitude}}

@@ -123,7 +123,6 @@ class SingleRestaurant extends Component {
                 <List.Item>
                   {singleRestaurant.opentableUrl ? (
                     <div>
-                      {console.log(singleRestaurant.opentableUrl)}
                       <Label
                         style={{margin: '0px'}}
                         className="single-page-button-width"
