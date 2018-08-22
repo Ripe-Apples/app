@@ -87,12 +87,12 @@ class SingleRestaurant extends Component {
                 <div>
                   <span className="knew-wave">This 🥧 is hot!!!</span>{' '}
                   <Divider hidden />
-                  <LikeButton singleRestaurant={singleRestaurant} />
+                  <LikeButton />
                   <Divider hidden />
                 </div>
               ) : (
                 <div>
-                  <LikeButton singleRestaurant={singleRestaurant} />
+                  <LikeButton />
                 </div>
               )}
               <List>

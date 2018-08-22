@@ -58,7 +58,8 @@ const likeReducer = (state = [], action) => {
       return [...state, action.payload];
     case DELETE_LIKE:
       const likesToKeep =  state.filter(like => like.restaurantId !== action.payload[0] && like.userId !== action.payload[1]);
-      return [...state, likesToKeep]
+      console.log('likestokeep', likesToKeep)
+      return likesToKeep
     case GET_LIKES:
       return action.payload;
     default:
