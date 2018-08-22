@@ -2,6 +2,16 @@ const router = require('express').Router()
 const {User} = require('../db/models')
 module.exports = router
 
+router.put('/likedCuisines', async (req, res, next) => {
+  try {
+    const userToUpdate = await User.findById(req.user.id)
+    await userToUpdate.update({likedCuinses: req.body.cuisines})
+    res.status(200).send('Updated!')
+  } catch (error) {
+    next(error)
+  }
+})
+
 // router.get('/', async (req, res, next) => {
 //   try {
 //     const users = await User.findAll({
