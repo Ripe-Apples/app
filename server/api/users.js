@@ -5,7 +5,7 @@ module.exports = router
 router.put('/likedCuisines', async (req, res, next) => {
   try {
     const userToUpdate = await User.findById(req.user.id)
-    await userToUpdate.update({likedCuinses: req.body.cuisines})
+    await userToUpdate.update({likedCuisines: req.body})
     res.status(200).send('Updated!')
   } catch (error) {
     next(error)

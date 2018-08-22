@@ -4,7 +4,7 @@ import {Card} from 'semantic-ui-react'
 import {restaurantSort, restaurantScorer} from '../helperFuncs'
 import RestaurantCard from './restaurant-card'
 
-class Profile extends Component {
+class Recommendations extends Component {
   render() {
     const {user, restaurants} = this.props
     const userStr = user.email.slice(0, user.email.indexOf('@'))
@@ -33,7 +33,7 @@ class Profile extends Component {
                         }
                       })
                     )
-                      .slice(0, 8)
+                      .slice(0, 12)
                       .map(restaurant => {
                         return (
                           <RestaurantCard
@@ -60,4 +60,4 @@ const mapState = state => ({
   restaurants: state.restaurantReducer.restaurants
 })
 
-export default connect(mapState)(Profile)
+export default connect(mapState)(Recommendations)

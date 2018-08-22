@@ -35,7 +35,9 @@ const RestaurantCard = props => {
             className="card-image"
             style={{color: 'black'}}
           >
-            {restaurant.name}
+            {restaurant.name.length > 18
+              ? restaurant.name.slice(0, 18) + '...'
+              : restaurant.name}
           </Link>
           <span className="right floated">
             <Label color={color} key={color}>
