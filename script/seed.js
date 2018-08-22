@@ -23,7 +23,7 @@ async function seed() {
     User.create({email: 'jordan@email.com', password: '123'}),
     User.create({email: 'victor@email.com', password: '123'})
   ])
-  console.log(`seeded ${users.length} users`)
+  console.log(`Seeded ${users.length} users.`)
   //DB depends on Yelp to create restaurants before creating reviews
   await yelpCreate()
   //Creates object of existing restaurants to use in other create functions
@@ -43,16 +43,16 @@ async function seed() {
 // This way we can isolate the error handling and exit trapping.
 // The `seed` function is concerned only with modifying the database.
 async function runSeed() {
-  console.log('seeding...')
+  console.log('Seeding...')
   try {
     await seed()
   } catch (err) {
     console.error(err)
     process.exitCode = 1
   } finally {
-    console.log('closing db connection')
+    console.log('Closing database connection...')
     await db.close()
-    console.log('db connection closed')
+    console.log('Database connection closed!')
   }
 }
 
