@@ -20,13 +20,20 @@ import {
 class RestaurantList extends Component {
   constructor() {
     super()
+    this.state = {
+      loading: true
+    }
     this.handleChange = this.handleChange.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.filterRestaurants = this.filterRestaurants.bind(this)
   }
 
   async componentDidMount() {
-    await this.props.fetchRestaurants()
+    // if there are no restaurants in the store then fetch them from the database (first time the page is loaded)
+    if (this.props.restaurants.length === 0) {
+      await this.props.fetchRestaurants()
+    }
+
     const {
       yelpWeight,
       zomatoWeight,
@@ -44,10 +51,25 @@ class RestaurantList extends Component {
       )
     })
 
-    await this.props.changeFilteredRestaurants(this.props.restaurants)
+    // populates filteredRestaurants in the store on first navigation to the page
+    if (
+      this.props.filteredRestaurants.length === 0 &&
+      this.props.price === '' &&
+      this.props.cuisine === '' &&
+      this.props.searchValue === ''
+    ) {
+      await this.filterRestaurants()
+    }
+
+    // loads the page that the user was on
     await this.props.changeRestaurantsOnCurrentPage(
-      this.props.filteredRestaurants.slice(0, 12)
+      this.props.filteredRestaurants.slice(
+        (this.props.currentPage - 1) * 12,
+        (this.props.currentPage - 1) * 12 + 12
+      )
     )
+
+    this.setState({loading: false})
   }
 
   restaurantScore = (
@@ -106,6 +128,9 @@ class RestaurantList extends Component {
 
     await this.filterRestaurants()
 
+    // resets the current page to 1 upon typing into the searchbar
+    await this.props.changeCurrentPage(1)
+
     await this.props.changeRestaurantsOnCurrentPage(
       this.props.filteredRestaurants.slice(0, 12)
     )
@@ -153,18 +178,7 @@ class RestaurantList extends Component {
   }
 
   render() {
-    let restaurants = this.props.restaurantsOnCurrentPage
-
-    let restaurantsArray
-    const lowercaseSearchValue = this.props.searchValue.toLowerCase()
-
-    if (this.props.searchValue === '') {
-      restaurantsArray = restaurants
-    } else {
-      restaurantsArray = restaurants.filter(restaurant => {
-        return restaurant.name.toLowerCase().includes(lowercaseSearchValue)
-      })
-    }
+    // recalculates each restaurant's score on each render
     const {
       yelpWeight,
       zomatoWeight,
@@ -172,7 +186,7 @@ class RestaurantList extends Component {
       foursquareWeight
     } = this.props
 
-    restaurantsArray.forEach(restaurant => {
+    this.props.restaurants.forEach(restaurant => {
       restaurant.score = this.restaurantScore(
         restaurant.reviews,
         yelpWeight,
@@ -182,11 +196,12 @@ class RestaurantList extends Component {
       )
     })
 
+    const restaurants = this.props.restaurantsOnCurrentPage
     const totalRestaurants = this.props.filteredRestaurants.length
     const perPage = 12
     const pages = Math.ceil(totalRestaurants / perPage)
 
-    return !totalRestaurants && this.props.searchValue === '' ? (
+    return this.state.loading ? (
       <div>
         <Dimmer active inverted>
           <Loader inverted>Loading</Loader>
