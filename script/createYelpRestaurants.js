@@ -21,7 +21,7 @@ async function getYelp(offset) {
   return data.businesses
 }
 
-async function getRestaurants() {
+async function getYelpRestaurants() {
   let restaurants = []
 
   for (let i = 0; i < 20; i++) {
@@ -32,7 +32,7 @@ async function getRestaurants() {
 }
 
 async function createYelpRestaurants() {
-  const restaurants = await getRestaurants()
+  const restaurants = await getYelpRestaurants()
   const restaurantsArr = restaurants.map(restaurant => {
     const location = restaurant.location.display_address.join(', ')
 
@@ -49,19 +49,34 @@ async function createYelpRestaurants() {
   })
 
   await Restaurant.bulkCreate(restaurantsArr)
+}
 
-  const ratingsArr = restaurants.map((restaurant, idx) => {
-    let id = idx + 1
-    return {
-      source: 'Yelp',
-      rating: restaurant.rating,
-      restaurantId: id,
-      sourceLogo: iconUrl,
-      reviewUrl: restaurant.url
-    }
-  })
-
-  await Review.bulkCreate(ratingsArr)
+async function createYelpRatings(restaurantObj) {
+  try {
+    console.log('Creating Yelp reviews...')
+    const restaurants = await getYelpRestaurants()
+    let newObj = {}
+    const ratingsArr = restaurants
+      .filter(restaurant => {
+        if (restaurantObj[restaurant.name] && !newObj[restaurant.name]) {
+          newObj[restaurant.name] = true
+          return true
+        }
+      })
+      .map(restaurant => {
+        return {
+          source: 'Yelp',
+          rating: restaurant.rating,
+          restaurantId: restaurantObj[restaurant.name].id,
+          sourceLogo: iconUrl,
+          reviewUrl: restaurant.url
+        }
+      })
+    await Review.bulkCreate(ratingsArr)
+    console.log('Yelp reviews are done!')
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 async function yelpCreate() {
@@ -74,4 +89,4 @@ async function yelpCreate() {
   }
 }
 
-module.exports = yelpCreate
+module.exports = {yelpCreate, createYelpRatings}
