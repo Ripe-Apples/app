@@ -55,9 +55,11 @@ async function createYelpRatings(restaurantObj) {
   try {
     console.log('Creating Yelp reviews...')
     const restaurants = await getYelpRestaurants()
+    let newObj = {}
     const ratingsArr = restaurants
       .filter(restaurant => {
-        if (restaurantObj[restaurant.name]) {
+        if (restaurantObj[restaurant.name] && !newObj[restaurant.name]) {
+          newObj[restaurant.name] = true
           return true
         }
       })
