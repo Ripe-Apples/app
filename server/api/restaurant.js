@@ -5,7 +5,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const restaurants = await Restaurant.findAll({include: [Review]})
-    res.json(restaurants)
+    res.json(restaurants.filter(restaurant => restaurant.reviews.length))
   } catch (err) {
     next(err)
   }
