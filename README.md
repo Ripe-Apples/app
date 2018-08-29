@@ -4,5 +4,13 @@ Do you ever feel overwhelmed by the bounty of restaurant review and rating websi
 
 Ripe Apples is a single-page-application built using React, Redux, Node, Express and Sequelize. While the restaurant scores are the application's killer feature, the app also allows users to filter restaurants based on their price and cuisine type. Additionally, users can change the scoring weights for restaurants based on which rating-sources they prefer. The most interesting problem we tackled was implementing multiple (and limited) APIs to seed our database and standardizing the data.
 
+## Screenshots
+
+![Alt text](https://github.com/Ripe-Apples/app/blob/master/Screenshots/Homepage.png)
+
+![Alt text](https://github.com/Ripe-Apples/app/blob/master/Screenshots/Single%20Restaurant.png)
+
+![Alt text](https://github.com/Ripe-Apples/app/blob/master/Screenshots/Taste%20Preferences.png)
+
 Built with ❤️ by: Kevin Ho, Lucas Levin, Victor Ravier, Jordan Marcus
 Check us out at: www.Ripe-Apples.com
