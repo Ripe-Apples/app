@@ -6,11 +6,11 @@ Ripe Apples is a single-page-application built using React, Redux, Node, Express
 
 ## Screenshots
 
-![Alt text](https://github.com/Ripe-Apples/app/blob/master/Screenshots/Homepage.png)
+![Homepage](https://github.com/Ripe-Apples/app/blob/master/Screenshots/Homepage.png)
 
-![Alt text](https://github.com/Ripe-Apples/app/blob/master/Screenshots/Single%20Restaurant.png)
+![Single Restaurant](https://github.com/Ripe-Apples/app/blob/master/Screenshots/Single%20Restaurant.png)
 
-![Alt text](https://github.com/Ripe-Apples/app/blob/master/Screenshots/Taste%20Preferences.png)
+![Taste Preferences](https://github.com/Ripe-Apples/app/blob/master/Screenshots/Taste%20Preferences.png)
 
 Built with ❤️ by: Kevin Ho, Lucas Levin, Victor Ravier, Jordan Marcus
 Check us out at: www.Ripe-Apples.com
