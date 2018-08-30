@@ -20,6 +20,6 @@ It's important to note that the Google and Foursquare data is already stored in 
 
 ![Taste Preferences](https://github.com/Ripe-Apples/app/blob/master/Screenshots/Taste%20Preferences.png)
 
-Built with ❤️ by: Kevin Ho, Lucas Levin, Victor Ravier, Jordan Marcus
-
 Check us out at: www.Ripe-Apples.com
+
+Built with ❤️ by: Kevin Ho, Lucas Levin, Victor Ravier, Jordan Marcus
